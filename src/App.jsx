@@ -4,7 +4,6 @@ import ReactLenis from 'lenis/react'
 
 // Section Imports
 import Navbar from './sections/Navbar'
-import Hero from './sections/Hero'
 import ServiceSummery from './sections/ServiceSummery'
 import Services from './sections/Services'
 import About from './sections/About'
