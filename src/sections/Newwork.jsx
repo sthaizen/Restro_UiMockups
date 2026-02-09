@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 
@@ -56,6 +56,10 @@ export default function Newwork() {
 
   const projectRefs = useRef([]);
   const h1Ref = useRef(null);
+  const cursorRef = useRef(null);
+  const [cursorVisible, setCursorVisible] = useState(false);
+  const quickSetterX = useRef(null);
+  const quickSetterY = useRef(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -150,13 +154,98 @@ export default function Newwork() {
           }
         );
       }
+
+      // Initialize GSAP quickTo for ultra-smooth cursor movement
+      if (cursorRef.current) {
+        quickSetterX.current = gsap.quickTo(cursorRef.current, "x", {
+          duration: 0.6,
+          ease: "power3.out",
+        });
+        quickSetterY.current = gsap.quickTo(cursorRef.current, "y", {
+          duration: 0.6,
+          ease: "power3.out",
+        });
+      }
     });
 
     return () => ctx.revert();
   }, []);
 
+  // Optimized mouse follower effect using GSAP quickTo
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (cursorVisible && quickSetterX.current && quickSetterY.current) {
+        quickSetterX.current(e.clientX);
+        quickSetterY.current(e.clientY);
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [cursorVisible]);
+
+  const handleCardMouseEnter = () => {
+    setCursorVisible(true);
+    if (cursorRef.current) {
+      gsap.to(cursorRef.current, {
+        scale: 1,
+        opacity: 1,
+        duration: 0.4,
+        ease: "power3.out",
+      });
+    }
+  };
+
+  const handleCardMouseLeave = () => {
+    setCursorVisible(false);
+    if (cursorRef.current) {
+      gsap.to(cursorRef.current, {
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.4,
+        ease: "power3.out",
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#fafafa] px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24 Inter">
+      {/* Custom Cursor Follower */}
+      <div
+        ref={cursorRef}
+        className="fixed top-12 left-18 pointer-events-none z-50 opacity-0"
+        style={{
+          transform: "translate(-50%, -50%)",
+          willChange: "transform",
+        }}
+      >
+        <div className="bg-black/60 text-white px-0.5 py-0.5 flex items-center gap-2 shadow-xl">
+        {/* icon with square background */}
+        <div className="w-7 h-7 bg-black/40 flex items-center justify-center">
+          <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="transform -rotate-360 -scale-x-100"
+        >
+          <path
+            d="M20 4V5.4C20 8.76031 20 10.4405 19.346 11.7239C18.7708 12.8529 17.8529 13.7708 16.7239 14.346C15.4405 15 13.7603 15 10.4 15H4M4 15L9 10M4 15L9 20"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+
+        </div>
+
+        <span className="text-[12px] font-medium tracking-wider pr-1.5">LIVE SITE </span>
+      </div>
+
+      </div>
+
       <div className="max-w-[1440px] mx-auto">
         {/* Header Section */}
         <div className="mb-16 sm:mb-20 lg:mb-24 space-y-3">
@@ -194,46 +283,47 @@ export default function Newwork() {
                     ? "min-h-[520px] lg:min-h-[677px]"
                     : "min-h-[400px] lg:min-h-[485px]"
                 }`}
+                onMouseEnter={handleCardMouseEnter}
+                onMouseLeave={handleCardMouseLeave}
               >
                 {/* Background */}
-               <div
-                className="
+                <div
+                  className="
                   absolute inset-0
                   transition-transform duration-700 ease-out
                   will-change-transform
                   group-hover:scale-[1.04]
                 "
-              >
-                {/* Background */}
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    backgroundImage: `url(${project.bgImage})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    backgroundSize: "cover",
-                  }}
-                />
+                >
+                  {/* Background */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      backgroundImage: `url(${project.bgImage})`,
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                      backgroundSize: "cover",
+                    }}
+                  />
 
-                {/* Soft overlay for depth */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/0 to-black/20 opacity-70 group-hover:opacity-90 transition-opacity duration-700" />
+                  {/* Soft overlay for depth */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/0 to-black/20 opacity-70 group-hover:opacity-90 transition-opacity duration-700" />
 
-                {/* Foreground */}
-                <div className="absolute inset-0 z-10 flex items-center justify-center">
-                  <img
-                    src={project.fgImage}
-                    alt={project.title}
-                    className="
+                  {/* Foreground */}
+                  <div className="absolute inset-0 z-10 flex items-center justify-center">
+                    <img
+                      src={project.fgImage}
+                      alt={project.title}
+                      className="
                       w-full h-full object-cover
                       opacity-0
                       transition-opacity duration-700 ease-out
                       group-hover:opacity-100
                       drop-shadow-[0_20px_35px_rgba(0,0,0,0.25)]
                     "
-                  />
+                    />
+                  </div>
                 </div>
-              </div>
-
               </div>
 
               {/* Title + Description */}

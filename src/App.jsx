@@ -43,17 +43,17 @@ const bgDarkOpacity = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0, 0.7])
       <div className='fixed top-0 left-0 w-full z-[100] '>
         <StickNav />
       </div>
-
+{/* 
       <div className='relative z-10'>
         <Main />
-      </div>
+      </div> */}
 
       <div className='sticky top-0 z-0 h-screen w-full overflow-hidden'>
         <motion.div
           style={{ filter, scale, opacity }}
           className='h-full w-full flex flex-col justify-center items-center'
         >
-          <ServiceSummery />
+          <Main />
         </motion.div>
       </div>
 
