@@ -230,7 +230,7 @@ export default function Testimonial() {
                       ].join(" ")}
                       style={{ minHeight: 48 }}
                     >
-                      <div className="col-span-5 md:col-span-3 pl-3 md:pl-4 text-xl md:text-[18px] font-normal roboto3">
+                      <div className="col-span-5 md:col-span-3 pl-3 md:pl-4 text-xl md:text-[18px] font-normal ">
                         {t.name}
                       </div>
                       <div className="col-span-5 md:col-span-7 text-sm md:text-[18px]">
