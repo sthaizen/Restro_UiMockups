@@ -119,26 +119,61 @@ const CirculaScrollSection = () => {
       activateStep(0);
 
       // -----------------------------------
-      // Title animation (staggered)
+      // Title animation (UPGRADED: smooth + scrub, works up & down)
       // -----------------------------------
       if (titleWrapRef.current) {
-        const lines = titleLineRefs.current.filter(Boolean);
+        // Keep your refs as-is, but make animation robust by also falling back
+        // to selecting the two lines directly (your JSX currently assigns [0] twice).
+        const fallbackLines = Array.from(
+          titleWrapRef.current.querySelectorAll("h2 span.block")
+        );
 
-        gsap.set(lines, { opacity: 0, y: 18 });
+        const lines =
+          titleLineRefs.current.filter(Boolean).length >= 2
+            ? titleLineRefs.current.filter(Boolean)
+            : fallbackLines;
 
-        gsap.to(lines, {
-          opacity: 1,
-          y: 0,
-          duration: 0.9,
-          ease: "power3.out",
-          stagger: 0.12,
+        gsap.set(lines, {
+          opacity: 0,
+          y: 34,
+          rotateX: 8,
+          transformPerspective: 900,
+          transformOrigin: "50% 100%",
+          filter: "blur(5px)",
+          willChange: "transform, opacity, filter",
+        });
+
+        // Scrubbed timeline = naturally reverses when scrolling up
+        const tl = gsap.timeline({
           scrollTrigger: {
             trigger: titleWrapRef.current,
-            start: "top 80%",
-            end: "top 45%",
-            toggleActions: "play none none reverse",
+            start: "top 85%",
+            end: "top 35%",
+            scrub: 0.8,
           },
         });
+
+        tl.to(lines, {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          filter: "blur(0px)",
+          ease: "power3.out",
+          stagger: 0.12,
+          duration: 1,
+        });
+
+        // Subtle “settle” micro-movement for extra life (still scrubbed)
+        tl.to(
+          lines,
+          {
+            y: -2,
+            ease: "sine.out",
+            stagger: 0.08,
+            duration: 0.6,
+          },
+          ">-0.25"
+        );
       }
 
       // -----------------------------------
@@ -199,23 +234,28 @@ const CirculaScrollSection = () => {
       <div className="max-w-[1480px] mx-auto px-6">
         <div className="mb-16" ref={titleWrapRef}>
           <h2 className="text-[32px] sm:text-[42px] lg:text-[54px] font-semibold leading-[1.2] text-black inter">
-            <span ref={(el) => (titleLineRefs.current[0] = el)}
-className="block text-gray-400">AI-powered expense management</span>
-            <span ref={(el) => (titleLineRefs.current[0] = el)}
- className="block text-gray-900">
-                designed to free finance teams from manual work.
+            <span
+              ref={(el) => (titleLineRefs.current[0] = el)}
+              className="block text-gray-400"
+            >
+              AI-powered expense management
             </span>
-            </h2>
-
+            <span
+              ref={(el) => (titleLineRefs.current[0] = el)}
+              className="block text-gray-900"
+            >
+              designed to free finance teams from manual work.
+            </span>
+          </h2>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-22 items-start">
           {/* LEFT */}
-          <div className="w-full lg:w-[715px] flex-shrink-0">
+          <div ref={(el) => (titleLineRefs.current[0] = el)} className="w-full lg:w-[715px] flex-shrink-0">
             {STEPS.map((step, i) => (
               <div
                 key={step.id}
-                ref={(el) => (stepRefs.current[i] = el)}
+               
                 className="mb-14 last:mb-0"
               >
                 {/* Entire Card */}

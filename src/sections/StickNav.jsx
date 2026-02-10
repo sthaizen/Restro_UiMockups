@@ -118,8 +118,8 @@ const StickNav = forwardRef(function StickNav(props, ref) {
         will-change-transform ${className}`}
       {...rest}
     >
-      <div className="font-AlexBrush font-bold text-[18px] tracking-wide text-zinc-900 ml-1 md:ml-7 ">
-        Yathartha 
+      <div className="font-AlexBrush font-bold text-[18px] tracking-wide text-zinc-900 ml-1 md:ml-7 uppercase">
+        Stay  
       </div>
 
       {/* Desktop Nav */}

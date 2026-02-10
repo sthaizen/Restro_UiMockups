@@ -135,25 +135,77 @@ export default function Newwork() {
         }
       });
 
-      // Header reveal
+      // ✅ Header reveal (scrubbed: works on scroll down + up)
       if (h1Ref.current) {
-        gsap.fromTo(
-          h1Ref.current,
-          { opacity: 0, y: 40 },
+        const header = h1Ref.current;
+
+        const topBlock = header.children?.[0];
+        const bottomBlock = header.children?.[1];
+
+        const label = topBlock?.querySelector("span"); // [WORK]
+        const line1 = topBlock?.querySelector("div");  // first sentence line
+        const line2 = bottomBlock;                     // second sentence line
+
+        const parts = [label, line1, line2].filter(Boolean);
+
+        // Initial states
+        gsap.set(parts, {
+          opacity: 0,
+          y: 26,
+          filter: "blur(5px)",
+          clipPath: "inset(0 0 100% 0)",
+          willChange: "transform, opacity, filter, clip-path",
+        });
+
+        // Scrubbed reveal timeline (scroll progress controls it)
+        const tl = gsap.timeline({
+          defaults: { ease: "none" }, // scrub feels best with no easing
+          scrollTrigger: {
+            trigger: header,
+            start: "top 85%",
+            end: "top 45%",
+            scrub: 1, // ✅ smooth follow on scroll down/up
+          },
+        });
+
+        // Reveal label first (slightly earlier)
+        if (label) {
+          tl.to(label, {
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            clipPath: "inset(0 0 0% 0)",
+            duration: 0.35,
+          });
+        }
+
+        // Reveal lines with a gentle stagger
+        tl.to(
+          [line1, line2].filter(Boolean),
           {
             opacity: 1,
             y: 0,
-            duration: 1.2,
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: h1Ref.current,
-              start: "top 85%",
-              end: "top 50%",
-              scrub: true,
-            },
-          }
+            filter: "blur(0px)",
+            clipPath: "inset(0 0 0% 0)",
+            duration: 0.65,
+            stagger: 0.12,
+          },
+          label ? 0.1 : 0
         );
-      }
+
+        // Subtle parallax drift (also scrubbed both ways)
+        gsap.to(header, {
+          y: -18,
+          ease: "none",
+          scrollTrigger: {
+            trigger: header,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.8,
+          },
+        });
+}
+
 
       // Initialize GSAP quickTo for ultra-smooth cursor movement
       if (cursorRef.current) {
@@ -220,30 +272,30 @@ export default function Newwork() {
         }}
       >
         <div className="bg-black/60 text-white px-0.5 py-0.5 flex items-center gap-2 shadow-xl">
-        {/* icon with square background */}
-        <div className="w-7 h-7 bg-black/40 flex items-center justify-center">
-          <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="transform -rotate-360 -scale-x-100"
-        >
-          <path
-            d="M20 4V5.4C20 8.76031 20 10.4405 19.346 11.7239C18.7708 12.8529 17.8529 13.7708 16.7239 14.346C15.4405 15 13.7603 15 10.4 15H4M4 15L9 10M4 15L9 20"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+          {/* icon with square background */}
+          <div className="w-7 h-7 bg-black/40 flex items-center justify-center">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="transform -rotate-360 -scale-x-100"
+            >
+              <path
+                d="M20 4V5.4C20 8.76031 20 10.4405 19.346 11.7239C18.7708 12.8529 17.8529 13.7708 16.7239 14.346C15.4405 15 13.7603 15 10.4 15H4M4 15L9 10M4 15L9 20"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
 
+          <span className="text-[12px] font-medium tracking-wider pr-1.5">
+            LIVE SITE{" "}
+          </span>
         </div>
-
-        <span className="text-[12px] font-medium tracking-wider pr-1.5">LIVE SITE </span>
-      </div>
-
       </div>
 
       <div className="max-w-[1440px] mx-auto">
