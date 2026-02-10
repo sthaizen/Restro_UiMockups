@@ -10,9 +10,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Navigation links
 const navLinks = [
-  { href: "#work", label: "WORK" },
-  { href: "#about", label: "ABOUT" },
-  { href: "#contact", label: "CONTACT" },
+  { href: "#work", label: "Work" },
+  { href: "#about", label: "Resume" },
+  { href: "#contact", label: "About" },
 ];
 
 // Register plugin safely (avoids SSR issues)
@@ -118,8 +118,8 @@ const StickNav = forwardRef(function StickNav(props, ref) {
         will-change-transform ${className}`}
       {...rest}
     >
-      <div className="font-AlexBrush font-bold text-[18px] tracking-wide text-zinc-900 ml-1 md:ml-7 uppercase">
-        Stay
+      <div className="font-AlexBrush font-bold text-[18px] tracking-wide text-zinc-900 ml-1 md:ml-7 ">
+        Yathartha 
       </div>
 
       {/* Desktop Nav */}

@@ -1,0 +1,309 @@
+import React, { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+const STEPS = [
+  {
+    id: 1,
+    feature: "Automated expense submission",
+    image: "/assets/backgrounds/jjs.png",
+    topBg: "#f3f4f6",
+    bottomBg: "#ffffff",
+    imgMaxW: "100%",
+    imgMaxH: "100%",
+    imgPadding: "0px",
+    cardRadius: "14px",
+    caption: (
+      <>
+        Easily <strong>scan receipts on the go.</strong> Circula&apos;s AI fills
+        in the rest and prevents invalid receipts from being submitted –
+        reducing your manual data entry by 92%.
+      </>
+    ),
+  },
+  {
+    id: 2,
+    feature: "Smooth AI-supported approval processes",
+    image: "/assets/backgrounds/ggs.png",
+    topBg: "#f6f6f6",
+    bottomBg: "#ffffff",
+    imgMaxW: "100%",
+    imgMaxH: "100%",
+    imgPadding: "0px",
+    cardRadius: "14px",
+    caption: (
+      <>
+        <strong>Approval and controlling flows</strong> have never been so
+        simple. Plus: Circula&apos;s AI flags duplicate submissions and
+        compliance risks such as the 3-month-rule automatically for you.
+      </>
+    ),
+  },
+  {
+    id: 3,
+    feature: "Effortless integration with your IT infrastructure",
+    image: "/assets/backgrounds/kkk.png",
+    topBg: "#f3f4f6",
+    bottomBg: "#ffffff",
+    imgMaxW: "100%",
+    imgMaxH: "100%",
+    imgPadding: "0px",
+    cardRadius: "14px",
+    caption: (
+      <>
+        Circula creates <strong>automated data transfer</strong> with your
+        existing IT infrastructure. Without manual effort and time-consuming
+        error corrections.
+      </>
+    ),
+  },
+];
+
+const CirculaScrollSection = () => {
+  const containerRef = useRef(null);
+
+  const stepRefs = useRef([]);
+  const checkRefs = useRef([]);
+
+  // Title refs for animation
+  const titleWrapRef = useRef(null);
+  const titleLineRefs = useRef([]);
+
+  // Card refs for full-container animations
+  const cardRefs = useRef([]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // -----------------------------------
+      // Right-side indicator activation
+      // -----------------------------------
+      function activateStep(index) {
+        checkRefs.current.forEach((el, i) => {
+          if (!el) return;
+
+          const isCurrent = i === index;
+          const dot = el.querySelector(".check-dot");
+          const label = el.querySelector(".check-label");
+
+          gsap.to(dot, {
+            backgroundColor: isCurrent ? "#43a346" : "#b2b2b2",
+            scale: isCurrent ? 1.1 : 1,
+            duration: 0.25,
+            overwrite: "auto",
+          });
+
+          gsap.to(label, {
+            color: isCurrent ? "#000" : "#9ca3af",
+            duration: 0.25,
+            overwrite: "auto",
+          });
+        });
+      }
+
+      // Create triggers to set active step on the right
+      stepRefs.current.forEach((triggerEl, i) => {
+        if (!triggerEl) return;
+        ScrollTrigger.create({
+          trigger: triggerEl,
+          start: "top 40%",
+          end: "bottom 40%",
+          onEnter: () => activateStep(i),
+          onEnterBack: () => activateStep(i),
+        });
+      });
+
+      activateStep(0);
+
+      // -----------------------------------
+      // Title animation (staggered)
+      // -----------------------------------
+      if (titleWrapRef.current) {
+        const lines = titleLineRefs.current.filter(Boolean);
+
+        gsap.set(lines, { opacity: 0, y: 18 });
+
+        gsap.to(lines, {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          stagger: 0.12,
+          scrollTrigger: {
+            trigger: titleWrapRef.current,
+            start: "top 80%",
+            end: "top 45%",
+            toggleActions: "play none none reverse",
+          },
+        });
+      }
+
+      // -----------------------------------
+      // Card animations:
+      // 1) enter (fade+lift)
+      // 2) scroll-down (scrub) fade out + scale down (ENTIRE CARD)
+      // -----------------------------------
+      cardRefs.current.forEach((card) => {
+        if (!card) return;
+
+        // Enter
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 26 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 78%",
+              end: "top 55%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+
+        // Fade out + scale down as you scroll past (entire container)
+        gsap.set(card, { willChange: "transform, opacity" });
+
+        gsap.fromTo(
+          card,
+          { opacity: 1, scale: 1 },
+          {
+            opacity: 0,
+            scale: 0.9,
+            ease: "none",
+            immediateRender: false,
+            scrollTrigger: {
+              trigger: card,
+              start: "top 35%",
+              end: "bottom 10%",
+              scrub: true,
+            },
+          }
+        );
+      });
+
+      ScrollTrigger.refresh();
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={containerRef} className="bg-[#fafafa] font-sans py-20">
+      <div className="max-w-[1480px] mx-auto px-6">
+        <div className="mb-16" ref={titleWrapRef}>
+          <h2 className="text-[32px] sm:text-[42px] lg:text-[54px] font-semibold leading-[1.2] text-black inter">
+            <span ref={(el) => (titleLineRefs.current[0] = el)}
+className="block text-gray-400">AI-powered expense management</span>
+            <span ref={(el) => (titleLineRefs.current[0] = el)}
+ className="block text-gray-900">
+                designed to free finance teams from manual work.
+            </span>
+            </h2>
+
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-22 items-start">
+          {/* LEFT */}
+          <div className="w-full lg:w-[715px] flex-shrink-0">
+            {STEPS.map((step, i) => (
+              <div
+                key={step.id}
+                ref={(el) => (stepRefs.current[i] = el)}
+                className="mb-14 last:mb-0"
+              >
+                {/* Entire Card */}
+                <div
+                  ref={(el) => (cardRefs.current[i] = el)}
+                  className="overflow-hidden border border-gray-100"
+                  style={{ borderRadius: step.cardRadius }}
+                >
+                  {/* Media */}
+                  <div
+                    className="w-full aspect-[715/496] flex items-center justify-center"
+                    style={{
+                      backgroundColor: step.topBg,
+                      padding: step.imgPadding,
+                    }}
+                  >
+                    <img
+                      src={step.image}
+                      alt={step.feature}
+                      loading="lazy"
+                      style={{
+                        maxWidth: step.imgMaxW,
+                        maxHeight: step.imgMaxH,
+                        objectFit: "contain",
+                      }}
+                    />
+                  </div>
+
+                  {/* Caption */}
+                  <div
+                    className="py-[49px] px-[45px]"
+                    style={{ backgroundColor: step.bottomBg }}
+                  >
+                    <p className="text-[19px] leading-relaxed text-black/90">
+                      {step.caption}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* RIGHT */}
+          <div className="flex-1 lg:sticky lg:top-62 py-4">
+            <p className="text-[21px] text-[#222222] leading-relaxed mb-8">
+              Circula centralises and automates your entire expense management
+              for you – from travel expenses to reimbursements and credit card
+              transactions.
+            </p>
+
+            <button className="w-full bg-[#f3f4f6] hover:bg-[#e5e7eb] text-gray-900 py-4 px-6 rounded-2xl mb-10 transition-colors text-[17px]">
+              Learn how Circula manages your expenses
+            </button>
+
+            <div className="space-y-5">
+              {STEPS.map((step, i) => (
+                <div
+                  key={step.id}
+                  ref={(el) => (checkRefs.current[i] = el)}
+                  className="flex items-center gap-4"
+                >
+                  <div className="check-dot w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center transition-all">
+                    <svg
+                      className="w-4 h-4 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  </div>
+
+                  <span className="check-label text-[19px] text-gray-400 transition-colors">
+                    {step.feature}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default CirculaScrollSection;

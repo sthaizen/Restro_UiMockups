@@ -42,7 +42,7 @@ const ServiceSummery = () => {
     
     
   return (
-    <section className="mt-20 overflow-hidden font-light leading-snug text-center mb-42 contact-text-responsive ">
+    <section className="overflow-hidden font-light leading-snug text-center contact-text-responsive bg-[#fafafa]">
         <div id="title-service-1">
             <p>
                 Figma/Framer 

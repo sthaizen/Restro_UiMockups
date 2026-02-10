@@ -153,7 +153,7 @@ export default function Testimonial() {
         <div className="col-span-12 md:col-span-2">
           <div
             data-kicker
-            className="pt-12 md:pt-36 text-[15px] tracking-widest text-black select-none roboto3"
+            className="pt-12 md:pt-36 text-[15px] tracking-widest text-black select-none "
           >
             [TESTIMONIALS]
           </div>
