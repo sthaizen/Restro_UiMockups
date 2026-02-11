@@ -65,26 +65,25 @@ const STEPS = [
 
 const CirculaScrollSection = () => {
   const containerRef = useRef(null);
-
   const stepRefs = useRef([]);
   const checkRefs = useRef([]);
-
-  // Title refs for animation
   const titleWrapRef = useRef(null);
   const titleLineRefs = useRef([]);
-
-  // Card refs for full-container animations
   const cardRefs = useRef([]);
+
+  // Mobile intro block refs
+  const mobileIntroRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      const isMobile = window.innerWidth < 1024;
+
       // -----------------------------------
-      // Right-side indicator activation
+      // Right-side indicator activation (desktop only)
       // -----------------------------------
       function activateStep(index) {
         checkRefs.current.forEach((el, i) => {
           if (!el) return;
-
           const isCurrent = i === index;
           const dot = el.querySelector(".check-dot");
           const label = el.querySelector(".check-label");
@@ -104,30 +103,27 @@ const CirculaScrollSection = () => {
         });
       }
 
-      // Create triggers to set active step on the right
-      stepRefs.current.forEach((triggerEl, i) => {
-        if (!triggerEl) return;
-        ScrollTrigger.create({
-          trigger: triggerEl,
-          start: "top 40%",
-          end: "bottom 40%",
-          onEnter: () => activateStep(i),
-          onEnterBack: () => activateStep(i),
+      if (!isMobile) {
+        stepRefs.current.forEach((triggerEl, i) => {
+          if (!triggerEl) return;
+          ScrollTrigger.create({
+            trigger: triggerEl,
+            start: "top 40%",
+            end: "bottom 40%",
+            onEnter: () => activateStep(i),
+            onEnterBack: () => activateStep(i),
+          });
         });
-      });
-
-      activateStep(0);
+        activateStep(0);
+      }
 
       // -----------------------------------
-      // Title animation (UPGRADED: smooth + scrub, works up & down)
+      // Title animation (all breakpoints)
       // -----------------------------------
       if (titleWrapRef.current) {
-        // Keep your refs as-is, but make animation robust by also falling back
-        // to selecting the two lines directly (your JSX currently assigns [0] twice).
         const fallbackLines = Array.from(
           titleWrapRef.current.querySelectorAll("h2 span.block")
         );
-
         const lines =
           titleLineRefs.current.filter(Boolean).length >= 2
             ? titleLineRefs.current.filter(Boolean)
@@ -143,7 +139,6 @@ const CirculaScrollSection = () => {
           willChange: "transform, opacity, filter",
         });
 
-        // Scrubbed timeline = naturally reverses when scrolling up
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: titleWrapRef.current,
@@ -163,7 +158,6 @@ const CirculaScrollSection = () => {
           duration: 1,
         });
 
-        // Subtle “settle” micro-movement for extra life (still scrubbed)
         tl.to(
           lines,
           {
@@ -177,14 +171,34 @@ const CirculaScrollSection = () => {
       }
 
       // -----------------------------------
-      // Card animations:
-      // 1) enter (fade+lift)
-      // 2) scroll-down (scrub) fade out + scale down (ENTIRE CARD)
+      // Mobile intro block fade-in
+      // -----------------------------------
+      if (isMobile && mobileIntroRef.current) {
+        gsap.fromTo(
+          mobileIntroRef.current,
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: mobileIntroRef.current,
+              start: "top 82%",
+              end: "top 60%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+
+      // -----------------------------------
+      // Card animations
       // -----------------------------------
       cardRefs.current.forEach((card) => {
         if (!card) return;
 
-        // Enter
+        // Enter animation — same on all breakpoints
         gsap.fromTo(
           card,
           { opacity: 0, y: 26 },
@@ -202,25 +216,27 @@ const CirculaScrollSection = () => {
           }
         );
 
-        // Fade out + scale down as you scroll past (entire container)
-        gsap.set(card, { willChange: "transform, opacity" });
+        // Scroll-past fade+scale — desktop only (cards overlap in sticky layout)
+        if (!isMobile) {
+          gsap.set(card, { willChange: "transform, opacity" });
 
-        gsap.fromTo(
-          card,
-          { opacity: 1, scale: 1 },
-          {
-            opacity: 0,
-            scale: 0.9,
-            ease: "none",
-            immediateRender: false,
-            scrollTrigger: {
-              trigger: card,
-              start: "top 35%",
-              end: "bottom 10%",
-              scrub: true,
-            },
-          }
-        );
+          gsap.fromTo(
+            card,
+            { opacity: 1, scale: 1 },
+            {
+              opacity: 0,
+              scale: 0.9,
+              ease: "none",
+              immediateRender: false,
+              scrollTrigger: {
+                trigger: card,
+                start: "top 35%",
+                end: "bottom 10%",
+                scrub: true,
+              },
+            }
+          );
+        }
       });
 
       ScrollTrigger.refresh();
@@ -232,8 +248,10 @@ const CirculaScrollSection = () => {
   return (
     <section ref={containerRef} className="bg-[#fafafa] font-sans py-20">
       <div className="max-w-[1480px] mx-auto px-6">
-        <div className="mb-16" ref={titleWrapRef}>
-          <h2 className="text-[32px] sm:text-[42px] lg:text-[54px] font-semibold leading-[1.2] text-black inter">
+
+        {/* ─── Title Block (all breakpoints) ─── */}
+        <div className="mb-10 lg:mb-16" ref={titleWrapRef}>
+          <h2 className="text-[28px] sm:text-[36px] lg:text-[54px] font-semibold leading-[1.2] text-black inter">
             <span
               ref={(el) => (titleLineRefs.current[0] = el)}
               className="block text-gray-400"
@@ -241,7 +259,7 @@ const CirculaScrollSection = () => {
               AI-powered expense management
             </span>
             <span
-              ref={(el) => (titleLineRefs.current[0] = el)}
+              ref={(el) => (titleLineRefs.current[1] = el)}
               className="block text-gray-900"
             >
               designed to free finance teams from manual work.
@@ -249,24 +267,56 @@ const CirculaScrollSection = () => {
           </h2>
         </div>
 
+        {/* ─── Mobile / Tablet Intro Block (hidden on lg+) ─── */}
+        {/*
+          On mobile, the sticky sidebar would never be seen — it just scrolls out of view.
+          Instead we surface the key copy + CTA above the cards as a clean, scannable intro.
+          The dot-indicator checklist is removed on mobile: it relies on scroll-sticky context
+          to be meaningful; without it the list is just redundant text already in the captions.
+        */}
+        <div
+          ref={mobileIntroRef}
+          className="lg:hidden mb-10"
+        >
+          <p className="text-[17px] sm:text-[19px] text-[#333333] leading-relaxed mb-6">
+            Circula centralises and automates your entire expense management
+            for you – from travel expenses to reimbursements and credit card
+            transactions.
+          </p>
+          <button className="w-full bg-[#f3f4f6] active:bg-[#e5e7eb] text-gray-900 py-4 px-6 rounded-2xl transition-colors text-[16px] sm:text-[17px] font-medium">
+            Learn how Circula manages your expenses
+          </button>
+        </div>
+
+        {/* ─── Two-column layout (desktop) / Single-column (mobile+tablet) ─── */}
         <div className="flex flex-col lg:flex-row gap-22 items-start">
-          {/* LEFT */}
-          <div ref={(el) => (titleLineRefs.current[0] = el)} className="w-full lg:w-[715px] flex-shrink-0">
+
+          {/* LEFT — feature cards */}
+          <div className="w-full lg:w-[715px] flex-shrink-0 space-y-8 sm:space-y-10 lg:space-y-14">
             {STEPS.map((step, i) => (
               <div
                 key={step.id}
-               
-                className="mb-14 last:mb-0"
+                ref={(el) => (stepRefs.current[i] = el)}
               >
+                {/* Step number pill — mobile only, gives positional context */}
+                {/* <div className="lg:hidden flex items-center gap-2 mb-3">
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#43a346] text-white text-[12px] font-semibold">
+                    {i + 1}
+                  </span>
+                  <span className="text-[13px] font-semibold text-[#43a346] uppercase tracking-wide">
+                    {step.feature}
+                  </span>
+                </div> */}
+
                 {/* Entire Card */}
                 <div
                   ref={(el) => (cardRefs.current[i] = el)}
-                  className="overflow-hidden border border-gray-100"
+                  className="overflow-hidden border border-gray-100 shadow-sm"
                   style={{ borderRadius: step.cardRadius }}
                 >
                   {/* Media */}
                   <div
-                    className="w-full aspect-[715/496] flex items-center justify-center"
+                    className="w-full aspect-[4/3] sm:aspect-[715/496] flex items-center justify-center"
                     style={{
                       backgroundColor: step.topBg,
                       padding: step.imgPadding,
@@ -286,10 +336,10 @@ const CirculaScrollSection = () => {
 
                   {/* Caption */}
                   <div
-                    className="py-[49px] px-[45px]"
+                    className="py-7 px-5 sm:py-10 sm:px-8 lg:py-[49px] lg:px-[45px]"
                     style={{ backgroundColor: step.bottomBg }}
                   >
-                    <p className="text-[19px] leading-relaxed text-black/90">
+                    <p className="text-[15px] sm:text-[17px] lg:text-[19px] leading-relaxed text-black/90">
                       {step.caption}
                     </p>
                   </div>
@@ -298,8 +348,13 @@ const CirculaScrollSection = () => {
             ))}
           </div>
 
-          {/* RIGHT */}
-          <div className="flex-1 lg:sticky lg:top-62 py-4">
+          {/* RIGHT — sticky sidebar (desktop only) */}
+          {/*
+            Hidden on mobile/tablet via CSS. The sticky panel depends on the page
+            having enough scroll height alongside the left column — on small screens
+            that relationship breaks and the panel offers no navigational value.
+          */}
+          <div className="hidden lg:block flex-1 lg:sticky lg:top-62 py-4">
             <p className="text-[21px] text-[#222222] leading-relaxed mb-8">
               Circula centralises and automates your entire expense management
               for you – from travel expenses to reimbursements and credit card
@@ -332,7 +387,6 @@ const CirculaScrollSection = () => {
                       />
                     </svg>
                   </div>
-
                   <span className="check-label text-[19px] text-gray-400 transition-colors">
                     {step.feature}
                   </span>

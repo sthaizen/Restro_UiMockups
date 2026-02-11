@@ -10,9 +10,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Navigation links
 const navLinks = [
-  { href: "#work", label: "Work" },
-  { href: "#about", label: "Resume" },
-  { href: "#contact", label: "About" },
+  { href: "#work", label: "WORK" },
+  { href: "#about", label: "ABOUT" },
+  { href: "#contact", label: "CONTACTS" },
 ];
 
 // Register plugin safely (avoids SSR issues)
