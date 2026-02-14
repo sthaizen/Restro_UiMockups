@@ -9,7 +9,7 @@ if (typeof window !== "undefined") {
 const STEPS = [
   {
     id: 1,
-    feature: "Automated expense submission",
+    feature: "Design that passes the “damn” test",
     image: "/assets/backgrounds/jjs.png",
     topBg: "#f3f4f6",
     bottomBg: "#ffffff",
@@ -19,15 +19,13 @@ const STEPS = [
     cardRadius: "14px",
     caption: (
       <>
-        Easily <strong>scan receipts on the go.</strong> Circula&apos;s AI fills
-        in the rest and prevents invalid receipts from being submitted –
-        reducing your manual data entry by 92%.
+        Clean, modern interfaces that feel premium — the kind that earns trust before anyone even reads the headline. And yes… I <strong>will notice the 1px misalignment</strong>. No, I <strong>won’t ignore it</strong>.
       </>
     ),
   },
   {
     id: 2,
-    feature: "Smooth AI-supported approval processes",
+    feature: "Development that doesn’t fall apart later",
     image: "/assets/backgrounds/ggs.png",
     topBg: "#f6f6f6",
     bottomBg: "#ffffff",
@@ -37,15 +35,13 @@ const STEPS = [
     cardRadius: "14px",
     caption: (
       <>
-        <strong>Approval and controlling flows</strong> have never been so
-        simple. Plus: Circula&apos;s AI flags duplicate submissions and
-        compliance risks such as the 3-month-rule automatically for you.
+         I build what I design: <strong>fast, responsive, and smooth</strong>. No “works on my laptop” energy — just <strong>clean code</strong>, sensible structure, and pages that behave on every screen like they were raised properly.
       </>
     ),
   },
   {
     id: 3,
-    feature: "Effortless integration with your IT infrastructure",
+    feature: "AI speed… with human taste",
     image: "/assets/backgrounds/kkk.png",
     topBg: "#f3f4f6",
     bottomBg: "#ffffff",
@@ -55,9 +51,7 @@ const STEPS = [
     cardRadius: "14px",
     caption: (
       <>
-        Circula creates <strong>automated data transfer</strong> with your
-        existing IT infrastructure. Without manual effort and time-consuming
-        error corrections.
+         Yes, I use AI — <strong>like a power tool, not a personality</strong>. It helps with research, drafts, and cleanup. The vibe, flow, and final polish? <strong>That’s all human (me)</strong>.
       </>
     ),
   },
@@ -256,13 +250,13 @@ const CirculaScrollSection = () => {
               ref={(el) => (titleLineRefs.current[0] = el)}
               className="block text-gray-400"
             >
-              AI-powered expense management
+              Crafted with design instincts + AI precision
             </span>
             <span
               ref={(el) => (titleLineRefs.current[1] = el)}
               className="block text-gray-900"
             >
-              designed to free finance teams from manual work.
+              Handcrafted websites — with soul and serious polish.
             </span>
           </h2>
         </div>
@@ -279,12 +273,10 @@ const CirculaScrollSection = () => {
           className="lg:hidden mb-10"
         >
           <p className="text-[17px] sm:text-[19px] text-[#333333] leading-relaxed mb-6">
-            Circula centralises and automates your entire expense management
-            for you – from travel expenses to reimbursements and credit card
-            transactions.
-          </p>
+             I build websites that load fast, look clean, and quietly convince people to trust you. AI is my assistant. I’m the one saying ‘no’ to ugly buttons and weird spacing
+               </p>
           <button className="w-full bg-[#f3f4f6] active:bg-[#e5e7eb] text-gray-900 py-4 px-6 rounded-2xl transition-colors text-[16px] sm:text-[17px] font-medium">
-            Learn how Circula manages your expenses
+            Let’s build something slick
           </button>
         </div>
 
@@ -356,13 +348,11 @@ const CirculaScrollSection = () => {
           */}
           <div className="hidden lg:block flex-1 lg:sticky lg:top-62 py-4">
             <p className="text-[21px] text-[#222222] leading-relaxed mb-8">
-              Circula centralises and automates your entire expense management
-              for you – from travel expenses to reimbursements and credit card
-              transactions.
+              I build websites that load fast, look clean, and quietly convince people to trust you. AI is my assistant. I’m the one saying ‘no’ to ugly buttons and weird spacing
             </p>
 
             <button className="w-full bg-[#f3f4f6] hover:bg-[#e5e7eb] text-gray-900 py-4 px-6 rounded-2xl mb-10 transition-colors text-[17px]">
-              Learn how Circula manages your expenses
+              Let’s build something slick
             </button>
 
             <div className="space-y-5">

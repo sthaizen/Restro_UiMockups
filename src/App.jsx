@@ -20,6 +20,7 @@ import Projects from './sections/Projects'
 import StickNav from './sections/StickNav'
 import Anotherabt from './sections/Anotherabt'
 import Random from './sections/Random'
+import Anotherlets from './sections/Anotherlets'
 
 const App = () => {
   const coverSectionRef = useRef(null)
@@ -68,12 +69,12 @@ const bgDarkOpacity = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0, 0.7])
       {/* Put this section above overlay */}
       <div ref={coverSectionRef} className='relative z-20 bg-white'>
         <Newwork />
+        <ServiceSummery />
         <Anotherabt />
         <Questions />
-        {/* <AboutSection /> */}
+        {/* <AboutSection /> 
         {/* <Testimonial /> */}
-        <ServiceSummery />
-        {/* <ContactSummery /> */}
+         <ContactSummery /> 
         <Ctst />
       </div>
 
