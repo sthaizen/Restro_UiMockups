@@ -454,47 +454,79 @@ const Main = ({ showPhoto = true }) => {
         return;
       }
 
+      // Calculate group centering offsets
+      let textOffset = 0;
+      let photoOffset = -400;
+      if (nameBgRef.current && photoRef.current) {
+        const nameRect = nameBgRef.current.getBoundingClientRect();
+        const photoRect = photoRef.current.getBoundingClientRect();
+        const groupWidth = nameRect.width + 20 + photoRect.width;
+        const groupLeftCentered = (window.innerWidth - groupWidth) / 2;
+        textOffset = groupLeftCentered - nameRect.left;
+        photoOffset = (groupLeftCentered + nameRect.width + 20) - photoRect.left;
+      }
+
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       const D = {
-        header: 1.2,
-        navStagger: 0.8,
-        title: 0.6,
-        blurb: 1.2,
-        aside: 1.0,
-        mobile: 1.0,
-        photo: 0.6,
-        bgIn: 1.6,
+        header: 0.8,
+        navStagger: 0.5,
+        title: 0.4,
+        blurb: 0.8,
+        aside: 0.7,
+        mobile: 0.7,
+        photo: 0.9,
+        bgIn: 0.9,
       };
-
-      tl.from(headerRef.current, { y: -22, opacity: 0, duration: D.header });
-
-      gsap.matchMedia().add("(min-width: 768px)", () => {
-        const navItems = headerRef.current?.querySelectorAll("nav") || [];
-        if (navItems.length) {
-          tl.from(navItems, {
-            y: -14,
-            opacity: 0,
-            duration: D.navStagger,
-            stagger: 0.15,
-          }, "-=0.8");
-        }
-      });
 
       if (nameBgRef.current) {
         tl.fromTo(
           nameBgRef.current,
-          { opacity: 0, scale: 0.94, y: 16 },
-          { opacity: 1, scale: 1, y: 0, duration: D.bgIn },
-          "-=0.6"
+          { opacity: 0, scale: 0.96, y: 40, x: textOffset },
+          { opacity: 1, scale: 1, y: 0, x: textOffset, duration: 1.1, ease: "power3.out" }
         );
-        gsap.to(nameBgRef.current, {
-          y: 10,
-          duration: 5.5,
-          ease: "sine.inOut",
-          yoyo: true,
-          repeat: -1,
+      }
+
+      if (photoRef.current) {
+        gsap.set(photoRef.current, {
+          opacity: 0,
+          scale: 0.96,
+          willChange: "transform, opacity",
         });
+        tl.fromTo(
+          photoRef.current,
+          { opacity: 0, scale: 0.96, y: 40, x: photoOffset },
+          { opacity: 1, scale: 1, y: 0, x: photoOffset, duration: 1.1, ease: "power3.out" },
+          "<"
+        );
+      }
+
+      if (nameBgRef.current || photoRef.current) {
+        if (nameBgRef.current) {
+          tl.to(
+            nameBgRef.current,
+            { x: 0, duration: 1.0, ease: "power3.inOut" },
+            "-=0.6"
+          );
+        }
+        if (photoRef.current) {
+          tl.to(
+            photoRef.current,
+            { x: 0, duration: 1.0, ease: "power3.inOut" },
+            "<"
+          );
+        }
+      }
+
+      // Header and Nav Items appear after separation
+      const headerEl = document.querySelector("header");
+
+      if (headerEl) {
+        tl.from(
+          headerEl,
+          { y: -8, autoAlpha: 0, duration: D.header, ease: "power3.out" },
+          "-=0.7"
+        );
       }
 
       // Desktop title lines animation
@@ -507,9 +539,9 @@ const Main = ({ showPhoto = true }) => {
               opacity: 0,
               filter: "blur(1px)",
               duration: D.title,
-              stagger: 0.22,
+              stagger: 0.15,
             },
-            "-=1.0"
+            "-=0.6"
           );
         }
       });
@@ -518,7 +550,7 @@ const Main = ({ showPhoto = true }) => {
         tl.from(
           blurbRef.current,
           { y: 18, opacity: 0, duration: D.blurb },
-          "-=1.0"
+          "-=0.6"
         );
       }
 
@@ -529,8 +561,8 @@ const Main = ({ showPhoto = true }) => {
             x: 22,
             opacity: 0,
             duration: D.aside,
-            stagger: 0.16,
-          }, "-=0.9");
+            stagger: 0.1,
+          }, "-=0.5");
         }
       }
 
@@ -542,23 +574,12 @@ const Main = ({ showPhoto = true }) => {
             y: 16,
             opacity: 0,
             duration: D.mobile,
-            stagger: 0.16,
-          }, "-=0.9");
+            stagger: 0.1,
+          }, "-=0.5");
         }
       }
 
-      if (photoRef.current) {
-        gsap.set(photoRef.current, {
-          opacity: 0,
-          scale: 0.96,
-          willChange: "transform, opacity",
-        });
-        tl.to(
-          photoRef.current,
-          { opacity: 1, scale: 1, duration: D.photo, overwrite: "auto" },
-          "-=0.6"
-        );
-      }
+
     }, rootRef);
 
     return () => ctx.revert();
@@ -658,12 +679,12 @@ const Main = ({ showPhoto = true }) => {
         {/* ── Background display name — responsive opacity on mobile ── */}
         <div
           aria-hidden="true"
-          className="pointer-events-none select-none absolute left-[3vw] bottom-[-4vw] font-normal leading-none tracking-[-.02em] text-black z-0 will-change-transform
+          className="pointer-events-none select-none absolute left-[2vw] bottom-[-5.8vw] font-normal leading-none tracking-[-.02em] text-black z-0 will-change-transform
                      opacity-[0.06] md:opacity-100"
           ref={nameBgRef}
         >
           <span
-            className="block text-[24vw] sm:text-[19vw] md:text-[18vw] lg:text-[17vw] xl:text-[16vw] 2xl:text-[19vw] mb-15"
+            className="block text-[24vw] sm:text-[19vw] md:text-[18vw] lg:text-[17vw] xl:text-[16vw] 2xl:text-[18vw] mb-15"
             id="title-service"
           >
             STAY ZI
@@ -674,7 +695,7 @@ const Main = ({ showPhoto = true }) => {
         {showPhoto && (
           <div
             ref={photoRef}
-            className="hidden md:block absolute right-6 md:right-10 lg:right-14 bottom-6 md:bottom-8 z-20"
+            className="hidden md:block absolute right-6 md:right-10 lg:right-14 bottom-[10px] md:bottom-[14px] z-20"
             id="title-servicel"
           >
             <div

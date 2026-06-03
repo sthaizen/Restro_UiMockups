@@ -41,30 +41,7 @@ const StickNav = forwardRef(function StickNav(props, ref) {
     else if (ref) ref.current = node;
   };
 
-  // Intro animation
-  useLayoutEffect(() => {
-    if (!headerEl.current) return;
 
-    const ctx = gsap.context(() => {
-      gsap.from(headerEl.current, {
-        y: -18,
-        autoAlpha: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        delay: 0.4,
-      });
-
-      gsap.from(desktopLinks.current.filter(Boolean), {
-         y: -18,
-        autoAlpha: 0,
-        duration: 0.8,
-        ease: "power3.out",
-
-      });
-    }, headerEl);
-
-    return () => ctx.revert();
-  }, []);
 
 
 
