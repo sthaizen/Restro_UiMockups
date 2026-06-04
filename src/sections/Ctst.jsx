@@ -184,7 +184,7 @@ const Contact = ({
         viewport={{ amount: 0.2, once: false }}
         transition={{ type: "spring", stiffness: 120, damping: 20 }}
       >
-        <CornerCopyright sectionRef={sectionRef} year={2025} />
+        <CornerCopyright sectionRef={sectionRef} year={2026} />
         <ParallaxWordmark text="STAY ZI" sectionRef={sectionRef} dir={dir} />
       </motion.footer>
     </section>

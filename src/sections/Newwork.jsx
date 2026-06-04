@@ -25,7 +25,7 @@ export default function Newwork() {
       tall: true,
       bgImage: "/assets/backgrounds/33.png",
       fgImage: "/assets/backgrounds/33.png",
-      title: "Clyric",
+      title: "Nova",
       description: "Software",
     },
     {
@@ -204,7 +204,7 @@ export default function Newwork() {
             scrub: 0.8,
           },
         });
-}
+      }
 
 
       // Initialize GSAP quickTo for ultra-smooth cursor movement
@@ -330,11 +330,10 @@ export default function Newwork() {
             >
               {/* Card */}
               <div
-                className={`group relative overflow-hidden cursor-pointer bg-black flex items-center justify-center p-8 sm:p-10 lg:p-12 ${
-                  project.tall
+                className={`group relative overflow-hidden cursor-pointer bg-black flex items-center justify-center p-8 sm:p-10 lg:p-12 ${project.tall
                     ? "min-h-[520px] lg:min-h-[677px]"
                     : "min-h-[400px] lg:min-h-[485px]"
-                }`}
+                  }`}
                 onMouseEnter={handleCardMouseEnter}
                 onMouseLeave={handleCardMouseLeave}
               >
