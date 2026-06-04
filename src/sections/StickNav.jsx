@@ -8,11 +8,13 @@ import React, {
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLenis } from "lenis/react";
+import { useNavigate } from "react-router-dom";
 
 // Navigation links
 const navLinks = [
   { href: "#work", label: "WORK" },
   { href: "#about", label: "ABOUT" },
+  { href: "/skill", label: "SKILLS" },
   { href: "#contact", label: "CONTACTS" },
 ];
 
@@ -26,6 +28,7 @@ const StickNav = forwardRef(function StickNav(props, ref) {
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const lenis = useLenis();
+  const navigate = useNavigate();
 
   // Local refs
   const headerEl = useRef(null);
@@ -36,6 +39,11 @@ const StickNav = forwardRef(function StickNav(props, ref) {
   const mobileTl = useRef(null);
 
   const handleScroll = (e, href) => {
+    if (href.startsWith("/")) {
+      e.preventDefault();
+      navigate(href);
+      return;
+    }
     e.preventDefault();
     if (lenis) {
       lenis.scrollTo(href, { offset: -90, duration: 1.2 });
@@ -113,7 +121,7 @@ const StickNav = forwardRef(function StickNav(props, ref) {
       {...rest}
     >
       <div className="font-AlexBrush font-bold text-[18px] tracking-wide text-zinc-900 ml-1 md:ml-7 uppercase">
-        Stay  
+        Stay
       </div>
 
       {/* Desktop Nav */}
@@ -147,19 +155,16 @@ const StickNav = forwardRef(function StickNav(props, ref) {
           onClick={() => setMobileOpen((v) => !v)}
         >
           <span
-            className={`block w-6 h-0.5 bg-black transition-transform duration-300 ${
-              mobileOpen ? "translate-y-2 rotate-45" : ""
-            }`}
+            className={`block w-6 h-0.5 bg-black transition-transform duration-300 ${mobileOpen ? "translate-y-2 rotate-45" : ""
+              }`}
           />
           <span
-            className={`block w-6 h-0.5 bg-black transition-opacity duration-300 ${
-              mobileOpen ? "opacity-0" : "opacity-100"
-            }`}
+            className={`block w-6 h-0.5 bg-black transition-opacity duration-300 ${mobileOpen ? "opacity-0" : "opacity-100"
+              }`}
           />
           <span
-            className={`block w-6 h-0.5 bg-black transition-transform duration-300 ${
-              mobileOpen ? "-translate-y-2 -rotate-45" : ""
-            }`}
+            className={`block w-6 h-0.5 bg-black transition-transform duration-300 ${mobileOpen ? "-translate-y-2 -rotate-45" : ""
+              }`}
           />
         </button>
       </div>

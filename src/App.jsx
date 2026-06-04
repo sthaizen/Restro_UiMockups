@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motion'
 import { ReactLenis } from 'lenis/react'
+import { Routes, Route } from 'react-router-dom'
 
 // Section Imports
 import Navbar from './sections/Navbar'
@@ -20,9 +21,10 @@ import Projects from './sections/Projects'
 import StickNav from './sections/StickNav'
 import Anotherabt from './sections/Anotherabt'
 import Random from './sections/Random'
+import SkillPage from './components/SkillPage/SkillPage'
 
 
-const App = () => {
+const Home = () => {
   const coverSectionRef = useRef(null)
 
   // Track scroll progress relative to the 'Newwork' entry
@@ -79,6 +81,15 @@ const bgDarkOpacity = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0, 0.7])
       </div>
 
     </ReactLenis>
+  )
+}
+
+const App = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/skill" element={<SkillPage />} />
+    </Routes>
   )
 }
 
