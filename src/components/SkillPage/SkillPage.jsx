@@ -1,15 +1,48 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
 import Sidebar from "./Sidebar";
 import TechSection from "./TechSection";
 import TimelineSection from "./TimelineSection";
 import ProjectsSection from "./ProjectsSection";
 import FooterSection from "./FooterSection";
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function SkillPage() {
-  // Scroll to top on mount
+  // Scroll to top on mount & initialize Lenis smooth scroll
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    let lenis;
+    if (window.innerWidth >= 1024) {
+      const scroller = document.querySelector(".skill-page-scroller");
+      if (scroller) {
+        lenis = new Lenis({
+          wrapper: scroller,
+          content: scroller.firstElementChild,
+          smoothWheel: true,
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        });
+
+        // Update ScrollTrigger on scroll
+        lenis.on("scroll", ScrollTrigger.update);
+
+        // Add Lenis to GSAP ticker
+        const tickerCallback = (time) => {
+          lenis.raf(time * 1000);
+        };
+        gsap.ticker.add(tickerCallback);
+
+        return () => {
+          lenis.destroy();
+          gsap.ticker.remove(tickerCallback);
+        };
+      }
+    }
   }, []);
 
   const handleBackHome = (e) => {
@@ -38,7 +71,7 @@ export default function SkillPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="w-full lg:h-full lg:overflow-y-auto p-8 md:p-12 lg:p-16 bg-black flex-1 z-10"
+        className="w-full lg:h-full lg:overflow-y-auto p-8 md:p-12 lg:p-16 bg-black flex-1 z-10 skill-page-scroller"
       >
         <div className="max-w-[980px] w-full flex flex-col gap-16">
           {/* Tech & Languages Section */}
@@ -52,9 +85,9 @@ export default function SkillPage() {
           </section>
 
           {/* Featured Projects Grid */}
-          <section id="projects">
+          {/* <section id="projects">
             <ProjectsSection />
-          </section>
+          </section> */}
 
           {/* Let's Work Together Footer */}
           <section id="contact-me">
