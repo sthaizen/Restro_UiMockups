@@ -485,9 +485,10 @@ const Main = ({ showPhoto = true }) => {
       const headerEl = document.querySelector("header");
 
       if (headerEl) {
-        tl.from(
+        tl.fromTo(
           headerEl,
-          { y: -8, autoAlpha: 0, duration: D.header, ease: "power3.out" },
+          { y: -8, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: D.header, ease: "power3.out" },
           "-=0.7"
         );
       }
@@ -495,12 +496,17 @@ const Main = ({ showPhoto = true }) => {
       // Desktop title lines animation
       gsap.matchMedia().add("(min-width: 768px)", () => {
         if (titleLinesRef.current.length) {
-          tl.from(
+          tl.fromTo(
             titleLinesRef.current,
             {
               y: 36,
               opacity: 0,
               filter: "blur(1px)",
+            },
+            {
+              y: 0,
+              opacity: 1,
+              filter: "none",
               duration: D.title,
               stagger: 0.15,
             },
@@ -510,9 +516,10 @@ const Main = ({ showPhoto = true }) => {
       });
 
       if (blurbRef.current) {
-        tl.from(
+        tl.fromTo(
           blurbRef.current,
-          { y: 18, opacity: 0, duration: D.blurb },
+          { y: 18, opacity: 0 },
+          { y: 0, opacity: 1, duration: D.blurb },
           "-=0.6"
         );
       }
@@ -520,12 +527,17 @@ const Main = ({ showPhoto = true }) => {
       if (asideRef.current) {
         const asideChildren = asideRef.current.querySelectorAll("[data-anim]");
         if (asideChildren.length) {
-          tl.from(asideChildren, {
-            x: 22,
-            opacity: 0,
-            duration: D.aside,
-            stagger: 0.1,
-          }, "-=0.5");
+          tl.fromTo(
+            asideChildren,
+            { x: 22, opacity: 0 },
+            {
+              x: 0,
+              opacity: 1,
+              duration: D.aside,
+              stagger: 0.1,
+            },
+            "-=0.5"
+          );
         }
       }
 
@@ -533,12 +545,17 @@ const Main = ({ showPhoto = true }) => {
         const mobileChildren =
           mobileCtaRef.current.querySelectorAll("[data-anim]");
         if (mobileChildren.length) {
-          tl.from(mobileChildren, {
-            y: 16,
-            opacity: 0,
-            duration: D.mobile,
-            stagger: 0.1,
-          }, "-=0.5");
+          tl.fromTo(
+            mobileChildren,
+            { y: 16, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: D.mobile,
+              stagger: 0.1,
+            },
+            "-=0.5"
+          );
         }
       }
 
