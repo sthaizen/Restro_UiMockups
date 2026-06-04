@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motion'
-import ReactLenis from 'lenis/react'
+import { ReactLenis } from 'lenis/react'
 
 // Section Imports
 import Navbar from './sections/Navbar'

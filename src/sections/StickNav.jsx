@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLenis } from "lenis/react";
 
 // Navigation links
 const navLinks = [
@@ -24,6 +25,7 @@ const StickNav = forwardRef(function StickNav(props, ref) {
   const { className = "", ...rest } = props;
 
   const [mobileOpen, setMobileOpen] = useState(false);
+  const lenis = useLenis();
 
   // Local refs
   const headerEl = useRef(null);
@@ -32,6 +34,20 @@ const StickNav = forwardRef(function StickNav(props, ref) {
   const mobileLinks = useRef([]);
 
   const mobileTl = useRef(null);
+
+  const handleScroll = (e, href) => {
+    e.preventDefault();
+    if (lenis) {
+      lenis.scrollTo(href, { offset: -90, duration: 1.2 });
+    } else {
+      const target = document.querySelector(href);
+      if (target) {
+        const yOffset = -90;
+        const y = target.getBoundingClientRect().top + window.scrollY + yOffset;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+    }
+  };
 
 
   // Merge forwarded ref + local ref
@@ -111,6 +127,7 @@ const StickNav = forwardRef(function StickNav(props, ref) {
             ref={(el) => {
               if (el) desktopLinks.current[i] = el;
             }}
+            onClick={(e) => handleScroll(e, href)}
             className="text-black/70 hover:text-[#ffca6e] transition-all duration-500"
           >
             {label}
@@ -161,7 +178,10 @@ const StickNav = forwardRef(function StickNav(props, ref) {
               ref={(el) => {
                 if (el) mobileLinks.current[i] = el;
               }}
-              onClick={() => setMobileOpen(false)}
+              onClick={(e) => {
+                setMobileOpen(false);
+                handleScroll(e, href);
+              }}
               className="text-black/70 hover:text-[#ffca6e] transition-all duration-500"
             >
               {label}

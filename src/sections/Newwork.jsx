@@ -261,7 +261,7 @@ export default function Newwork() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafa] px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24 Inter">
+    <div id="work" className="min-h-screen bg-[#fafafa] px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24 Inter scroll-mt-24">
       {/* Custom Cursor Follower */}
       <div
         ref={cursorRef}

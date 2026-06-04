@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLenis } from "lenis/react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -10,7 +11,7 @@ const STEPS = [
   {
     id: 1,
     feature: "Design that passes the “damn” test",
-    image: "/assets/backgrounds/jjs.png",
+    image: "/assets/backgrounds/lol.png",
     topBg: "#f3f4f6",
     bottomBg: "#ffffff",
     imgMaxW: "100%",
@@ -26,7 +27,7 @@ const STEPS = [
   {
     id: 2,
     feature: "Development that doesn’t fall apart later",
-    image: "/assets/backgrounds/ggs.png",
+    image: "/assets/backgrounds/kk.png",
     topBg: "#f6f6f6",
     bottomBg: "#ffffff",
     imgMaxW: "100%",
@@ -35,7 +36,7 @@ const STEPS = [
     cardRadius: "14px",
     caption: (
       <>
-         I build what I design: <strong>fast, responsive, and smooth</strong>. No “works on my laptop” energy — just <strong>clean code</strong>, sensible structure, and pages that behave on every screen like they were raised properly.
+        I build what I design: <strong>fast, responsive, and smooth</strong>. No “works on my laptop” energy — just <strong>clean code</strong>, sensible structure, and pages that behave on every screen like they were raised properly.
       </>
     ),
   },
@@ -51,14 +52,29 @@ const STEPS = [
     cardRadius: "14px",
     caption: (
       <>
-         Yes, I use AI — <strong>like a power tool, not a personality</strong>. It helps with research, drafts, and cleanup. The vibe, flow, and final polish? <strong>That’s all human (me)</strong>.
+        Yes, I use AI — <strong>like a power tool, not a personality</strong>. It helps with research, drafts, and cleanup. The vibe, flow, and final polish? <strong>That’s all human (me)</strong>.
       </>
     ),
   },
 ];
 
 const CirculaScrollSection = () => {
+  const lenis = useLenis();
   const containerRef = useRef(null);
+
+  const handleContactScroll = (e) => {
+    e.preventDefault();
+    if (lenis) {
+      lenis.scrollTo("#contact", { offset: -90, duration: 1.2 });
+    } else {
+      const target = document.querySelector("#contact");
+      if (target) {
+        const yOffset = -90;
+        const y = target.getBoundingClientRect().top + window.scrollY + yOffset;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+    }
+  };
   const stepRefs = useRef([]);
   const checkRefs = useRef([]);
   const titleWrapRef = useRef(null);
@@ -240,7 +256,7 @@ const CirculaScrollSection = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="bg-[#fafafa] font-sans py-20">
+    <section id="about" ref={containerRef} className="bg-[#fafafa] font-sans py-20 scroll-mt-24">
       <div className="max-w-[1480px] mx-auto px-6">
 
         {/* ─── Title Block (all breakpoints) ─── */}
@@ -273,9 +289,9 @@ const CirculaScrollSection = () => {
           className="lg:hidden mb-10"
         >
           <p className="text-[17px] sm:text-[19px] text-[#333333] leading-relaxed mb-6">
-             I build websites that load fast, look clean, and quietly convince people to trust you. AI is my assistant. I’m the one saying ‘no’ to ugly buttons and weird spacing
-               </p>
-          <button className="w-full bg-[#f3f4f6] active:bg-[#e5e7eb] text-gray-900 py-4 px-6 rounded-2xl transition-colors text-[16px] sm:text-[17px] font-medium">
+            I build websites that load fast, look clean, and quietly convince people to trust you. AI is my assistant. I’m the one saying ‘no’ to ugly buttons and weird spacing
+          </p>
+          <button onClick={handleContactScroll} className="w-full bg-[#f3f4f6] active:bg-[#e5e7eb] text-gray-900 py-4 px-6 rounded-2xl transition-colors text-[16px] sm:text-[17px] font-medium cursor-pointer">
             Let’s build something slick
           </button>
         </div>
@@ -351,7 +367,7 @@ const CirculaScrollSection = () => {
               I build websites that load fast, look clean, and quietly convince people to trust you. AI is my assistant. I’m the one saying ‘no’ to ugly buttons and weird spacing
             </p>
 
-            <button className="w-full bg-[#f3f4f6] hover:bg-[#e5e7eb] text-gray-900 py-4 px-6 rounded-2xl mb-10 transition-colors text-[17px]">
+            <button onClick={handleContactScroll} className="w-full bg-[#f3f4f6] hover:bg-[#e5e7eb] text-gray-900 py-4 px-6 rounded-2xl mb-10 transition-colors text-[17px] cursor-pointer">
               Let’s build something slick
             </button>
 

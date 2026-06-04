@@ -86,7 +86,7 @@ const ResumeModal = ({ onClose }) => {
 
           <div className="flex items-center gap-2 ml-auto">
             <a
-              href="/assets/backgrounds/Resume1.pdf"
+              href="/assets/backgrounds/Yathartha%20Shrestha.pdf"
               download
               className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold tracking-wide
                          bg-black text-white rounded hover:bg-[#0d13d1] transition-colors duration-200"
@@ -162,7 +162,7 @@ const ResumeModal = ({ onClose }) => {
                 experience.
               </p>
               <a
-                href="/assets/backgrounds/Resume1.pdf"
+                href="/assets/backgrounds/Yathartha%20Shrestha.pdf"
                 download
                 className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold
                            bg-black text-white rounded-lg hover:bg-[#0d13d1] transition-colors duration-200 w-full justify-center"
@@ -185,7 +185,7 @@ const ResumeModal = ({ onClose }) => {
               </a>
 
               <a
-                href="/assets/backgrounds/Resume1.pdf"
+                href="/assets/backgrounds/Yathartha%20Shrestha.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-zinc-400 underline underline-offset-2"
@@ -198,7 +198,7 @@ const ResumeModal = ({ onClose }) => {
              * Desktop / tablet: original scrollbar-clipping iframe trick.
              */
             <iframe
-              src="/assets/backgrounds/Resume1.pdf"
+              src="/assets/backgrounds/Yathartha%20Shrestha.pdf"
               style={{
                 position: "absolute",
                 top: 0,
@@ -219,8 +219,6 @@ const ResumeModal = ({ onClose }) => {
 
 // ─── Reusable CTA Button ───────────────────────────────────────────────────────
 const CTAButton = ({ layout = "default" }) => {
-  const [modalOpen, setModalOpen] = useState(false);
-
   /*
    * layout variants:
    *   "default"  — original desktop aside layout (mt-28, stacked meta + button)
@@ -229,115 +227,76 @@ const CTAButton = ({ layout = "default" }) => {
 
   if (layout === "mobile") {
     return (
-      <>
-        <div className="mt-8 flex flex-col gap-3">
-          <span
-            className="text-[13px] text-zinc-500 cursor-default"
-            data-anim="cta-meta"
-          >
-            *Open to 2 projects
-          </span>
-
-          <div className="flex items-stretch gap-2" data-anim="cta">
-            {/* Primary action — full-width on xs, auto on sm */}
-            <button
-              type="button"
-              onClick={() => setModalOpen(true)}
-              className="group flex-1 sm:flex-none inline-flex items-stretch  shadow-sm 
-                         focus:outline-none focus:ring-2 focus:ring-black/20 gap-1"
-              aria-label="Schedule a call"
-            >
-              <span
-                className="relative bg-black px-5 py-3.5 text-[15px] font-medium text-white 
-                           transition-colors duration-300 overflow-hidden flex-1 text-center"
-              >
-                <span className="absolute inset-0 -translate-x-full bg-[#0d13d1] transition-transform duration-300 group-hover:translate-x-0" />
-                <span className="relative z-10">Credentials Inside</span>
-              </span>
-              <span
-                className="bg-black px-4 py-3.5 text-white border-l border-white/20 
-                          transition-all duration-300 group-hover:bg-[#0d13d1] group-hover:translate-x-1 flex items-center"
-              >
-                →
-              </span>
-            </button>
-
-            {/* Secondary: View résumé — icon-only pill on mobile to save space */}
-            {/* <button
-              type="button"
-              onClick={() => setModalOpen(true)}
-              aria-label="View résumé"
-              className="flex items-center justify-center w-12 h-auto rounded-md border border-zinc-200
-                         text-zinc-500 hover:border-black hover:text-black transition-colors duration-200 bg-white shrink-0"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                <polyline points="14 2 14 8 20 8" />
-              </svg>
-            </button> */}
-          </div>
-
-          {/* Availability badge */}
-          {/* <div className="flex items-center gap-1.5 mt-1">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-            </span>
-            <span className="text-[12px] text-zinc-400 tracking-wide">
-              Available for work
-            </span>
-          </div> */}
-        </div>
-
-        {modalOpen && <ResumeModal onClose={() => setModalOpen(false)} />}
-      </>
-    );
-  }
-
-  // ── Default (desktop aside) — UNCHANGED ──────────────────────────────────────
-  return (
-    <>
-      <div className="mt-28">
+      <div className="mt-8 flex flex-col gap-3">
         <span
-          className="mb-2 block text-[16px] text-black cursor-default"
+          className="text-[13px] text-zinc-500 cursor-default"
           data-anim="cta-meta"
         >
           *Open to 2 projects
         </span>
 
-        <button
-          type="button"
-          onClick={() => setModalOpen(true)}
-          className="group inline-flex items-stretch rounded-md shadow-sm focus:outline-none focus:ring-2 gap-0.5 focus:ring-black/20"
-          data-anim="cta"
-        >
-          <span
-            className="relative bg-black px-5 py-3 text-md font-medium text-white 
-                      transition-colors duration-300 group-hover:bg-[#0d13d1] overflow-hidden"
+        <div className="flex items-stretch gap-2" data-anim="cta">
+          {/* Primary action — full-width on xs, auto on sm */}
+          <a
+            href="/assets/backgrounds/Yathartha%20Shrestha.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex-1 sm:flex-none inline-flex items-stretch shadow-sm 
+                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/20 gap-1"
+            aria-label="View credentials in new tab"
           >
-            <span className="absolute inset-0 -translate-x-full bg-[#0d13d1] transition-transform duration-300 group-hover:translate-x-0" />
-            <span className="relative z-10">Spoiler: I’m Good</span>
-          </span>
-          <span
-            className="bg-black px-4 py-3 text-white border-l border-white/20 
-                      transition-all duration-300 group-hover:bg-[#0d13d1] group-hover:translate-x-1"
-          >
-            →
-          </span>
-        </button>
+            <span
+              className="relative bg-black px-5 py-3.5 text-[15px] font-medium text-white 
+                         transition-colors duration-300 overflow-hidden flex-1 text-center"
+            >
+              <span className="absolute inset-0 -translate-x-full bg-[#0d13d1] transition-transform duration-300 group-hover:translate-x-0" />
+              <span className="relative z-10">Credentials Inside</span>
+            </span>
+            <span
+              className="bg-black px-4 py-3.5 text-white border-l border-white/20 
+                         transition-all duration-300 group-hover:bg-[#0d13d1] group-hover:translate-x-1 flex items-center"
+            >
+              →
+            </span>
+          </a>
+        </div>
       </div>
+    );
+  }
 
-      {modalOpen && <ResumeModal onClose={() => setModalOpen(false)} />}
-    </>
+  // ── Default (desktop aside) ──────────────────────────────────────────────────
+  return (
+    <div className="mt-28">
+      <span
+        className="mb-2 block text-[16px] text-black cursor-default"
+        data-anim="cta-meta"
+      >
+        *Open to 2 projects
+      </span>
+
+      <a
+        href="/assets/backgrounds/Yathartha%20Shrestha.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group inline-flex items-stretch rounded-md shadow-sm focus-visible:outline-none focus-visible:ring-2 gap-0.5 focus-visible:ring-black/20"
+        data-anim="cta"
+        aria-label="View resume in new tab"
+      >
+        <span
+          className="relative bg-black px-5 py-3 text-md font-medium text-white 
+                    transition-colors duration-300 group-hover:bg-[#0d13d1] overflow-hidden"
+        >
+          <span className="absolute inset-0 -translate-x-full bg-[#0d13d1] transition-transform duration-300 group-hover:translate-x-0" />
+          <span className="relative z-10">Spoiler: I’m Good</span>
+        </span>
+        <span
+          className="bg-black px-4 py-3 text-white border-l border-white/20 
+                    transition-all duration-300 group-hover:bg-[#0d13d1] group-hover:translate-x-1"
+        >
+          →
+        </span>
+      </a>
+    </div>
   );
 };
 
@@ -483,7 +442,7 @@ const Main = ({ showPhoto = true }) => {
         tl.fromTo(
           nameBgRef.current,
           { opacity: 0, scale: 0.96, y: 40, x: textOffset },
-          { opacity: 1, scale: 1, y: 0, x: textOffset, duration: 1.1, ease: "power3.out" }
+          { opacity: 1, scale: 1, y: 0, x: textOffset, duration: 1.4, ease: "power3.out" }
         );
       }
 
@@ -496,7 +455,7 @@ const Main = ({ showPhoto = true }) => {
         tl.fromTo(
           photoRef.current,
           { opacity: 0, scale: 0.96, y: 40, x: photoOffset },
-          { opacity: 1, scale: 1, y: 0, x: photoOffset, duration: 1.1, ease: "power3.out" },
+          { opacity: 1, scale: 1, y: 0, x: photoOffset, duration: 1.4, ease: "power3.out" },
           "<"
         );
       }
@@ -696,20 +655,22 @@ const Main = ({ showPhoto = true }) => {
           <div
             ref={photoRef}
             className="hidden md:block absolute right-6 md:right-10 lg:right-14 bottom-[10px] md:bottom-[14px] z-20"
-            id="title-servicel"
+            style={{ opacity: 0 }}
           >
-            <div
-              className="size-20 lg:size-28 xl:size-30 rounded-full overflow-hidden 
-                         ring-1 ring-black/10 shadow-xl bg-white 
-                         transform transition-all duration-500 ease-out 
-                         origin-bottom-right hover:scale-150 cursor-pointer"
-            >
-              <img
-                src="/assets/projects/bla.png"
-                className="h-full w-full object-cover"
-                draggable={false}
-                alt="Profile"
-              />
+            <div id="title-servicel">
+              <div
+                className="size-20 lg:size-28 xl:size-30 rounded-full overflow-hidden 
+                           ring-1 ring-black/10 shadow-xl bg-white 
+                           transform transition-all duration-500 ease-out 
+                           origin-bottom-right hover:scale-150 cursor-pointer"
+              >
+                <img
+                  src="/assets/projects/bla.png"
+                  className="h-full w-full object-cover"
+                  draggable={false}
+                  alt="Profile"
+                />
+              </div>
             </div>
           </div>
         )}

@@ -130,7 +130,7 @@ const Contact = ({
   });
 
   return (
-    <section id="contact" ref={sectionRef} className="relative w-full py-20 lg:py-1 bg-[#fafafa]">
+    <section id="contact" ref={sectionRef} className="relative w-full py-20 lg:py-1 bg-[#fafafa] scroll-mt-24">
       <div className="mx-auto w-full px-[5vw] lg:px-[4vw] pt-1 md:pt-25">
         <div className="grid grid-cols-1 md:grid-cols-3 items-start gap-10">
           {/* Left: label */}
