@@ -2,6 +2,7 @@
    IMPORTS (must be first)
 ================================ */
 @import "tailwindcss";
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Alex+Brush&family=Allura&family=Inter:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;900&display=swap');
 
@@ -189,6 +190,7 @@
   --color-DarkLava: #393632;
   --color-SageGray: #8b8b73;
   --color-gold: #cfa355;
+  --font-satoshi: "Satoshi", sans-serif;
   --font-amiamie: "Amiamie", sans-serif;
   --font-amiamie-round: "Amiamie-Round", sans-serif;
   --color-storm: #282b4b;
@@ -200,6 +202,12 @@
   @keyframes marquee {
     from { transform: translateX(0); }
     to   { transform: translateX(calc(-100% - var(--gap))); }
+  }
+
+  --animate-shiny-sweep: shiny-sweep 6s linear infinite;
+  @keyframes shiny-sweep {
+    from { background-position: 200% 0; }
+    to   { background-position: -200% 0; }
   }
 }
 
@@ -221,6 +229,15 @@ body {
 ================================ */
 @utility clip-path {
   clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+}
+
+@utility shiny-text {
+  background: linear-gradient(90deg, #b5b5b5a4 0%, #d4d4d8 50%, #b5b5b5a4 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shiny-sweep 6s linear infinite;
 }
 
 @utility banner-text-responsive {
