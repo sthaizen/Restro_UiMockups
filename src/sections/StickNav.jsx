@@ -106,6 +106,7 @@ const StickNav = forwardRef(function StickNav(props, ref) {
   return (
     <header
       ref={setHeaderRef}
+      style={{ opacity: 0, visibility: "hidden" }}
       className={`fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 md:px-10 py-4 md:py-5
         bg-[#fafafa]/80 backdrop-blur supports-[backdrop-filter]:bg-[#fafafa]/90
         will-change-transform ${className}`}
