@@ -17,7 +17,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="w-full lg:sticky lg:top-4 flex flex-col font-satoshi text-zinc-400 pl-6">
+    <div className="w-full lg:sticky lg:top-4 flex flex-col font-satoshi text-zinc-400 pl-6 mt-30">
 
       {/* Profile Header - mb-12 maps to the 48px margin in screenshot */}
       <div className="mb-12 flex flex-col gap-5">
@@ -119,7 +119,7 @@ export default function Sidebar() {
             <Mail className="w-5 h-5 text-zinc-400 group-hover:text-white transition-colors shrink-0" />
             <div>
               <p className="text-sm font-medium text-zinc-200 group-hover:text-white transition-colors">Email</p>
-              <p className="text-xs text-zinc-500 mt-0.5">yatharthastha234@gmail.com</p>
+              <p className="text-xs text-zinc-500 mt-0.5">Get in touch</p>
             </div>
           </div>
         </a>

@@ -1,4 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Helper component for each tech pill
 function TechPill({ name, logoUrl, customIcon }) {
@@ -61,6 +66,8 @@ const RenderIcon = (
 );
 
 export default function TechSection() {
+  const containerRef = useRef(null);
+
   const languages = [
     { name: "JavaScript", logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
     { name: "Python", logoUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
@@ -102,18 +109,125 @@ export default function TechSection() {
     { name: "OpenAI", customIcon: OpenAIIcon },
   ];
 
+  useGSAP(() => {
+    // Select scroller element dynamically based on screen size (split column vs global window scroller)
+    const scrollerElement = document.querySelector(".skill-page-scroller");
+    const scroller = window.innerWidth >= 1024 && scrollerElement ? scrollerElement : window;
+
+    // 1. Intro Hook Animation
+    gsap.fromTo(
+      ".intro-hook",
+      { y: 30, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".intro-hook",
+          scroller: scroller,
+          start: "top 95%",
+          toggleActions: "play reverse play reverse",
+        },
+      }
+    );
+
+    // 2. Languages Section: Heading and Pills
+    const languagesTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".languages-section",
+        scroller: scroller,
+        start: "top 90%",
+        toggleActions: "play reverse play reverse",
+      },
+    });
+
+    languagesTl.fromTo(
+      ".languages-heading",
+      { y: 25, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }
+    ).fromTo(
+      ".languages-pills > div",
+      { y: 15, opacity: 0, scale: 0.92 },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.45,
+        stagger: 0.06,
+        ease: "back.out(1.4)",
+      },
+      "-=0.45"
+    );
+
+    // 3. Technologies Section: Main Heading
+    gsap.fromTo(
+      ".tech-heading",
+      { y: 25, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.7,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".tech-heading",
+          scroller: scroller,
+          start: "top 90%",
+          toggleActions: "play reverse play reverse",
+        },
+      }
+    );
+
+    // 4. Tech Sub-sections (Frontend, Backend, Database, Miscellaneous)
+    const subSections = [
+      { class: ".frontend-sec", trigger: ".frontend-sec" },
+      { class: ".backend-sec", trigger: ".backend-sec" },
+      { class: ".database-sec", trigger: ".database-sec" },
+      { class: ".misc-sec", trigger: ".misc-sec" }
+    ];
+
+    subSections.forEach((sec) => {
+      const secTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sec.trigger,
+          scroller: scroller,
+          start: "top 90%",
+          toggleActions: "play reverse play reverse",
+        },
+      });
+
+      secTl.fromTo(
+        `${sec.class} h4`,
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }
+      ).fromTo(
+        `${sec.class} .pill-wrapper > div`,
+        { y: 15, opacity: 0, scale: 0.92 },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.4,
+          stagger: 0.05,
+          ease: "back.out(1.4)",
+        },
+        "-=0.35"
+      );
+    });
+  }, { scope: containerRef });
+
   return (
-    <div className="flex flex-col gap-7">
+    <div ref={containerRef} className="flex flex-col gap-7">
 
       {/* Intro Hook */}
-      <div className="shiny-text text-[30px] sm:text-[36px] lg:text-[50px] font-extralight mt-[20px] mb-[30px] leading-tight text-[#B5B5B5A4] font-satoshi">
+      <div className="intro-hook shiny-text text-[30px] sm:text-[36px] lg:text-[50px] font-extralight mt-[20px] mb-[30px] leading-tight text-[#B5B5B5A4] font-satoshi">
         Just a Full Stack Developer finding purpose.
       </div>
 
       {/* Languages Section */}
-      <div className="w-full mt-1">
-        <h3 className="text-[30px] font-light mb-[16px] text-gray-200 tracking-tight font-satoshi">Languages</h3>
-        <div className="flex flex-wrap gap-2">
+      <div className="languages-section w-full mt-1">
+        <h3 className="languages-heading text-[30px] font-light mb-[16px] text-gray-200 tracking-tight font-satoshi">Languages</h3>
+        <div className="languages-pills flex flex-wrap gap-2">
           {languages.map((lang, index) => (
             <TechPill key={index} name={lang.name} logoUrl={lang.logoUrl} />
           ))}
@@ -122,12 +236,12 @@ export default function TechSection() {
 
       {/* Technologies Section */}
       <div className="flex flex-col gap-6 mt-2">
-        <h3 className="text-[30px] font-light  text-gray-200 tracking-tight font-satoshi">Technologies</h3>
+        <h3 className="tech-heading text-[30px] font-light text-gray-200 tracking-tight font-satoshi">Technologies</h3>
 
         {/* Frontend */}
-        <div className="flex flex-col">
+        <div className="frontend-sec flex flex-col">
           <h4 className="text-white font-medium text-[18px] capitalize tracking-tight mb-[8px] font-satoshi">Frontend</h4>
-          <div className="flex flex-wrap gap-2">
+          <div className="pill-wrapper flex flex-wrap gap-2">
             {frontend.map((tech, index) => (
               <TechPill key={index} name={tech.name} logoUrl={tech.logoUrl} customIcon={tech.customIcon} />
             ))}
@@ -135,9 +249,9 @@ export default function TechSection() {
         </div>
 
         {/* Backend */}
-        <div className="flex flex-col ">
+        <div className="backend-sec flex flex-col ">
           <h4 className="text-white font-medium text-[18px] capitalize tracking-tight mb-[8px] font-satoshi">Backend</h4>
-          <div className="flex flex-wrap gap-2">
+          <div className="pill-wrapper flex flex-wrap gap-2">
             {backend.map((tech, index) => (
               <TechPill key={index} name={tech.name} logoUrl={tech.logoUrl} customIcon={tech.customIcon} />
             ))}
@@ -145,9 +259,9 @@ export default function TechSection() {
         </div>
 
         {/* Database */}
-        <div className="flex flex-col ">
+        <div className="database-sec flex flex-col ">
           <h4 className="text-white font-medium text-[18px] capitalize tracking-tight mb-[8px] font-satoshi">Database</h4>
-          <div className="flex flex-wrap gap-2">
+          <div className="pill-wrapper flex flex-wrap gap-2">
             {database.map((tech, index) => (
               <TechPill key={index} name={tech.name} logoUrl={tech.logoUrl} customIcon={tech.customIcon} />
             ))}
@@ -155,9 +269,9 @@ export default function TechSection() {
         </div>
 
         {/* Miscellaneous */}
-        <div className="flex flex-col ">
+        <div className="misc-sec flex flex-col ">
           <h4 className="text-white font-medium text-[18px] capitalize tracking-tight mb-[8px] font-satoshi">Miscellaneous</h4>
-          <div className="flex flex-wrap gap-2">
+          <div className="pill-wrapper flex flex-wrap gap-2">
             {misc.map((tech, index) => (
               <TechPill key={index} name={tech.name} logoUrl={tech.logoUrl} customIcon={tech.customIcon} />
             ))}
