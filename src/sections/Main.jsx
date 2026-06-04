@@ -231,11 +231,12 @@ const CTAButton = ({ layout = "default" }) => {
         <span
           className="text-[13px] text-zinc-500 cursor-default"
           data-anim="cta-meta"
+          style={{ opacity: 0 }}
         >
           *Open to 2 projects
         </span>
 
-        <div className="flex items-stretch gap-2" data-anim="cta">
+        <div className="flex items-stretch gap-2" data-anim="cta" style={{ opacity: 0 }}>
           {/* Primary action — full-width on xs, auto on sm */}
           <a
             href="/assets/backgrounds/Yathartha%20Shrestha.pdf"
@@ -270,6 +271,7 @@ const CTAButton = ({ layout = "default" }) => {
       <span
         className="mb-2 block text-[16px] text-black cursor-default"
         data-anim="cta-meta"
+        style={{ opacity: 0 }}
       >
         *Open to 2 projects
       </span>
@@ -280,6 +282,7 @@ const CTAButton = ({ layout = "default" }) => {
         rel="noopener noreferrer"
         className="group inline-flex items-stretch rounded-md shadow-sm focus-visible:outline-none focus-visible:ring-2 gap-0.5 focus-visible:ring-black/20"
         data-anim="cta"
+        style={{ opacity: 0 }}
         aria-label="View resume in new tab"
       >
         <span
@@ -326,10 +329,10 @@ const MobileHero = ({ blurbRef, mobileCtaRef }) => {
 
       {/* ── Main heading ───────────────────────────────────────────────────── */}
       <h1 className="font-semibold tracking-tight text-zinc-900 leading-[1.1] text-balance">
-        <span className="block text-[11.5vw] sm:text-[9vw]" data-anim="cta">
+        <span className="block text-[11.5vw] sm:text-[9vw]" data-anim="cta" style={{ opacity: 0 }}>
           Web Designer
         </span>
-        <span className="block text-[11.5vw] sm:text-[9vw]" data-anim="cta">
+        <span className="block text-[11.5vw] sm:text-[9vw]" data-anim="cta" style={{ opacity: 0 }}>
           &amp; Developer
         </span>
       </h1>
@@ -339,6 +342,7 @@ const MobileHero = ({ blurbRef, mobileCtaRef }) => {
         className="mt-3 text-[15px] sm:text-[17px] text-zinc-500 text-pretty leading-relaxed"
         ref={blurbRef}
         data-anim="cta-meta"
+        style={{ opacity: 0 }}
       >
         Crafting fast, beautiful websites for service&nbsp;&amp;&nbsp;software
         businesses.
@@ -384,7 +388,7 @@ const Main = ({ showPhoto = true }) => {
 
     const ctx = gsap.context(() => {
       if (prefersReduced) {
-        gsap.set(headerRef.current, { y: 0, opacity: 1 });
+        gsap.set(headerRef.current, { y: 0, opacity: 1, visibility: "visible" });
         gsap.set(
           [...(headerRef.current?.querySelectorAll("nav") || [])],
           { y: 0, opacity: 1 }
@@ -608,12 +612,14 @@ const Main = ({ showPhoto = true }) => {
             <span
               className="block will-change-transform text-[10.5vw] sm:text-[8vw] md:text-[40px] lg:text-[35px] cursor-default"
               ref={setTitleLineRef(0)}
+              style={{ opacity: 0 }}
             >
               Web Designer
             </span>
             <span
               className="block will-change-transform text-[10.5vw] sm:text-[8vw] md:text-[40px] lg:text-[35px] cursor-default"
               ref={setTitleLineRef(1)}
+              style={{ opacity: 0 }}
             >
               Frontend Developer
             </span>
@@ -622,6 +628,7 @@ const Main = ({ showPhoto = true }) => {
           <p
             className="mt-2 cursor-default md:mt-3 text-[14px] sm:text-[16px] md:text-[20px] lg:text-[23px] text-zinc-600 will-change-transform text-pretty"
             ref={blurbRef}
+            style={{ opacity: 0 }}
           >
             For service and software businesses.
           </p>
@@ -641,6 +648,7 @@ const Main = ({ showPhoto = true }) => {
           className="pointer-events-none select-none absolute left-[2vw] bottom-[-5.8vw] font-normal leading-none tracking-[-.02em] text-black z-0 will-change-transform
                      opacity-[0.06] md:opacity-100"
           ref={nameBgRef}
+          style={{ opacity: 0 }}
         >
           <span
             className="block text-[24vw] sm:text-[19vw] md:text-[18vw] lg:text-[17vw] xl:text-[16vw] 2xl:text-[18vw] mb-15"
