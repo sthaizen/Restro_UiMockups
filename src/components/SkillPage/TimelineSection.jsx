@@ -118,7 +118,7 @@ export default function TimelineSection() {
       title: "Student Academic Representative",
       subtitle: "Islington College, Kamal Marg, Kathmandu",
       date: "Oct 2024 - May 2025",
-      logoUrl: "https://islington.edu.np/wp-content/uploads/2023/04/Islington-Logo-1.png",
+      logoUrl: "/assets/backgrounds/clzlogo.jpg",
     },
     {
       title: "Full Stack Intern",
@@ -139,13 +139,13 @@ export default function TimelineSection() {
       title: "BSc (Hons) Computing",
       subtitle: "Islington College, Kamal Marg, Kathmandu",
       date: "Nov 2023 - Jun 2026",
-      logoUrl: "https://islington.edu.np/wp-content/uploads/2023/04/Islington-Logo-1.png",
+      logoUrl: "/assets/backgrounds/clzlogo.jpg",
     },
     {
       title: "School Leaving Certificate",
       subtitle: "Bishnu Memorial Collage , Kamaladi, Kathmandu",
       date: "Jul 2021 - Jun 2023",
-      customIcon: FreelanceIcon,
+      logoUrl: "/assets/backgrounds/Scllogo.png",
     },
   ];
 

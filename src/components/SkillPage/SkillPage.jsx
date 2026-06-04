@@ -15,8 +15,11 @@ export default function SkillPage() {
   // Scroll to top on mount & initialize Lenis smooth scroll
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.documentElement.classList.add("dark-scrollbar");
 
     let lenis;
+    let tickerCallback;
+
     if (window.innerWidth >= 1024) {
       const scroller = document.querySelector(".skill-page-scroller");
       if (scroller) {
@@ -32,17 +35,18 @@ export default function SkillPage() {
         lenis.on("scroll", ScrollTrigger.update);
 
         // Add Lenis to GSAP ticker
-        const tickerCallback = (time) => {
+        tickerCallback = (time) => {
           lenis.raf(time * 1000);
         };
         gsap.ticker.add(tickerCallback);
-
-        return () => {
-          lenis.destroy();
-          gsap.ticker.remove(tickerCallback);
-        };
       }
     }
+
+    return () => {
+      if (lenis) lenis.destroy();
+      if (tickerCallback) gsap.ticker.remove(tickerCallback);
+      document.documentElement.classList.remove("dark-scrollbar");
+    };
   }, []);
 
   const handleBackHome = (e) => {

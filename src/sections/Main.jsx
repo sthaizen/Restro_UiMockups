@@ -446,7 +446,7 @@ const Main = ({ showPhoto = true }) => {
         tl.fromTo(
           nameBgRef.current,
           { opacity: 0, scale: 0.96, y: 40, x: textOffset },
-          { opacity: 1, scale: 1, y: 0, x: textOffset, duration: 1.4, ease: "power3.out" }
+          { opacity: 1, scale: 1, y: 0, x: textOffset, duration: 1.6, ease: "power3.out" }
         );
       }
 
@@ -459,7 +459,7 @@ const Main = ({ showPhoto = true }) => {
         tl.fromTo(
           photoRef.current,
           { opacity: 0, scale: 0.96, y: 40, x: photoOffset },
-          { opacity: 1, scale: 1, y: 0, x: photoOffset, duration: 1.4, ease: "power3.out" },
+          { opacity: 1, scale: 1, y: 0, x: photoOffset, duration: 1.6, ease: "power3.out" },
           "<"
         );
       }
@@ -690,7 +690,7 @@ const Main = ({ showPhoto = true }) => {
                            origin-bottom-right hover:scale-150 cursor-pointer"
               >
                 <img
-                  src="/assets/projects/bla.png"
+                  src="/assets/backgrounds/avt2.png"
                   className="h-full w-full object-cover"
                   draggable={false}
                   alt="Profile"
@@ -710,7 +710,7 @@ const Main = ({ showPhoto = true }) => {
                           shadow-[0_2px_16px_rgba(0,0,0,0.10)] border border-zinc-100">
             <div className="size-7 rounded-full overflow-hidden ring-1 ring-black/10 shrink-0">
               <img
-                src="/assets/projects/bla.png"
+                src="/assets/backgrounds/avt2.png"
                 className="h-full w-full object-cover"
                 draggable={false}
                 alt="Profile"

@@ -336,3 +336,59 @@ body {
     to   { transform: translateY(calc(-100% - var(--gap))); }
   }
 }
+
+/* ================================
+   CUSTOM SCROLLBAR STYLES (DARK THEME)
+================================ */
+/* For the right column scroller in SkillPage (Desktop) */
+.skill-page-scroller::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.skill-page-scroller::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+.skill-page-scroller::-webkit-scrollbar-thumb {
+  background: #27272a; /* zinc-800 */
+  border-radius: 9999px;
+  border: 2px solid #000000; /* Padding effect */
+}
+
+.skill-page-scroller::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46; /* zinc-700 */
+}
+
+/* Firefox support for the right column scroller in SkillPage */
+.skill-page-scroller {
+  scrollbar-width: thin;
+  scrollbar-color: #27272a #000000;
+}
+
+/* For the body/html scrollbar when on SkillPage (Mobile) */
+.dark-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark-scrollbar::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+.dark-scrollbar::-webkit-scrollbar-thumb {
+  background: #27272a; /* zinc-800 */
+  border-radius: 9999px;
+  border: 2px solid #000000; /* Padding effect */
+}
+
+.dark-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46; /* zinc-700 */
+}
+
+/* Firefox support for dark body/html */
+html.dark-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #27272a #000000;
+}
+

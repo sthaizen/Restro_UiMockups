@@ -12,7 +12,7 @@ export default function FooterSection() {
         Let's Work Together
       </h2>
 
-      {/* Content Container */}
+      {/* Content Container what ht ehell is going on you*/}
       <div className="space-y-8">
         {/* Paragraph */}
         <p className="text-gray-300 text-lg sm:text-xl leading-relaxed font-light mb-[32px] font-satoshi">
@@ -41,7 +41,7 @@ export default function FooterSection() {
             </div>
           </div>
 
-          {/* Follow Me */}
+          {/* Follow Me  */}
           <div>
             <h3 className="text-2xl font-light text-white mb-6 tracking-tight font-satoshi">
               Follow Me

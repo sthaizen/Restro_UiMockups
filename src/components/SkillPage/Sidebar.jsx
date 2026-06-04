@@ -5,7 +5,7 @@ export default function Sidebar() {
   const name = "Yathartha Shrestha";
   const role = "Full Stack Developer";
   const bio = "Building real products for real clients. Passionate about creating scalable solutions that make a difference.";
-  const avatarUrl = "https://api.dicebear.com/7.x/notionists/svg?seed=Yathartha&backgroundColor=ffffff";
+  const avatarUrl = "/assets/backgrounds/avt2.png";
 
   const [copied, setCopied] = useState(false);
 
@@ -17,7 +17,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="w-full lg:sticky lg:top-4 flex flex-col font-satoshi text-zinc-400 pl-6 mt-30">
+    <div className="w-full lg:sticky lg:top-4 flex flex-col font-satoshi text-zinc-400 pl-6 mt-5">
 
       {/* Profile Header - mb-12 maps to the 48px margin in screenshot */}
       <div className="mb-12 flex flex-col gap-5">
