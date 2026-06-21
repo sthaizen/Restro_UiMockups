@@ -24,7 +24,7 @@ export default function Newwork() {
       id: 3,
       tall: true,
       bgImage: "/assets/backgrounds/33.png",
-      fgImage: "/assets/backgrounds/33.png",
+      fgImage: "/assets/backgrounds/jjss.png",
       title: "Nova",
       description: "Software",
     },
