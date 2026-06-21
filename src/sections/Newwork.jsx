@@ -3,63 +3,66 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 
 export default function Newwork() {
-  const projects = [
-    {
-      id: 1,
-      tall: false,
-      bgImage: "/assets/backgrounds/111.png",
-      fgImage: "/assets/backgrounds/1.png",
-      title: "Loops",
-      description: "Software",
-    },
-    {
-      id: 2,
-      tall: false,
-      bgImage: "/assets/backgrounds/22.png",
-      fgImage: "/assets/backgrounds/2.png",
-      title: "Neuro",
-      description: "Software",
-    },
-    {
-      id: 3,
-      tall: true,
-      bgImage: "/assets/backgrounds/33.png",
-      fgImage: "/assets/backgrounds/jjss.png",
-      title: "Nova",
-      description: "Software",
-    },
-    {
-      id: 4,
-      tall: true,
-      bgImage: "/assets/backgrounds/cl.png",
-      fgImage: "/assets/backgrounds/clr2.png",
-      title: "Clyric",
-      description: "Web-app",
-    },
-    {
-      id: 5,
-      tall: true,
-      bgImage: "/assets/backgrounds/4.png",
-      fgImage: "/assets/backgrounds/4.png",
-      title: "Toe Heng",
-      description: "Entertainment",
-    },
-    {
-      id: 6,
-      tall: false,
-      bgImage: "/assets/backgrounds/Last.png",
-      fgImage: "/assets/backgrounds/66.png",
-      title: "Sand Peak",
-      description: "Venture Capial",
-    },
-  ];
 
-  const projectRefs = useRef([]);
   const h1Ref = useRef(null);
-  const cursorRef = useRef(null);
+  const overviewImgRef = useRef(null);
+  const bottomLeftImgRef = useRef(null);
+  const middleImgRef = useRef(null);
+  const bottomRightImgRef = useRef(null);
+
   const [cursorVisible, setCursorVisible] = useState(false);
+  const cursorRef = useRef(null);
   const quickSetterX = useRef(null);
   const quickSetterY = useRef(null);
+
+  useEffect(() => {
+    if (cursorRef.current) {
+      quickSetterX.current = gsap.quickTo(cursorRef.current, "x", {
+        duration: 0.6,
+        ease: "power3.out",
+      });
+      quickSetterY.current = gsap.quickTo(cursorRef.current, "y", {
+        duration: 0.6,
+        ease: "power3.out",
+      });
+    }
+  }, []);
+
+  // Offset controls in pixels relative to the mouse cursor
+  const cursorOffsetX = 70;
+  const cursorOffsetY = 55;
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (cursorVisible && quickSetterX.current && quickSetterY.current) {
+        quickSetterX.current(e.clientX + cursorOffsetX);
+        quickSetterY.current(e.clientY + cursorOffsetY);
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [cursorVisible]);
+
+  const handleCardMouseEnter = () => {
+    setCursorVisible(true);
+    if (cursorRef.current) {
+      gsap.set(cursorRef.current, {
+        scale: 1,
+        opacity: 1,
+      });
+    }
+  };
+
+  const handleCardMouseLeave = () => {
+    setCursorVisible(false);
+    if (cursorRef.current) {
+      gsap.set(cursorRef.current, {
+        scale: 1,
+        opacity: 0,
+      });
+    }
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -67,84 +70,17 @@ export default function Newwork() {
     }
 
     const ctx = gsap.context(() => {
-      projects.forEach((_, index) => {
-        const el = projectRefs.current[index];
-        if (!el) return;
 
-        const fg = el.querySelector(".foreground");
-        const bg = el.querySelector(".background");
-
-        // Card reveal
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: 80 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1.1,
-            ease: "power4.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 100%",
-              end: "top 40%",
-              scrub: true,
-            },
-          }
-        );
-
-        // Background reveal with scale
-        if (bg) {
-          gsap.fromTo(
-            bg,
-            { opacity: 0, y: 25, scale: 1.15 },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              duration: 1.1,
-              ease: "power4.out",
-              scrollTrigger: {
-                trigger: el,
-                start: "top 70%",
-                end: "top 45%",
-                scrub: true,
-              },
-            }
-          );
-        }
-
-        // Foreground reveal with scale
-        if (fg) {
-          gsap.fromTo(
-            fg,
-            { opacity: 0, y: 18, scale: 1.15 },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              duration: 1.1,
-              ease: "power4.out",
-              scrollTrigger: {
-                trigger: el,
-                start: "top 95%",
-                end: "top 55%",
-                scrub: true,
-              },
-            }
-          );
-        }
-      });
-
-      // ✅ Header reveal (scrubbed: works on scroll down + up)
+      // Header reveal (scrubbed: works on scroll down + up)
       if (h1Ref.current) {
         const header = h1Ref.current;
 
         const topBlock = header.children?.[0];
         const bottomBlock = header.children?.[1];
 
-        const label = topBlock?.querySelector("span"); // [WORK]
-        const line1 = topBlock?.querySelector("div");  // first sentence line
-        const line2 = bottomBlock;                     // second sentence line
+        const label = topBlock?.querySelector("span");
+        const line1 = topBlock?.querySelector("div");
+        const line2 = bottomBlock;
 
         const parts = [label, line1, line2].filter(Boolean);
 
@@ -157,18 +93,16 @@ export default function Newwork() {
           willChange: "transform, opacity, filter, clip-path",
         });
 
-        // Scrubbed reveal timeline (scroll progress controls it)
         const tl = gsap.timeline({
-          defaults: { ease: "none" }, // scrub feels best with no easing
+          defaults: { ease: "none" },
           scrollTrigger: {
             trigger: header,
             start: "top 85%",
             end: "top 45%",
-            scrub: 1, // ✅ smooth follow on scroll down/up
+            scrub: 1,
           },
         });
 
-        // Reveal label first (slightly earlier)
         if (label) {
           tl.to(label, {
             opacity: 1,
@@ -179,7 +113,6 @@ export default function Newwork() {
           });
         }
 
-        // Reveal lines with a gentle stagger
         tl.to(
           [line1, line2].filter(Boolean),
           {
@@ -193,7 +126,6 @@ export default function Newwork() {
           label ? 0.1 : 0
         );
 
-        // Subtle parallax drift (also scrubbed both ways)
         gsap.to(header, {
           y: -18,
           ease: "none",
@@ -205,17 +137,43 @@ export default function Newwork() {
           },
         });
       }
-
-
-      // Initialize GSAP quickTo for ultra-smooth cursor movement
-      if (cursorRef.current) {
-        quickSetterX.current = gsap.quickTo(cursorRef.current, "x", {
-          duration: 0.6,
-          ease: "power3.out",
+      // Parallax scroll for the bottom 3 staggered images
+      if (bottomLeftImgRef.current) {
+        gsap.to(bottomLeftImgRef.current, {
+          y: 100,
+          ease: "none",
+          scrollTrigger: {
+            trigger: bottomLeftImgRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          }
         });
-        quickSetterY.current = gsap.quickTo(cursorRef.current, "y", {
-          duration: 0.6,
-          ease: "power3.out",
+      }
+
+      if (middleImgRef.current) {
+        gsap.to(middleImgRef.current, {
+          y: -80,
+          ease: "none",
+          scrollTrigger: {
+            trigger: middleImgRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          }
+        });
+      }
+
+      if (bottomRightImgRef.current) {
+        gsap.to(bottomRightImgRef.current, {
+          y: -200,
+          ease: "none",
+          scrollTrigger: {
+            trigger: bottomRightImgRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          }
         });
       }
     });
@@ -223,174 +181,166 @@ export default function Newwork() {
     return () => ctx.revert();
   }, []);
 
-  // Optimized mouse follower effect using GSAP quickTo
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (cursorVisible && quickSetterX.current && quickSetterY.current) {
-        quickSetterX.current(e.clientX);
-        quickSetterY.current(e.clientY);
-      }
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [cursorVisible]);
-
-  const handleCardMouseEnter = () => {
-    setCursorVisible(true);
-    if (cursorRef.current) {
-      gsap.to(cursorRef.current, {
-        scale: 1,
-        opacity: 1,
-        duration: 0.4,
-        ease: "power3.out",
-      });
-    }
-  };
-
-  const handleCardMouseLeave = () => {
-    setCursorVisible(false);
-    if (cursorRef.current) {
-      gsap.to(cursorRef.current, {
-        scale: 0.8,
-        opacity: 0,
-        duration: 0.4,
-        ease: "power3.out",
-      });
-    }
-  };
-
   return (
     <div id="work" className="min-h-screen bg-[#fafafa] px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24 Inter scroll-mt-24">
-      {/* Custom Cursor Follower */}
+
+      <div className="w-full mx-auto">
+
+        {/* NEW Header Section */}
+        <div className="mb-20 sm:mb-24 lg:mb-32 flex flex-col items-center justify-center text-center">
+          <h1
+            ref={h1Ref}
+            className="text-[32px] sm:text-[42px] lg:text-[56px] font-bold leading-[1.3] text-[#212325] inter max-w-[1000px]"
+          >
+            {/* Top Block */}
+            <div className="flex flex-col items-center">
+              <span className="text-[11px] sm:text-[14.87px] font-normal uppercase tracking-[0.15em] text-[#212325] mb-8 sm:mb-10 block font-mono">
+                ◆ ABOUT RESTRO HUB
+              </span>
+              <div className="font-medium">
+                We bring restaurants to life through control and innovation.
+              </div>
+            </div>
+
+            {/* Bottom Block */}
+            <div className="font-medium">
+              Trusted by owners who demand speed, accuracy, service, and care.
+            </div>
+          </h1>
+
+          {/* Call to Action Button */}
+          <button className="group mt-10 sm:mt-12 bg-black text-white text-[12px] sm:text-[13px] font-medium tracking-wider uppercase px-8 py-4 flex items-center justify-center gap-3 hover:bg-[#222] transition-colors duration-300">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="transition-transform duration-300 group-hover:translate-x-1"
+            >
+              <path d="M5 12h14" />
+              <path d="M12 5l7 7-7 7" />
+            </svg>
+            WHO WE ARE
+          </button>
+        </div>
+
+        {/* PLATFORM OVERVIEW SECTION */}
+        <div className="w-full h-[1px] bg-black/10 my-16 sm:my-5" />
+
+        <div className="mb-24 sm:mb-32 lg:mb-40">
+          {/* Monospace label */}
+          <h2 className="text-[#212325] font-mono text-[11px] sm:text-[13px] lg:text-[14.87px] tracking-[0.15em] uppercase font-bold select-none mb-12 sm:mb-16 text-left pl-4 sm:pl-8">
+            ◆ PLATFORM OVERVIEW
+          </h2>
+
+          {/* Two-column layout for top overview */}
+          <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center justify-between px-4 sm:px-8">
+            <div className="w-full lg:w-1/2 flex justify-center lg:justify-end lg:translate-x-[170px] overflow-hidden">
+              <div
+                ref={overviewImgRef}
+                className="group relative w-full max-w-[440px] aspect-[451/556] overflow-hidden shadow-sm cursor-pointer"
+                onMouseEnter={handleCardMouseEnter}
+                onMouseLeave={handleCardMouseLeave}
+              >
+                <img
+                  src="/assets/mockups/main2.jpg"
+                  alt="Platform Overview Interior"
+                  className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.1]"
+                />
+              </div>
+            </div>
+
+            {/* Right column: Info & Button */}
+            <div className="w-full lg:w-1/2 flex flex-col items-start text-left lg:pl-32">
+              <p className="text-[19.1px] leading-[1.4] text-[#212325] mb-10 font-normal font-sans max-w-[320px] tracking-tight">
+                Our <strong className="font-bold text-black">RestroHub system</strong> is built for smooth billing, smarter orders, and reliable control. Made for restaurants that want speed, clarity, and service.
+              </p>
+              <button className="group mt-10 sm:mt-0 bg-black text-white text-[12px] sm:text-[13px] font-medium tracking-wider uppercase px-8 py-4 flex items-center justify-center gap-3 hover:bg-[#222] transition-colors duration-300">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                >
+                  <path d="M5 12h14" />
+                  <path d="M12 5l7 7-7 7" />
+                </svg>
+                Product Overview
+              </button>
+            </div>
+          </div>
+
+          {/* Staggered bottom images row */}
+          <div className="grid grid-cols-3 gap-3 sm:gap-6 lg:gap-12 items-start mt-20 sm:mt-32 px-4 sm:px-12 lg:px-24">
+            {/* Left Bottom Image (Low position) */}
+            <div ref={bottomLeftImgRef} className="flex justify-center pt-[15%] lg:pt-[25%] lg:translate-x-[-120px] lg:translate-y-[0px]">
+              <div
+                className="group relative w-full max-w-[384px] aspect-[384/473] overflow-hidden shadow-sm cursor-pointer"
+                onMouseEnter={handleCardMouseEnter}
+                onMouseLeave={handleCardMouseLeave}
+              >
+                <img
+                  src="/assets/mockups/left.jpg"
+                  alt="Restaurant Seating"
+                  className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.1]"
+                />
+              </div>
+            </div>
+
+            {/* Middle Bottom Image (Medium position) */}
+            <div ref={middleImgRef} className="flex justify-center pt-[5%] lg:pt-[10%] lg:translate-x-[120px] lg:translate-y-[50px]">
+              <div
+                className="group relative w-full max-w-[316px] aspect-[316/390] overflow-hidden shadow-sm cursor-pointer"
+                onMouseEnter={handleCardMouseEnter}
+                onMouseLeave={handleCardMouseLeave}
+              >
+                <img
+                  src="/assets/mockups/middle.jpg"
+                  alt="Cozy Table Set"
+                  className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.1]"
+                />
+              </div>
+            </div>
+
+            {/* Right Bottom Image (High position) */}
+            <div ref={bottomRightImgRef} className="flex justify-center lg:translate-x-[60px] lg:translate-y-[-90px]">
+              <div
+                className="group relative w-full max-w-[376px] aspect-[316/390] overflow-hidden shadow-sm cursor-pointer"
+                onMouseEnter={handleCardMouseEnter}
+                onMouseLeave={handleCardMouseLeave}
+              >
+                <img
+                  src="/assets/mockups/Main.jpg"
+                  alt="Cafe Bar Counter"
+                  className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.1]"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Custom Mouse Cursor following specifications */}
       <div
         ref={cursorRef}
-        className="fixed top-12 left-18 pointer-events-none z-50 opacity-0"
+        className="fixed top-0 left-0 pointer-events-none z-50 opacity-0"
         style={{
           transform: "translate(-50%, -50%)",
           willChange: "transform",
         }}
       >
-        <div className="bg-black/60 text-white px-0.5 py-0.5 flex items-center gap-2 shadow-xl">
-          {/* icon with square background */}
-          <div className="w-7 h-7 bg-black/40 flex items-center justify-center">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="transform -rotate-360 -scale-x-100"
-            >
-              <path
-                d="M20 4V5.4C20 8.76031 20 10.4405 19.346 11.7239C18.7708 12.8529 17.8529 13.7708 16.7239 14.346C15.4405 15 13.7603 15 10.4 15H4M4 15L9 10M4 15L9 20"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-
-          <span className="text-[12px] font-medium tracking-wider pr-1.5">
-            LIVE SITE{" "}
-          </span>
-        </div>
-      </div>
-
-      <div className="max-w-[1440px] mx-auto">
-        {/* Header Section */}
-        <div className="mb-16 sm:mb-20 lg:mb-24 space-y-3">
-          <h1
-            ref={h1Ref}
-            className="text-[32px] sm:text-[42px] lg:text-[64px] font-semibold leading-[1.2] text-black inter"
-          >
-            <div>
-              <span className="text-base sm:text-lg lg:text-[16px] font-medium text-black inter3">
-                [WORK]
-              </span>
-              <div className="text-left lg:text-right mb-1">
-                I help service and software businesses
-              </div>
-            </div>
-            <div className="text-left">
-              create memorable, optimised website experiences as quickly as they
-              need.
-            </div>
-          </h1>
-        </div>
-
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-auto gap-x-6 sm:gap-x-8 lg:gap-x-7 gap-y-12 sm:gap-y-16 lg:gap-y-10">
-          {projects.map((project, index) => (
-            <div
-              key={project.id}
-              className="flex flex-col"
-              ref={(el) => (projectRefs.current[index] = el)}
-            >
-              {/* Card */}
-              <div
-                className={`group relative overflow-hidden cursor-pointer bg-black flex items-center justify-center p-8 sm:p-10 lg:p-12 ${project.tall
-                    ? "min-h-[520px] lg:min-h-[677px]"
-                    : "min-h-[400px] lg:min-h-[485px]"
-                  }`}
-                onMouseEnter={handleCardMouseEnter}
-                onMouseLeave={handleCardMouseLeave}
-              >
-                {/* Background */}
-                <div
-                  className="
-                  absolute inset-0
-                  transition-transform duration-700 ease-out
-                  will-change-transform
-                  group-hover:scale-[1.04]
-                "
-                >
-                  {/* Background */}
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      backgroundImage: `url(${project.bgImage})`,
-                      backgroundRepeat: "no-repeat",
-                      backgroundPosition: "center",
-                      backgroundSize: "cover",
-                    }}
-                  />
-
-                  {/* Soft overlay for depth */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/0 to-black/20 opacity-70 group-hover:opacity-90 transition-opacity duration-700" />
-
-                  {/* Foreground */}
-                  <div className="absolute inset-0 z-10 flex items-center justify-center">
-                    <img
-                      src={project.fgImage}
-                      alt={project.title}
-                      className="
-                      w-full h-full object-cover
-                      opacity-0
-                      transition-opacity duration-700 ease-out
-                      group-hover:opacity-100
-                      drop-shadow-[0_20px_35px_rgba(0,0,0,0.25)]
-                    "
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Title + Description */}
-              <div className="mt-4 flex items-center gap-1 text-left">
-                <span className="text-base sm:text-lg lg:text-[17px] font-semibold text-black">
-                  {project.title}
-                </span>
-                <span className="text-base sm:text-lg lg:text-[17px] font-medium text-[#3D3D3D]">
-                  -
-                </span>
-                <span className="text-base sm:text-lg lg:text-[17px] font-medium text-black/[0.28]">
-                  {project.description}
-                </span>
-              </div>
-            </div>
-          ))}
+        <div className="bg-[#FFFFFF1A] border border-white/10 backdrop-blur-lg text-white px-7 py-3 flex items-center justify-center font-bold text-[12px] tracking-[0.2em] select-none uppercase font-satoshi">
+          VIEW
         </div>
       </div>
     </div>
