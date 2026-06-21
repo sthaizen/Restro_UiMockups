@@ -217,7 +217,7 @@ export default function Questions() {
   };
 
   return (
-    <section ref={sectionRef} className="relative w-full bg-[#fafafa]">
+    <section id="faq" ref={sectionRef} className="relative w-full bg-[#fafafa]">
       <div className="mx-auto lg:px-[7vw] px-6 md:px-10 py-14 md:py-20 grid grid-cols-1 md:grid-cols-[200px_1fr] gap-x-12 lg:gap-x-20 lg:pt-30">
         <div className="pb-[22px] pt-[12px] md:pt-[40px] text-[15px] tracking-widest text-black">
           [FAQS]

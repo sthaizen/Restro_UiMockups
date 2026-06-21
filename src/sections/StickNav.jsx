@@ -1,203 +1,417 @@
-import React, {
-  useState,
-  useRef,
-  useLayoutEffect,
-  useEffect,
-  forwardRef,
-} from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useLenis } from "lenis/react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-// Navigation links
-const navLinks = [
-  { href: "#work", label: "WORK" },
-  { href: "#about", label: "ABOUT" },
-  { href: "/skill", label: "SKILLS" },
-  { href: "#contact", label: "CONTACTS" },
-];
+const Navbar = ({ forceLight = false }) => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeMenu, setActiveMenu] = useState(null);
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
-// Register plugin safely (avoids SSR issues)
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-const StickNav = forwardRef(function StickNav(props, ref) {
-  const { className = "", ...rest } = props;
-
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const lenis = useLenis();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // Local refs
-  const headerEl = useRef(null);
-  const desktopLinks = useRef([]);
-  const menuEl = useRef(null);
-  const mobileLinks = useRef([]);
+  const isLightMode = activeMenu || isScrolled || forceLight;
 
-  const mobileTl = useRef(null);
-
-  const handleScroll = (e, href) => {
-    if (href.startsWith("/")) {
-      e.preventDefault();
-      navigate(href);
-      return;
-    }
-    e.preventDefault();
-    if (lenis) {
-      lenis.scrollTo(href, { offset: -90, duration: 1.2 });
-    } else {
-      const target = document.querySelector(href);
-      if (target) {
-        const yOffset = -90;
-        const y = target.getBoundingClientRect().top + window.scrollY + yOffset;
-        window.scrollTo({ top: y, behavior: "smooth" });
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
       }
-    }
-  };
+    };
 
-
-  // Merge forwarded ref + local ref
-  const setHeaderRef = (node) => {
-    headerEl.current = node;
-    if (typeof ref === "function") ref(node);
-    else if (ref) ref.current = node;
-  };
-
-
-
-
-
-  // Mobile menu timeline (create once)
-  useLayoutEffect(() => {
-    if (!menuEl.current) return;
-
-    const ctx = gsap.context(() => {
-      gsap.set(menuEl.current, { height: 0, autoAlpha: 0, y: -8 });
-      menuEl.current.style.pointerEvents = "none";
-
-      mobileTl.current = gsap
-        .timeline({ paused: true })
-        .to(menuEl.current, {
-          height: "auto",
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.35,
-          ease: "power2.out",
-          onStart: () => (menuEl.current.style.pointerEvents = "auto"),
-          onReverseComplete: () => (menuEl.current.style.pointerEvents = "none"),
-        })
-        .from(
-          mobileLinks.current.filter(Boolean),
-          {
-            y: -6,
-            autoAlpha: 0,
-            duration: 0.25,
-            ease: "power2.out",
-            stagger: 0.06,
-          },
-          "-=0.15"
-        );
-    }, menuEl);
-
-    return () => ctx.revert();
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Play / reverse mobile menu animation
-  useEffect(() => {
-    if (!mobileTl.current) return;
-    if (mobileOpen) mobileTl.current.play();
-    else mobileTl.current.reverse();
-  }, [mobileOpen]);
+  const handleNav = (e, target) => {
+    e.preventDefault();
+    if (target.startsWith("#")) {
+      if (location.pathname !== "/") {
+        navigate("/" + target);
+      } else {
+        const el = document.querySelector(target);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+    } else {
+      navigate(target);
+    }
+    setSidebarOpen(false);
+  };
 
   return (
-    <header
-      ref={setHeaderRef}
-      style={{ opacity: 0, visibility: "hidden" }}
-      className={`fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 md:px-10 py-4 md:py-5
-        bg-[#fafafa]/80 backdrop-blur supports-[backdrop-filter]:bg-[#fafafa]/90
-        will-change-transform ${className}`}
-      {...rest}
-    >
-      <div className="font-AlexBrush font-bold text-[18px] tracking-wide text-zinc-900 ml-1 md:ml-7 uppercase">
-        Stay
-      </div>
-
-      {/* Desktop Nav */}
-      <nav
-        aria-label="Primary Navigation"
-        className="hidden md:flex items-center gap-[2.5rem] text-[13px] font-semibold"
-      >
-        {navLinks.map(({ href, label }, i) => (
-          <a
-            key={href}
-            href={href}
-            ref={(el) => {
-              if (el) desktopLinks.current[i] = el;
-            }}
-            onClick={(e) => handleScroll(e, href)}
-            className="text-black/70 hover:text-[#ffca6e] transition-all duration-500"
-          >
-            {label}
-          </a>
-        ))}
-      </nav>
-
-      {/* Mobile Hamburger */}
-      <div className="md:hidden flex items-center">
-        <button
-          type="button"
-          className="inline-flex flex-col justify-center items-center w-9 h-9 space-y-1.5 focus:outline-none"
-          aria-label="Toggle menu"
-          aria-expanded={mobileOpen}
-          aria-controls="mobile-nav"
-          onClick={() => setMobileOpen((v) => !v)}
-        >
-          <span
-            className={`block w-6 h-0.5 bg-black transition-transform duration-300 ${mobileOpen ? "translate-y-2 rotate-45" : ""
-              }`}
-          />
-          <span
-            className={`block w-6 h-0.5 bg-black transition-opacity duration-300 ${mobileOpen ? "opacity-0" : "opacity-100"
-              }`}
-          />
-          <span
-            className={`block w-6 h-0.5 bg-black transition-transform duration-300 ${mobileOpen ? "-translate-y-2 -rotate-45" : ""
-              }`}
-          />
-        </button>
-      </div>
-
-      {/* Mobile Menu (GSAP animated) */}
+    <>
       <div
-        id="mobile-nav"
-        ref={menuEl}
-        className="absolute left-0 right-0 top-full md:hidden overflow-hidden
-          bg-[#fafafa]/95 backdrop-blur border-t border-black/5"
-      >
-        <nav className="flex flex-col px-6 py-5 gap-4 text-[13px] font-semibold">
-          {navLinks.map(({ href, label }, i) => (
-            <a
-              key={href}
-              href={href}
-              ref={(el) => {
-                if (el) mobileLinks.current[i] = el;
-              }}
-              onClick={(e) => {
-                setMobileOpen(false);
-                handleScroll(e, href);
-              }}
-              className="text-black/70 hover:text-[#ffca6e] transition-all duration-500"
-            >
-              {label}
-            </a>
-          ))}
-        </nav>
-      </div>
-    </header>
-  );
-});
+        className={`fixed inset-0 z-[90] bg-black/10 backdrop-blur-sm transition-all duration-300 ${activeMenu ? 'opacity-100 visible' : 'opacity-0 invisible'
+          }`}
+        onClick={() => setActiveMenu(null)}
+      />
 
-StickNav.displayName = "StickNav";
-export default StickNav;
+      <header className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ease-in-out ${forceLight || activeMenu
+        ? 'bg-white shadow-sm py-4 text-gray-900 border-b border-gray-100'
+        : isScrolled
+          ? 'bg-white/95 backdrop-blur-md shadow-sm py-2 text-gray-900'
+          : 'bg-transparent py-4 text-white border-b border-white/20'
+        }`}>
+        <nav className="max-w-[1560px] mx-auto px-6 md:px-5 flex items-center justify-between font-inter">
+
+          <Link 
+            to="/" 
+            onClick={(e) => handleNav(e, '#hero')} 
+            className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity"
+          >
+            <div className="flex flex-col gap-[3px]">
+              <div className={`w-[21px] h-[6px] rounded-[2px] rounded-tl-md transition-colors duration-300 ${isLightMode ? 'bg-[#18181B]' : 'bg-[#F3F3EF]'}`}></div>
+              <div className="flex gap-[3px]">
+                <div className={`w-[6px] h-[6px] rounded-[2px] transition-colors duration-300 ${isLightMode ? 'bg-[#18181B]' : 'bg-[#F3F3EF]'}`}></div>
+                <div className={`w-[16px] h-[6px] rounded-[2px] transition-colors duration-300 ${isLightMode ? 'bg-[#18181B]' : 'bg-[#F3F3EF]'}`}></div>
+              </div>
+              <div className="flex gap-[3px]">
+                <div className="w-[13px] h-[6px] bg-transparent"></div>
+                <div className={`w-[9px] h-[9px] rounded-[2px] rounded-br-sm transition-colors duration-300 ${isLightMode ? 'bg-[#18181B]' : 'bg-[#F3F3EF]'}`}></div>
+              </div>
+            </div>
+
+            <span className="font-semibold text-[22px] tracking-tight">
+              CLYRIC
+            </span>
+          </Link>
+
+          <div className="hidden md:flex items-center gap-8 ml-12">
+
+            <div
+              className="h-full flex items-center py-6 -my-6"
+              onMouseEnter={() => setActiveMenu('products')}
+              onMouseLeave={() => setActiveMenu(null)}
+            >
+              <Link 
+                to="/#work" 
+                onClick={(e) => handleNav(e, '#work')} 
+                className="text-[13px] font-medium hover:opacity-60 transition-opacity"
+              >
+                Documentation
+              </Link>
+
+              <div
+                className={`absolute top-full left-0 w-full bg-[#f0efee] text-gray-900 border-t border-black/5 shadow-xl transition-all duration-300 origin-top ${activeMenu === 'products' ? 'opacity-100 visible scale-y-100' : 'opacity-0 invisible scale-y-95'
+                  }`}
+                style={{ cursor: 'default' }}
+              >
+                <div className="max-w-[1580px] mx-auto py-8 px-6 flex gap-6">
+                  <div className="w-1/3 flex flex-col gap-2">
+                    <div 
+                      onClick={(e) => handleNav(e, '#work')} 
+                      className="bg-[#fcfcfc] p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] cursor-pointer"
+                    >
+                      <div className="flex items-center gap-3 mb-2">
+                        <svg className="w-5 h-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a6 6 0 11-12 0 6 6 0 0112 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a6 6 0 11-12 0 6 6 0 0112 0z" />
+                        </svg>
+                        <span className="font-medium text-[17px]">Practice Hub</span>
+                      </div>
+                      <p className="text-[13px] text-gray-500 leading-relaxed ml-8">One platform for problems, live sessions, and collaborative coding.</p>
+                    </div>
+                    <div 
+                      onClick={(e) => handleNav(e, '#about')} 
+                      className="p-6 rounded-2xl hover:bg-white/60 transition-colors cursor-pointer opacity-70 hover:opacity-100"
+                    >
+                      <div className="flex items-center gap-3 mb-2">
+                        <svg className="w-5 h-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                        </svg>
+                        <span className="font-medium text-[17px]">Progress Insights</span>
+                      </div>
+                      <p className="text-[13px] text-gray-500 leading-relaxed ml-8">Track accuracy, time, and weak spots — and see improvement clearly.</p>
+                    </div>
+                  </div>
+
+                  <div className="w-1/3 flex flex-col gap-2.5">
+                    {['Live Mock Sessions', 'Timed Practice', 'Problem Bank', 'Collaborative Coding', 'Progress Tracking'].map((item) => (
+                      <div 
+                        key={item} 
+                        onClick={(e) => handleNav(e, '#work')}
+                        className="bg-[#fcfcfc] px-5 py-7 rounded-xl flex justify-between items-center shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:bg-[#d2d0d0] cursor-pointer transition-all group"
+                      >
+                        <span className="text-[17px] font-medium text-gray-800">{item}</span>
+                        <div className="w-7 h-7 bg-[#e9e9e9] rounded-full flex items-center justify-center group-hover:bg-[#222222]/30 transition-colors">
+                          <svg className="w-3.5 h-3.5 text-black " fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                          </svg>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="w-1/3 bg-white rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col">
+                    <div className="h-84 w-full bg-gray-200 overflow-hidden">
+                      <img
+                        src="/assets/backgrounds/clr2.png"
+                        alt="Team meeting" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="p-6 flex flex-col flex-1 justify-between">
+                      <div>
+                        <h3 className="font-medium text-[16px] text-gray-900 leading-snug mb-2">How Cyric helps candidates get interview-ready</h3>
+                        <p className="text-[13px] text-gray-500 leading-relaxed">Problems, mock sessions, and progress tracking: users stay consistent and improve faster — without the tab chaos.</p>
+                      </div>
+                      <div className="mt-4">
+                        <button 
+                          onClick={(e) => handleNav(e, '#about')}
+                          className="bg-[#18181B] text-white px-5 py-2.5 rounded-full text-[13px] font-medium hover:bg-black transition-colors"
+                        >
+                          Read the Story
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              className="h-full flex items-center py-6 -my-6"
+              onMouseEnter={() => setActiveMenu('integrations')}
+              onMouseLeave={() => setActiveMenu(null)}
+            >
+              <Link 
+                to="/#about" 
+                onClick={(e) => handleNav(e, '#about')} 
+                className="text-[13px] font-medium hover:opacity-60 transition-opacity"
+              >
+                Terms & Conditions
+              </Link>
+
+              <div
+                className={`absolute top-full left-0 w-full bg-[#f0efee] text-gray-900 border-t border-black/5 shadow-xl transition-all duration-300 origin-top ${activeMenu === 'integrations' ? 'opacity-100 visible scale-y-100' : 'opacity-0 invisible scale-y-95'
+                  }`}
+                style={{ cursor: 'default' }}
+              >
+                <div className="max-w-[1580px] mx-auto py-8 px-6 flex gap-6">
+                  <div className="w-[30%] bg-[#fcfcfc] p-8 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col justify-center items-start">
+                    <svg className="w-7 h-7 text-gray-800 mb-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a6 6 0 11-12 0 6 6 0 0112 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a6 6 0 11-12 0 6 6 0 0112 0z" />
+                    </svg>
+                    <h3 className="font-medium text-[22px] text-gray-900 mb-2">Discover all features</h3>
+                    <p className="text-[17px] text-gray-500 leading-relaxed mb-6">Make your interview prep faster and smoother with one clean workflow — problems, mock sessions, and progress tracking.</p>
+                    <button 
+                      onClick={(e) => handleNav(e, '#work')}
+                      className="bg-[#18181B] text-white px-6 py-2.5 rounded-full text-[13px] font-medium hover:bg-black transition-colors"
+                    >
+                      See all
+                    </button>
+                  </div>
+
+                  <div className="w-[70%] bg-[#ffffff] p-8 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] grid grid-cols-3 gap-8">
+                    <div>
+                      <h4 className="text-[15px] text-gray-500 border-b border-gray-100 pb-3 mb-4 font-medium">Problem practice</h4>
+                      <div className="flex flex-col gap-2.5">
+                        {['Topic-wise Problems', 'Difficulty Levels', 'Timed Mode'].map((item) => (
+                          <div 
+                            key={item} 
+                            onClick={(e) => handleNav(e, '#work')}
+                            className="bg-[#f9fafb] px-4 py-3.5 rounded-xl flex justify-between items-center hover:bg-gray-100 cursor-pointer transition-colors group"
+                          >
+                            <span className="text-[17px] font-medium text-gray-800">{item}</span>
+                            <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center group-hover:bg-gray-200 transition-colors shadow-sm">
+                              <svg className="w-3 h-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                              </svg>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="text-[15px] text-gray-500 border-b border-gray-100 pb-3 mb-4 font-medium">Live sessions</h4>
+                      <div className="flex flex-col gap-2.5">
+                        {['Mock Interviews', 'Screen Share', 'Collaborative Editor'].map((item) => (
+                          <div 
+                            key={item} 
+                            onClick={(e) => handleNav(e, '#work')}
+                            className="bg-[#f8f9fa] px-4 py-3.5 rounded-xl flex justify-between items-center hover:bg-gray-100 cursor-pointer transition-colors group"
+                          >
+                            <span className="text-[17px] font-medium text-gray-800">{item}</span>
+                            <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center group-hover:bg-gray-200 transition-colors shadow-sm">
+                              <svg className="w-3 h-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                              </svg>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="text-[15px] text-gray-500 border-b border-gray-100 pb-3 mb-4 font-medium">Progress & profile</h4>
+                      <div className="flex flex-col gap-2.5">
+                        {['Session Reviews', 'Skill Insights', 'Leaderboard'].map((item) => (
+                          <div 
+                            key={item} 
+                            onClick={(e) => handleNav(e, '#work')}
+                            className="bg-[#f8f9fa] px-4 py-3.5 rounded-xl flex justify-between items-center hover:bg-gray-100 cursor-pointer transition-colors group"
+                          >
+                            <span className="text-[17px] font-medium text-gray-800">{item}</span>
+                            <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center group-hover:bg-gray-200 transition-colors shadow-sm">
+                              <svg className="w-3 h-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                              </svg>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <Link 
+              to="/#about" 
+              onClick={(e) => handleNav(e, '#about')} 
+              className="text-[13px] font-medium hover:opacity-60 transition-opacity"
+            >
+              About Us
+            </Link>
+            <Link 
+              to="/#work" 
+              onClick={(e) => handleNav(e, '#work')} 
+              className="text-[13px] font-medium hover:opacity-60 transition-opacity"
+            >
+              Pricing
+            </Link>
+            <Link 
+              to="/#faq" 
+              onClick={(e) => handleNav(e, '#faq')} 
+              className="text-[13px] font-medium hover:opacity-60 transition-opacity"
+            >
+              FAQ
+            </Link>
+            <Link 
+              to="/skill" 
+              className="text-[13px] font-medium hover:opacity-60 transition-opacity"
+            >
+              Skills
+            </Link>
+          </div>
+
+          <div className="hidden md:flex items-center gap-7 ml-auto">
+            <button className="flex items-center gap-1.5 hover:opacity-60 transition-opacity">
+              <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2 12H22" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 2C14.5013 4.73835 15.9228 8.29203 16 12C15.9228 15.708 14.5013 19.2616 12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2Z" />
+              </svg>
+              <span className="text-[13px] font-medium">en</span>
+            </button>
+
+            {!isSignedIn ? (
+              <button 
+                onClick={() => setIsSignedIn(true)}
+                className="text-[13px] font-medium hover:opacity-60 transition-opacity cursor-pointer"
+              >
+                Register or Login
+              </button>
+            ) : (
+              <div className="flex items-center gap-4">
+                <div className="w-8 h-8 rounded-full bg-zinc-800 text-white flex items-center justify-center text-xs font-bold border border-white/20 select-none">
+                  U
+                </div>
+                <button 
+                  onClick={() => setIsSignedIn(false)}
+                  className="text-[13px] font-medium hover:opacity-60 transition-opacity text-red-500 cursor-pointer"
+                >
+                  Sign Out
+                </button>
+              </div>
+            )}
+
+            <Link
+              to="/#contact"
+              onClick={(e) => handleNav(e, '#contact')}
+              className={`text-[14px] font-medium px-8 py-2 rounded-full transition-colors duration-300 ${isLightMode
+                ? 'bg-[#18181B] text-white hover:bg-black'
+                : 'bg-white/10 backdrop-blur-md border border-white/10 text-white hover:bg-[#18181B]/60'
+                }`}
+            >
+              Book a demo
+            </Link>
+          </div>
+
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="md:hidden p-1 hover:opacity-70 transition-opacity text-current"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </nav>
+      </header>
+
+      <div className={`
+                fixed top-0 right-0 bottom-0 h-full bg-black/85 backdrop-blur-2xl z-[120]
+                transition-all duration-300 ease-in-out border-l border-white/10
+                ${sidebarOpen ? 'w-64 p-6' : 'w-0 p-0 overflow-hidden'}
+                flex flex-col gap-6 shadow-2xl
+            `}>
+        <div className="flex justify-end">
+          <button onClick={() => setSidebarOpen(false)} className="p-1 hover:opacity-70 text-white cursor-pointer">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="flex flex-col gap-6 text-white/90 mt-8 text-[15px] font-medium font-inter">
+          <Link onClick={(e) => handleNav(e, '#work')} to="/#work" className="hover:text-white transition-colors">Products</Link>
+          <Link onClick={(e) => handleNav(e, '#work')} to="/#work" className="hover:text-white transition-colors">Integrations</Link>
+          <Link onClick={(e) => handleNav(e, '#about')} to="/#about" className="hover:text-white transition-colors">Terms & Conditions</Link>
+          <Link onClick={(e) => handleNav(e, '#work')} to="/#work" className="hover:text-white transition-colors">Pricing</Link>
+          <Link onClick={(e) => handleNav(e, '#about')} to="/#about" className="hover:text-white transition-colors">Resources</Link>
+          <Link onClick={() => setSidebarOpen(false)} to="/skill" className="hover:text-white transition-colors">Skills</Link>
+
+          <hr className="border-white/10 my-2" />
+
+          {!isSignedIn ? (
+            <button 
+              onClick={() => { setSidebarOpen(false); setIsSignedIn(true); }}
+              className="text-left hover:text-white transition-colors text-[15px] font-medium cursor-pointer"
+            >
+              Login
+            </button>
+          ) : (
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-zinc-800 text-white flex items-center justify-center text-xs font-bold border border-white/20">
+                  U
+                </div>
+                <span className="text-white/70 text-sm">User Profile</span>
+              </div>
+              <button 
+                onClick={() => { setSidebarOpen(false); setIsSignedIn(false); }}
+                className="text-left text-red-500 hover:text-red-400 transition-colors text-[15px] font-medium cursor-pointer"
+              >
+                Sign Out
+              </button>
+            </div>
+          )}
+
+          <Link 
+            onClick={(e) => handleNav(e, '#contact')} 
+            to="/#contact" 
+            className="bg-white text-black text-center px-6 py-2.5 rounded-full hover:bg-gray-100 transition-colors font-medium text-[14px]"
+          >
+            Book a demo
+          </Link>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Navbar;

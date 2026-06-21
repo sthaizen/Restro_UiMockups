@@ -1,67 +1,52 @@
-import React, { useRef } from 'react'
-import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motion'
-import { ReactLenis } from 'lenis/react'
-import { Routes, Route } from 'react-router-dom'
+import React, { useEffect } from 'react';
+import { ReactLenis } from 'lenis/react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 // Active Section Imports
-import Main from './sections/Main'
-import Ctst from './sections/Ctst'
-import Questions from './sections/question'
-import ContactSummery from './sections/ContactSummery'
-import Newwork from './sections/Newwork'
-import StickNav from './sections/StickNav'
-import Anotherabt from './sections/Anotherabt'
-import SkillPage from './components/SkillPage/SkillPage'
+import Main from './sections/Main';
+import Ctst from './sections/Ctst';
+import Questions from './sections/question';
+import ContactSummery from './sections/ContactSummery';
+import Newwork from './sections/Newwork';
+import Anotherabt from './sections/Anotherabt';
+import SkillPage from './components/SkillPage/SkillPage';
 
 const Home = () => {
-  const coverSectionRef = useRef(null)
+  const location = useLocation();
 
-  // Track scroll progress relative to the 'Newwork' entry
-  const { scrollYProgress } = useScroll({
-    target: coverSectionRef,
-    offset: ["start end", "start start"]
-  })
-
-  // Animation values
-  const brightness = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0.4])
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.9])
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0])
-  const filter = useMotionTemplate`brightness(${brightness})`
-
-  const bgDarkOpacity = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0, 0.7])
+  // Replaced window.location with React Router's useLocation hook
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.querySelector(location.hash);
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
+      }
+    }
+  }, [location.hash]);
 
   return (
     <ReactLenis root className='relative w-screen min-h-screen'>
 
-      <div className='fixed top-0 left-0 w-full z-[100] '>
-        <StickNav />
+      {/* FIX 1: Removed 'fixed h-full' wrapper. 
+        Main now sits naturally in the document flow, allowing it to dictate its own height.
+      */}
+      <div className="sticky top-0 z-0 w-full  pointer-events-auto">
+        <Main />
       </div>
 
-      <div className='sticky top-0 z-0 h-screen w-full overflow-hidden'>
-        <motion.div
-          style={{ filter, scale, opacity }}
-          className='h-full w-full flex flex-col justify-center items-center'
-        >
-          <Main />
-        </motion.div>
-      </div>
 
-      <motion.div
-        className='fixed inset-0 z-[5] pointer-events-none'
-        style={{ opacity: bgDarkOpacity, backgroundColor: '#0b0b0b' }}
-      />
-
-      {/* Put this section above overlay */}
-      <div ref={coverSectionRef} className='relative z-20 bg-white'>
+      <div className="relative z-10 bg-[#fafafa] shadow-[0_-10px_50px_rgba(0,0,0,0.12)]">
         <Newwork />
         <Anotherabt />
-        <Questions /> 
-        <ContactSummery /> 
+        <Questions />
+        <ContactSummery />
         <Ctst />
       </div>
 
     </ReactLenis>
-  )
+  );
 }
 
 const App = () => {
@@ -70,7 +55,7 @@ const App = () => {
       <Route path="/" element={<Home />} />
       <Route path="/skill" element={<SkillPage />} />
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;
