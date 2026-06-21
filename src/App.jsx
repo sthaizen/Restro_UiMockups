@@ -3,26 +3,15 @@ import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motio
 import { ReactLenis } from 'lenis/react'
 import { Routes, Route } from 'react-router-dom'
 
-// Section Imports
-import Navbar from './sections/Navbar'
-import ServiceSummery from './sections/ServiceSummery'
-import Services from './sections/Services'
-import About from './sections/About'
-import Works from './sections/Works'
-import ContactSummery from './sections/ContactSummery'
-import Contact from './sections/Contact'
+// Active Section Imports
 import Main from './sections/Main'
 import Ctst from './sections/Ctst'
 import Questions from './sections/question'
-import Testimonial from './sections/Testimonial'
-import AboutSection from './sections/Newabout'
+import ContactSummery from './sections/ContactSummery'
 import Newwork from './sections/Newwork'
-import Projects from './sections/Projects'
 import StickNav from './sections/StickNav'
 import Anotherabt from './sections/Anotherabt'
-import Random from './sections/Random'
 import SkillPage from './components/SkillPage/SkillPage'
-
 
 const Home = () => {
   const coverSectionRef = useRef(null)
@@ -33,14 +22,13 @@ const Home = () => {
     offset: ["start end", "start start"]
   })
 
-  // Your existing animations (keep)
+  // Animation values
   const brightness = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0.4])
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.9])
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0])
   const filter = useMotionTemplate`brightness(${brightness})`
 
-
-const bgDarkOpacity = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0, 0.7])
+  const bgDarkOpacity = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0, 0.7])
 
   return (
     <ReactLenis root className='relative w-screen min-h-screen'>
@@ -48,10 +36,6 @@ const bgDarkOpacity = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0, 0.7])
       <div className='fixed top-0 left-0 w-full z-[100] '>
         <StickNav />
       </div>
-{/* 
-      <div className='relative z-10'>
-        <Main />
-      </div> */}
 
       <div className='sticky top-0 z-0 h-screen w-full overflow-hidden'>
         <motion.div
@@ -62,7 +46,6 @@ const bgDarkOpacity = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0, 0.7])
         </motion.div>
       </div>
 
-     
       <motion.div
         className='fixed inset-0 z-[5] pointer-events-none'
         style={{ opacity: bgDarkOpacity, backgroundColor: '#0b0b0b' }}
@@ -72,11 +55,8 @@ const bgDarkOpacity = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0, 0.7])
       <div ref={coverSectionRef} className='relative z-20 bg-white'>
         <Newwork />
         <Anotherabt />
-        {/* <ServiceSummery /> */}
         <Questions /> 
-        {/* <AboutSection /> 
-        {/* <Testimonial /> */}
-         <ContactSummery /> 
+        <ContactSummery /> 
         <Ctst />
       </div>
 

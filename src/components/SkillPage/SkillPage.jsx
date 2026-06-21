@@ -6,7 +6,6 @@ import Lenis from "lenis";
 import Sidebar from "./Sidebar";
 import TechSection from "./TechSection";
 import TimelineSection from "./TimelineSection";
-import ProjectsSection from "./ProjectsSection";
 import FooterSection from "./FooterSection";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -49,10 +48,10 @@ export default function SkillPage() {
     };
   }, []);
 
-  const handleBackHome = (e) => {
-    e.preventDefault();
-    window.location.href = "/";
-  };
+  // const handleBackHome = (e) => {
+  //   e.preventDefault();
+  //   window.location.href = "/";
+  // };
 
   return (
     <div className="min-h-screen lg:h-screen w-screen bg-black text-neutral-100 font-satoshi relative overflow-x-hidden lg:overflow-hidden flex flex-col lg:flex-row p-0">
@@ -88,10 +87,7 @@ export default function SkillPage() {
             <TimelineSection />
           </section>
 
-          {/* Featured Projects Grid */}
-          {/* <section id="projects">
-            <ProjectsSection />
-          </section> */}
+
 
           {/* Let's Work Together Footer */}
           <section id="contact-me">
