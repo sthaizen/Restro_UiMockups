@@ -28,14 +28,14 @@ const Hero = () => {
   const brightOverlayRef = useRef(null);
   const bottomLabelsRef = useRef(null);
 
-  const { tier } = useSubscription();
+  useSubscription();
 
   // Marquee Refs
   const track1Ref = useRef(null);
   const track2Ref = useRef(null);
   const logoSectionRef = useRef(null);
 
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [, setIsLoaded] = useState(false);
 
   useEffect(() => {
     let ctx = gsap.context(() => {
