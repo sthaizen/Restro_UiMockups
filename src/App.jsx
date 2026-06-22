@@ -9,7 +9,9 @@ import Ctst from './sections/Ctst';
 import Questions from './sections/question';
 import ContactSummery from './sections/ContactSummery';
 import Newwork from './sections/Newwork';
+import HorizontalScroll from './sections/HorizontalScroll';
 import VideoSection from './sections/VideoSection';
+import VideoSection2 from './sections/VideoSection2';
 import Anotherabt from './sections/Anotherabt';
 import RestroAi from './sections/RestroAi';
 import SkillPage from './components/SkillPage/SkillPage';
@@ -48,9 +50,6 @@ const Home = () => {
   return (
     <ReactLenis root ref={lenisRef} autoRaf={false} className='relative w-screen min-h-screen'>
 
-      {/* FIX 1: Removed 'fixed h-full' wrapper. 
-        Main now sits naturally in the document flow, allowing it to dictate its own height.
-      */}
       <div className="sticky top-0 z-0 w-full  pointer-events-auto">
         <Main />
       </div>
@@ -58,7 +57,8 @@ const Home = () => {
 
       <div className="relative z-10 bg-[#ffffff] shadow-[0_-10px_50px_rgba(0,0,0,0.12)] ">
         <Newwork />
-        <VideoSection />
+        <VideoSection2 />
+        <HorizontalScroll />
         <RestroAi />
         {/* <Anotherabt /> */}
         <Questions />
@@ -69,6 +69,7 @@ const Home = () => {
       <BottomNav />
 
     </ReactLenis>
+
   );
 }
 

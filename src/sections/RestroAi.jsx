@@ -21,7 +21,7 @@ const CONFIG = {
 export default function RestroAi() {
   const containerRef = useRef(null);
   const videoRef = useRef(null);
-  
+
   // Refs for Parallax (Wrappers)
   const titleRef = useRef(null);
   const cardRef = useRef(null);
@@ -127,10 +127,10 @@ export default function RestroAi() {
         <div ref={titleRef} className="pt-24 md:pt-32 ">
           <h2
             ref={titleContentRef}
-            className="text-[#000000]/70 text-[40px] md:text-[64px] leading-[1.1] font-['Geist',Arial,sans-serif] font-light tracking-tight max-w-[900px] antialiased"
+            className="text-[#000000]/70 text-[40px] md:text-[60px] leading-[1.1] font-['Geist',Arial,sans-serif] font-light tracking-tight max-w-[900px] antialiased"
           >
             The Most Advanced<br />
-            Restaurant AI
+            Polaris AI
           </h2>
         </div>
 
@@ -140,12 +140,12 @@ export default function RestroAi() {
             <div className="flex items-center gap-3 mb-4">
               <div className="w-[10px] h-[10px] rounded-full bg-[#D1E0F3]" />
               <span className="text-[#CFCDC9] text-[18px] font-['Inter',Arial,sans-serif] font-normal tracking-wide">
-                RestroAI Engine
+                Polaris AI Engine
               </span>
             </div>
 
             <p className="text-[#CFCDC9] text-[16px] leading-[1.3] font-['Inter',Arial,sans-serif] font-normal">
-              RestroAI is our proprietary artificial intelligence designed to analyze real-time dining metrics, predict customer flow, and automate complex inventory decisions. Capable of processing thousands of data points simultaneously, RestroAI acts as the operational brain for modern, high-volume restaurants.
+              Polaris AI is our proprietary artificial intelligence designed to analyze real-time dining metrics, predict customer flow, and automate complex inventory decisions. Capable of processing thousands of data points simultaneously, Polaris AI acts as the operational brain for modern, high-volume restaurants.
             </p>
           </div>
         </div>

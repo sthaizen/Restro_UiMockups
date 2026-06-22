@@ -211,20 +211,36 @@ export default function Newwork() {
 
           {/* Call to Action Button */}
           <button className="group mt-10 sm:mt-12 bg-black text-white text-[12px] sm:text-[13px] font-medium tracking-wider uppercase px-8 py-4 flex items-center justify-center gap-3 hover:bg-[#222] transition-colors duration-500">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="transition-transform duration-500 group-hover:translate-x-1"
-            >
-              <path d="M5 12h14" />
-              <path d="M12 5l7 7-7 7" />
-            </svg>
+            <div className="relative overflow-hidden w-4 h-4 flex items-center justify-center">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="absolute transition-transform duration-500 ease-out group-hover:translate-x-[150%]"
+              >
+                <path d="M5 12h14" />
+                <path d="M12 5l7 7-7 7" />
+              </svg>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="absolute -translate-x-[150%] transition-transform duration-500 ease-out group-hover:translate-x-0"
+              >
+                <path d="M5 12h14" />
+                <path d="M12 5l7 7-7 7" />
+              </svg>
+            </div>
             <RollingText text="WHO WE ARE" />
           </button>
         </div>
@@ -261,20 +277,36 @@ export default function Newwork() {
                 Our <strong className="font-bold text-black">Polaris system</strong> is built for smooth billing, smarter orders, and reliable control. Made for restaurants that want speed, clarity, and service.
               </p>
               <button className="group mt-10 sm:mt-0 bg-black text-white text-[12px] sm:text-[13px] font-medium tracking-wider uppercase px-8 py-4 flex items-center justify-center gap-3 hover:bg-[#222] transition-colors duration-500">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="transition-transform duration-500 group-hover:translate-x-1"
-                >
-                  <path d="M5 12h14" />
-                  <path d="M12 5l7 7-7 7" />
-                </svg>
+                <div className="relative overflow-hidden w-4 h-4 flex items-center justify-center">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="absolute transition-transform duration-500 ease-out group-hover:translate-x-[150%]"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="M12 5l7 7-7 7" />
+                  </svg>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="absolute -translate-x-[150%] transition-transform duration-500 ease-out group-hover:translate-x-0"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="M12 5l7 7-7 7" />
+                  </svg>
+                </div>
                 <RollingText text="Product Overview" />
               </button>
             </div>
