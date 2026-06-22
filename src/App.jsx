@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ReactLenis } from 'lenis/react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import gsap from 'gsap';
 
 // Active Section Imports
 import Main from './sections/Main';
@@ -8,11 +9,28 @@ import Ctst from './sections/Ctst';
 import Questions from './sections/question';
 import ContactSummery from './sections/ContactSummery';
 import Newwork from './sections/Newwork';
+import VideoSection from './sections/VideoSection';
 import Anotherabt from './sections/Anotherabt';
 import SkillPage from './components/SkillPage/SkillPage';
+import BottomNav from './components/BottomNav';
 
 const Home = () => {
   const location = useLocation();
+  const lenisRef = useRef();
+
+  // Sync GSAP ticker with Lenis to prevent scroll jitter on pinned elements
+  useEffect(() => {
+    function update(time) {
+      lenisRef.current?.lenis?.raf(time * 1000);
+    }
+
+    gsap.ticker.add(update);
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      gsap.ticker.remove(update);
+    };
+  }, []);
 
   // Replaced window.location with React Router's useLocation hook
   useEffect(() => {
@@ -27,7 +45,7 @@ const Home = () => {
   }, [location.hash]);
 
   return (
-    <ReactLenis root className='relative w-screen min-h-screen'>
+    <ReactLenis root ref={lenisRef} autoRaf={false} className='relative w-screen min-h-screen'>
 
       {/* FIX 1: Removed 'fixed h-full' wrapper. 
         Main now sits naturally in the document flow, allowing it to dictate its own height.
@@ -37,13 +55,16 @@ const Home = () => {
       </div>
 
 
-      <div className="relative z-10 bg-[#fafafa] shadow-[0_-10px_50px_rgba(0,0,0,0.12)]">
+      <div className="relative z-10 bg-[#ffffff] shadow-[0_-10px_50px_rgba(0,0,0,0.12)] ">
         <Newwork />
-        <Anotherabt />
+        <VideoSection />
+        {/* <Anotherabt /> */}
         <Questions />
         <ContactSummery />
         <Ctst />
       </div>
+
+      <BottomNav />
 
     </ReactLenis>
   );

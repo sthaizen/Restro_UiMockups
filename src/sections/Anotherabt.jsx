@@ -256,7 +256,7 @@ const CirculaScrollSection = () => {
   }, []);
 
   return (
-    <section id="about" ref={containerRef} className="bg-[#fafafa] font-sans py-20 scroll-mt-24">
+    <section id="about" ref={containerRef} className="bg-[#ffffff] font-sans py-20 scroll-mt-24">
       <div className="max-w-[1480px] mx-auto px-6">
 
         {/* ─── Title Block (all breakpoints) ─── */}
