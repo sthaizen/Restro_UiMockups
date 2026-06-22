@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
+import RollingText from "../components/RollingText";
 
 export default function Newwork() {
 
@@ -209,7 +210,7 @@ export default function Newwork() {
           </h1>
 
           {/* Call to Action Button */}
-          <button className="group mt-10 sm:mt-12 bg-black text-white text-[12px] sm:text-[13px] font-medium tracking-wider uppercase px-8 py-4 flex items-center justify-center gap-3 hover:bg-[#222] transition-colors duration-300">
+          <button className="group mt-10 sm:mt-12 bg-black text-white text-[12px] sm:text-[13px] font-medium tracking-wider uppercase px-8 py-4 flex items-center justify-center gap-3 hover:bg-[#222] transition-colors duration-500">
             <svg
               width="16"
               height="16"
@@ -219,12 +220,12 @@ export default function Newwork() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="transition-transform duration-300 group-hover:translate-x-1"
+              className="transition-transform duration-500 group-hover:translate-x-1"
             >
               <path d="M5 12h14" />
               <path d="M12 5l7 7-7 7" />
             </svg>
-            WHO WE ARE
+            <RollingText text="WHO WE ARE" />
           </button>
         </div>
 
@@ -259,7 +260,7 @@ export default function Newwork() {
               <p className="text-[19.1px] leading-[1.4] text-[#212325] mb-10 font-normal font-sans max-w-[320px] tracking-tight">
                 Our <strong className="font-bold text-black">Polaris system</strong> is built for smooth billing, smarter orders, and reliable control. Made for restaurants that want speed, clarity, and service.
               </p>
-              <button className="group mt-10 sm:mt-0 bg-black text-white text-[12px] sm:text-[13px] font-medium tracking-wider uppercase px-8 py-4 flex items-center justify-center gap-3 hover:bg-[#222] transition-colors duration-300">
+              <button className="group mt-10 sm:mt-0 bg-black text-white text-[12px] sm:text-[13px] font-medium tracking-wider uppercase px-8 py-4 flex items-center justify-center gap-3 hover:bg-[#222] transition-colors duration-500">
                 <svg
                   width="16"
                   height="16"
@@ -269,12 +270,12 @@ export default function Newwork() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="transition-transform duration-300 group-hover:translate-x-1"
+                  className="transition-transform duration-500 group-hover:translate-x-1"
                 >
                   <path d="M5 12h14" />
                   <path d="M12 5l7 7-7 7" />
                 </svg>
-                Product Overview
+                <RollingText text="Product Overview" />
               </button>
             </div>
           </div>
