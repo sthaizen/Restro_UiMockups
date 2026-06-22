@@ -79,35 +79,32 @@ export default function VideoSection() {
       tl.fromTo(videoWrapperRef.current, {
         top: () => {
           const p = videoPlaceholderRef.current;
-          const c = containerRef.current;
-          return p && c ? p.getBoundingClientRect().top - c.getBoundingClientRect().top : 0;
+          if (!p) return 0;
+          return p.offsetTop + p.offsetHeight / 2 - window.innerHeight * 0.33;
         },
-        left: () => {
+        left: 0,
+        width: "100%",
+        height: "100vh",
+        clipPath: () => {
           const p = videoPlaceholderRef.current;
           const c = containerRef.current;
-          return p && c ? p.getBoundingClientRect().left - c.getBoundingClientRect().left : 0;
-        },
-        width: () => {
-          const p = videoPlaceholderRef.current;
-          return p ? p.getBoundingClientRect().width : 0;
-        },
-        height: () => {
-          const p = videoPlaceholderRef.current;
-          return p ? p.getBoundingClientRect().height : 0;
-        },
-        borderRadius: "6px"
+          if (!p || !c) return "inset(0px)";
+          const insetTop = window.innerHeight * 0.33 - p.offsetHeight / 2;
+          const insetLeft = p.offsetLeft;
+          const insetBottom = window.innerHeight - (insetTop + p.offsetHeight);
+          const insetRight = c.offsetWidth - (insetLeft + p.offsetWidth);
+          return `inset(${insetTop}px ${insetRight}px ${insetBottom}px ${insetLeft}px round 6px)`;
+        }
       }, {
         top: () => {
-          const c = containerRef.current;
-          return c ? -c.getBoundingClientRect().top : 0;
+          const p = videoPlaceholderRef.current;
+          if (!p) return 0;
+          return p.offsetTop + p.offsetHeight / 2 - window.innerHeight * 0.33;
         },
-        left: () => {
-          const c = containerRef.current;
-          return c ? -c.getBoundingClientRect().left : 0;
-        },
-        width: "100vw",
+        left: 0,
+        width: "100%",
         height: "100vh",
-        borderRadius: 0,
+        clipPath: "inset(0px 0px 0px 0px round 0px)",
         duration: EXPANSION_SCROLL_VH,
         ease: "power2.inOut"
       });
@@ -197,7 +194,7 @@ export default function VideoSection() {
       <div
         ref={videoWrapperRef}
         className="absolute z-10 overflow-hidden bg-gray-100 shadow-sm"
-        style={{ willChange: 'width, height, top, left, transform' }}
+        style={{ willChange: 'clip-path' }}
       >
         <video
           src="/assets/backgrounds/vid.webm"

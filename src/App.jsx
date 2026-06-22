@@ -58,7 +58,7 @@ const Home = () => {
 
       <div className="relative z-10 bg-[#ffffff] shadow-[0_-10px_50px_rgba(0,0,0,0.12)] ">
         <Newwork />
-        {/* <VideoSection /> */}
+        <VideoSection />
         <RestroAi />
         {/* <Anotherabt /> */}
         <Questions />
