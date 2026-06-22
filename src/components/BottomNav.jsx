@@ -5,11 +5,11 @@ import RollingText from './RollingText';
 
 const CONFIG = {
   bar: {
-    width: 300,
+    width: 280,
     height: 55,
     bgColor: '#0c0c0e',
     bgColorHover: '#222',
-    opacity: 0.7,
+    opacity: 0.9,
     blur: 14,
     bottomOffset: 34,
   },
@@ -17,7 +17,7 @@ const CONFIG = {
     width: 470,
     height: 560,
     bgColor: '#0c0c0e',
-    opacity: 0.7,
+    opacity: 0.85,
     blur: 14,
     gapAboveBar: 14,
   },
@@ -38,6 +38,11 @@ const CONFIG = {
     xDelay: 0.15,
     xDuration: 0.3,
     scrollTriggerDistance: 10,
+    // --- Entrance Animation Controls ---
+    entranceDelay1: 250,
+    entranceDelay2: 650,
+    entranceDelay3: 1250,
+    entranceDuration: 0.5,
   },
   shadow: '0 8px 40px rgba(0,0,0,0.5)',
 };
@@ -97,12 +102,12 @@ const BottomNav = () => {
     const triggerEntrance = () => {
       if (initialLoadRef.current === true) {
         initialLoadRef.current = 'animating';
-        setTimeout(() => setEntrancePhase(1), 100);
-        setTimeout(() => setEntrancePhase(2), 900);
+        setTimeout(() => setEntrancePhase(1), CONFIG.animation.entranceDelay1);
+        setTimeout(() => setEntrancePhase(2), CONFIG.animation.entranceDelay2);
         setTimeout(() => {
           setEntrancePhase(3);
-          setTimeout(() => { initialLoadRef.current = false; }, 1000);
-        }, 1700);
+          setTimeout(() => { initialLoadRef.current = false; }, 600);
+        }, CONFIG.animation.entranceDelay3);
       }
     };
 
@@ -207,10 +212,10 @@ const BottomNav = () => {
         }}
         whileHover={{ backgroundColor: hexToRgba(CONFIG.bar.bgColorHover, CONFIG.bar.opacity) }}
         transition={{
-          duration: initialLoadRef.current ? 0.8 : CONFIG.animation.morphDuration,
-          ease: [0.4, 0, 0.2, 1],
-          opacity: { duration: 1.0, ease: [0.4, 0, 0.2, 1] },
-          y: { duration: 1.2, ease: [0.4, 0, 0.2, 1] }
+          duration: initialLoadRef.current ? CONFIG.animation.entranceDuration : CONFIG.animation.morphDuration,
+          ease,
+          opacity: { duration: CONFIG.animation.entranceDuration, ease: "easeOut" },
+          y: { duration: CONFIG.animation.entranceDuration * 1.2, ease }
         }}
         onClick={() => setIsOpen(!isOpen)}
         className="fixed left-1/2 -translate-x-1/2 z-50 overflow-hidden cursor-pointer"
@@ -236,7 +241,7 @@ const BottomNav = () => {
                   x: entrancePhase >= 3 ? 0 : "-50%",
                 }}
                 transition={{
-                  duration: initialLoadRef.current ? 0.8 : CONFIG.animation.morphDuration,
+                  duration: initialLoadRef.current ? CONFIG.animation.entranceDuration : CONFIG.animation.morphDuration,
                   ease
                 }}
               >
@@ -250,7 +255,7 @@ const BottomNav = () => {
                   y: entrancePhase >= 3 ? 0 : 10
                 }}
                 transition={{
-                  duration: 0.8,
+                  duration: CONFIG.animation.entranceDuration,
                   ease
                 }}
                 className="absolute left-1/2 -translate-x-1/2 text-[11px] font-semibold tracking-[0.2em] text-white select-none"
@@ -265,7 +270,7 @@ const BottomNav = () => {
                   y: entrancePhase >= 3 ? 0 : 10
                 }}
                 transition={{
-                  duration: 0.8,
+                  duration: CONFIG.animation.entranceDuration,
                   ease
                 }}
                 className="absolute right-6 flex items-center justify-center text-white"

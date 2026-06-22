@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import RollingText from '../components/RollingText';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -161,19 +162,18 @@ export default function VideoSection() {
             Modern dining establishments face a fast-paced environment where managing menus, optimizing table turn times, and keeping transactions seamless are keys to survival and growth.
           </p>
 
-          <div className="group flex items-center gap-1">
-            <a href="#" className="relative flex items-center justify-center bg-[#dbe8f8] w-[46px] h-[46px] rounded-[3px] overflow-hidden transition-all duration-300">
-              <span className="absolute inset-0 bg-[#688ad0] -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#2b4b6b] relative z-10 group-hover:text-white">
-                <path d="M6 4v8a2 2 0 0 0 2 2h10" />
-                <polyline points="14 10 18 14 14 18" />
-              </svg>
-            </a>
-            <a href="#" className="relative flex items-center justify-center border-1 border-[#e5e5e5] h-[46px] px-6 rounded-[3px] overflow-hidden transition-all duration-300 group-hover:border-[#6e8acf]">
-              <span className="absolute inset-0 bg-[#688ad0] -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
-              <span className="relative z-10 text-[14px] font-normal text-gray-900 font-['Inter',Arial,sans-serif] group-hover:text-white">
-                Discover Our Story
-              </span>
+          <div className="flex items-center mt-2">
+            <a href="#" className="group relative flex items-center justify-center bg-white border border-[#e5e5e5] h-[46px] px-7 rounded-[3px] overflow-hidden transition-all duration-300 hover:border-black">
+              <span className="absolute inset-0 bg-black -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
+              <div className="relative z-10 flex items-center justify-center gap-[12px]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#2b4b6b] group-hover:text-white transition-colors duration-300 mt-[2px]">
+                  <path d="M6 4v8a2 2 0 0 0 2 2h10" />
+                  <polyline points="14 10 18 14 14 18" />
+                </svg>
+                <div className="text-[16px] leading-none font-normal text-gray-900 font-['Inter',Arial,sans-serif] group-hover:text-white transition-colors duration-300 flex items-center">
+                  <RollingText text="Discover Our Story" />
+                </div>
+              </div>
             </a>
           </div>
         </div>

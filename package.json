@@ -17,6 +17,7 @@
     "@tailwindcss/vite": "^4.1.12",
     "cobe": "^0.6.4",
     "framer-motion": "^12.23.24",
+    "geist": "^1.7.2",
     "gsap": "^3.13.0",
     "lenis": "^1.3.8",
     "lucide-react": "^0.542.0",

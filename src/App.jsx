@@ -11,6 +11,7 @@ import ContactSummery from './sections/ContactSummery';
 import Newwork from './sections/Newwork';
 import VideoSection from './sections/VideoSection';
 import Anotherabt from './sections/Anotherabt';
+import RestroAi from './sections/RestroAi';
 import SkillPage from './components/SkillPage/SkillPage';
 import BottomNav from './components/BottomNav';
 
@@ -57,7 +58,8 @@ const Home = () => {
 
       <div className="relative z-10 bg-[#ffffff] shadow-[0_-10px_50px_rgba(0,0,0,0.12)] ">
         <Newwork />
-        <VideoSection />
+        {/* <VideoSection /> */}
+        <RestroAi />
         {/* <Anotherabt /> */}
         <Questions />
         <ContactSummery />
