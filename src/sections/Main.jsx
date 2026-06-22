@@ -256,7 +256,7 @@ const Hero = () => {
         className="relative z-20 w-full bg-black/0"
         style={{ paddingBottom: '115.78px' }}
       >
-        <div ref={logoSectionRef} className="logo-section-content mt-7 opacity-0">
+        <div ref={logoSectionRef} className="logo-section-content mt-7 opacity-100">
           <p
             className="text-center text-white font-light opacity-80"
             style={{ fontSize: '16px', marginBottom: '40px' }}
