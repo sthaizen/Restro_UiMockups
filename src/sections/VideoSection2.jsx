@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import RollingText from '../components/RollingText';
@@ -12,6 +12,59 @@ export default function VideoSection2() {
   const leftTextRef = useRef(null);
   const rightTextRef = useRef(null);
   const overlayRef = useRef(null);
+
+  const [cursorVisible, setCursorVisible] = useState(false);
+  const cursorRef = useRef(null);
+  const quickSetterX = useRef(null);
+  const quickSetterY = useRef(null);
+
+  useEffect(() => {
+    if (cursorRef.current) {
+      quickSetterX.current = gsap.quickTo(cursorRef.current, "x", {
+        duration: 0.6,
+        ease: "power3.out",
+      });
+      quickSetterY.current = gsap.quickTo(cursorRef.current, "y", {
+        duration: 0.6,
+        ease: "power3.out",
+      });
+    }
+  }, []);
+
+  const cursorOffsetX = 70;
+  const cursorOffsetY = 55;
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (cursorVisible && quickSetterX.current && quickSetterY.current) {
+        quickSetterX.current(e.clientX + cursorOffsetX);
+        quickSetterY.current(e.clientY + cursorOffsetY);
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [cursorVisible]);
+
+  const handleVideoMouseEnter = () => {
+    setCursorVisible(true);
+    if (cursorRef.current) {
+      gsap.set(cursorRef.current, {
+        scale: 1,
+        opacity: 1,
+      });
+    }
+  };
+
+  const handleVideoMouseLeave = () => {
+    setCursorVisible(false);
+    if (cursorRef.current) {
+      gsap.set(cursorRef.current, {
+        scale: 1,
+        opacity: 0,
+      });
+    }
+  };
 
   const CONTENT_OFFSET_Y = 0;
 
@@ -179,10 +232,10 @@ export default function VideoSection2() {
       </div>
 
       <section ref={containerRef} className="relative z-10 font-inter h-screen w-full flex flex-col">
-        <div className="flex-1 w-full flex items-center justify-center relative z-20 px-[24px] md:px-[64px] lg:px-[96px]">
+        <div className="flex-1 w-full flex items-center justify-center relative z-20 px-[24px] md:px-[64px] lg:px-[96px] pointer-events-none">
 
           <div
-            className="relative w-full max-w-[1400px] flex items-center"
+            className="relative w-full max-w-[1400px] flex items-center pointer-events-none"
             style={{ transform: `translateY(${CONTENT_OFFSET_Y}px)` }}
           >
             <div className="w-full flex justify-center" style={{ transform: `translateY(${VIDEO_OFFSET_Y}px)` }}>
@@ -257,8 +310,10 @@ export default function VideoSection2() {
 
         <div
           ref={videoWrapperRef}
-          className="absolute z-10 overflow-hidden bg-black shadow-lg"
+          className="absolute z-10 overflow-hidden bg-black shadow-lg cursor-pointer"
           style={{ willChange: 'clip-path, transform', transform: 'translateZ(0)' }}
+          onMouseEnter={handleVideoMouseEnter}
+          onMouseLeave={handleVideoMouseLeave}
         >
           <video
             src="/assets/backgrounds/vid.webm"
@@ -278,6 +333,20 @@ export default function VideoSection2() {
           />
         </div>
       </section>
+
+      {/* Custom Mouse Cursor following specifications */}
+      <div
+        ref={cursorRef}
+        className="fixed top-0 left-0 pointer-events-none z-50 opacity-0"
+        style={{
+          transform: "translate(-50%, -50%)",
+          willChange: "transform",
+        }}
+      >
+        <div className="bg-[#FFFFFF1A] border border-white/10 backdrop-blur-lg text-white px-7 py-3 flex items-center justify-center font-bold text-[12px] tracking-[0.2em] select-none uppercase font-satoshi">
+          PLAY
+        </div>
+      </div>
     </div>
   );
 }
