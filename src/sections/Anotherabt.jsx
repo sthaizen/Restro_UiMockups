@@ -154,7 +154,7 @@ const CirculaScrollSection = () => {
             trigger: titleWrapRef.current,
             start: "top 85%",
             end: "top 35%",
-            scrub: 0.8,
+            scrub: true,
           },
         });
 

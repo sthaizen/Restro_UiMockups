@@ -81,7 +81,7 @@ const Hero = () => {
             trigger: heroRef.current,
             start: 'top top',
             end: '85% top',
-            scrub: 1,
+            scrub: true,
           }
         }
       );
@@ -96,7 +96,7 @@ const Hero = () => {
             trigger: heroRef.current,
             start: 'top top',
             end: 'bottom top',
-            scrub: 1,
+            scrub: true,
           }
         }
       );
@@ -111,7 +111,7 @@ const Hero = () => {
             trigger: heroRef.current,
             start: 'top top',
             end: 'bottom top',
-            scrub: 1,
+            scrub: true,
           }
         });
       });
@@ -125,7 +125,7 @@ const Hero = () => {
           trigger: heroRef.current,
           start: 'top top',
           end: '30% top',
-          scrub: 1,
+          scrub: true,
         }
       });
 

@@ -48,7 +48,7 @@ const Home = () => {
   }, [location.hash]);
 
   return (
-    <ReactLenis root ref={lenisRef} autoRaf={false} className='relative w-screen min-h-screen'>
+    <ReactLenis root ref={lenisRef} autoRaf={false} className='relative w-full min-h-screen'>
 
       <div className="sticky top-0 z-0 w-full  pointer-events-auto">
         <Main />

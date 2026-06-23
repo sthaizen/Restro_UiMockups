@@ -12,37 +12,44 @@ export default function VideoSection2() {
   const leftTextRef = useRef(null);
   const rightTextRef = useRef(null);
 
-  // Control the vertical Y position of the video and text block together (in pixels)
   const CONTENT_OFFSET_Y = 0;
 
-  // Fine-tuning controls to move elements independently (in pixels)
-  const LINE_WIDTH_PX = 1600;       // Controls the width of the top divider line
+  const LINE_WIDTH_PX = 1600;
   const VIDEO_OFFSET_Y = 0;
   const TEXT_LEFT_OFFSET_Y = 0;
   const TEXT_RIGHT_OFFSET_Y = 0;
 
-  // Animation controls
-  const TEXT_PARALLAX_X = 80;      // How much the text moves outward during expansion
+  const TEXT_PARALLAX_X = 80;
 
-  // Pin exactly when the section hits the top edge of the browser
   const PIN_START_POSITION = "7% 7%";
 
-  // Control the total duration of the scroll freeze (in percentage of viewport height)
-  // 180 means the user has to scroll 1.8x the screen height to finish the animation
   const TOTAL_PIN_SCROLL_DISTANCE = 200;
 
   useEffect(() => {
     let ctx = gsap.context(() => {
       const targetTrigger = videoPlaceholderRef.current;
 
-      // Main Scrubbed Timeline
+      gsap.fromTo(videoWrapperRef.current,
+        { scale: 0.8 },
+        {
+          scale: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top bottom",
+            end: PIN_START_POSITION,
+            scrub: true,
+          }
+        }
+      );
+
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: containerRef.current, // Pin the entire section exactly when it reaches the top
+          trigger: containerRef.current,
           start: PIN_START_POSITION,
           end: `+=${TOTAL_PIN_SCROLL_DISTANCE}%`,
           pin: containerRef.current,
-          scrub: 1.5,
+          scrub: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         }
@@ -98,7 +105,6 @@ export default function VideoSection2() {
         ease: "power2.inOut"
       }, 0);
 
-      // Animate text outward synchronously with the video expansion
       tl.to(leftTextRef.current, {
         x: -TEXT_PARALLAX_X,
         duration: 100,
@@ -111,7 +117,6 @@ export default function VideoSection2() {
         ease: "power2.inOut"
       }, 0);
 
-      // Reveal and expand the center divider line synchronously with the video scroll
       tl.fromTo(".divider-line",
         { scaleX: 0, opacity: 0 },
         {
@@ -122,10 +127,9 @@ export default function VideoSection2() {
         }, 0
       );
 
-      // Entrance animation for text elements (fade up and stagger)
       const leftElements = gsap.utils.toArray(leftTextRef.current.children);
       const rightElements = gsap.utils.toArray(rightTextRef.current.children);
-      
+
       gsap.fromTo([...leftElements, ...rightElements],
         { opacity: 0, y: 40 },
         {
@@ -136,7 +140,7 @@ export default function VideoSection2() {
           ease: "power3.out",
           scrollTrigger: {
             trigger: containerRef.current,
-            start: "top 75%", // Triggers gracefully as the section enters the screen
+            start: "top 75%",
             once: true
           }
         }
@@ -149,13 +153,11 @@ export default function VideoSection2() {
 
   return (
     <div className="bg-[#1b1b1b] w-full pt-[40px]">
-      {/* Top Line - Placed outside the padded container so it can stretch fully! */}
       <div
         className="h-[1px] bg-white/20 mb-5 mx-auto"
         style={{ width: `${LINE_WIDTH_PX}px`, maxWidth: '100%' }}
       />
 
-      {/* Top Label (Scrolls normally, not pinned) */}
       <div className="w-full relative z-20 px-[24px] md:px-[64px] lg:px-[96px] pb-8">
         <h2 className="text-[#ffffff] font-mono text-[11px] sm:text-[13px] lg:text-[14.87px] tracking-[0.15em] uppercase font-bold select-none text-left pl-4 sm:pl-8 inter">
           ◆ SHOWROOM
@@ -163,22 +165,20 @@ export default function VideoSection2() {
       </div>
 
       <section ref={containerRef} className="relative z-10 font-inter h-screen w-full flex flex-col">
-        {/* Perfectly Centered Main Content Area */}
         <div className="flex-1 w-full flex items-center justify-center relative z-20 px-[24px] md:px-[64px] lg:px-[96px]">
 
           <div
             className="relative w-full max-w-[1400px] flex items-center"
             style={{ transform: `translateY(${CONTENT_OFFSET_Y}px)` }}
           >
-            {/* Placeholder for the video before it expands */}
             <div className="w-full flex justify-center" style={{ transform: `translateY(${VIDEO_OFFSET_Y}px)` }}>
               <div ref={videoPlaceholderRef} className="w-[65%] aspect-[16/9] opacity-0" />
             </div>
-            {/* Single Full-width Divider Line */}
+            
             <div className="absolute left-1/2 -translate-x-1/2 w-[1600px] max-w-[100vw] top-1/2 -translate-y-[100px] z-20 pointer-events-none px-[24px]">
               <div className="divider-line w-full h-[1px] bg-white/40 origin-center" />
             </div>
-            {/* Left Text */}
+            
             <div
               ref={leftTextRef}
               className="absolute left-0 w-[45%] pointer-events-none z-30 top-1/2 -translate-y-1/2"
@@ -190,7 +190,6 @@ export default function VideoSection2() {
               </h1>
             </div>
 
-            {/* Right Text */}
             <div
               ref={rightTextRef}
               className="absolute right-0 w-[30%] flex flex-col items-end text-right pointer-events-auto z-30 top-1/2 -translate-y-1/2"
@@ -216,11 +215,10 @@ export default function VideoSection2() {
           </div>
         </div>
 
-        {/* Fullscreen capable video wrapper */}
         <div
           ref={videoWrapperRef}
           className="absolute z-10 overflow-hidden bg-black shadow-lg"
-          style={{ willChange: 'clip-path' }}
+          style={{ willChange: 'clip-path, transform', transform: 'translateZ(0)' }}
         >
           <video
             src="/assets/backgrounds/vid.webm"

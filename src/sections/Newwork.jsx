@@ -100,7 +100,7 @@ export default function Newwork() {
             trigger: header,
             start: "top 85%",
             end: "top 45%",
-            scrub: 1,
+            scrub: true,
           },
         });
 
@@ -134,7 +134,7 @@ export default function Newwork() {
             trigger: header,
             start: "top bottom",
             end: "bottom top",
-            scrub: 0.8,
+            scrub: true,
           },
         });
       }
@@ -147,7 +147,7 @@ export default function Newwork() {
             trigger: bottomLeftImgRef.current,
             start: "top bottom",
             end: "bottom top",
-            scrub: 1,
+            scrub: true,
           }
         });
       }
@@ -160,7 +160,7 @@ export default function Newwork() {
             trigger: middleImgRef.current,
             start: "top bottom",
             end: "bottom top",
-            scrub: 1,
+            scrub: true,
           }
         });
       }
@@ -173,7 +173,7 @@ export default function Newwork() {
             trigger: bottomRightImgRef.current,
             start: "top bottom",
             end: "bottom top",
-            scrub: 1,
+            scrub: true,
           }
         });
       }

@@ -57,7 +57,7 @@ export default function VideoSection() {
           start: PIN_START_POSITION,
           end: `+=${totalScrollVH}%`,
           pin: containerRef.current,
-          scrub: 1.5,
+          scrub: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
@@ -194,7 +194,7 @@ export default function VideoSection() {
       <div
         ref={videoWrapperRef}
         className="absolute z-10 overflow-hidden bg-gray-100 shadow-sm"
-        style={{ willChange: 'clip-path' }}
+        style={{ willChange: 'clip-path, transform', transform: 'translateZ(0)' }}
       >
         <video
           src="/assets/backgrounds/vid.webm"

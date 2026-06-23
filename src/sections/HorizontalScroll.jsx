@@ -69,7 +69,7 @@ export default function HorizontalScroll() {
         end: () => `+=${getScrollAmount() * -1}`,
         pin: true,
         animation: tween,
-        scrub: 1,
+        scrub: true,
         invalidateOnRefresh: true,
       });
 
