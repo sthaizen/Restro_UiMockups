@@ -44,10 +44,10 @@ const HeatCapabilities = ({
   containerClassName = '',
   mainBarGap = 10,
   floatingBarRowHeight = 50,
-  chartHeight = 480,
+  chartHeight = 430,
 
   // Customization controls
-  containerWidth = '85%',
+  containerWidth = '83%',
   primaryColor = '#688ad0',
   secondaryBarBg = '#242424',
   floatingBoxBg = '#2a313f',
@@ -58,6 +58,15 @@ const HeatCapabilities = ({
   subTitleColor = '#ffffff',
   mainBarTitleColor = '#ffffff',
   mainBarSubColor = '#ffffff',
+
+  // Grid controls
+  gridLineColor = '#303030',
+  intermediateGridLineColor = '#5a5a5a66',
+  gridLineStyle = 'dashed', // 'dashed', 'dotted', 'solid'
+  axisLineColor = '#5a5a5aff',
+  axisTickColor = '#5a5a5aff',
+  intermediateTickColor = '#5a5a5a80',
+  axisTextColor = '#ffffff',
 
   style,
   ...props
@@ -92,7 +101,7 @@ const HeatCapabilities = ({
       {...props}
     >
       {/* Header */}
-      <div 
+      <div
         className={`mx-auto flex flex-col md:flex-row justify-between items-start md:items-center mb-14 gap-8 ${containerClassName}`}
         style={{ width: containerWidth }}
       >
@@ -104,7 +113,7 @@ const HeatCapabilities = ({
         </p>
       </div>
 
-      <div 
+      <div
         className={`mx-auto ${containerClassName}`}
         style={{ width: containerWidth }}
       >
@@ -137,18 +146,42 @@ const HeatCapabilities = ({
         <div className="relative w-full pt-8 pb-12">
           {/* Grid Lines & X-Axis */}
           <div className="absolute inset-0 flex justify-between pointer-events-none">
-            <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-[#333333]"></div>
-            {[0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200].map((temp) => (
-              <div key={temp} className="relative h-full flex flex-col items-center" style={{ width: 0 }}>
-                {/* Dashed vertical line */}
-                <div className="absolute inset-y-0 w-px border-r border-dashed border-[#303030]"></div>
-                {/* Small solid tick below axis */}
-                <div className="absolute bottom-0 translate-y-full w-px h-[6px] bg-[#444444]"></div>
-                <span className="absolute bottom-0 translate-y-[200%] mt-[6px] text-[11px] text-[#888888] whitespace-nowrap">
-                  {temp} °C
-                </span>
-              </div>
-            ))}
+            <div className="absolute bottom-0 left-0 right-0 h-[1px]" style={{ backgroundColor: axisLineColor }}></div>
+            {Array.from({ length: 25 }, (_, i) => i * 50).map((temp) => {
+              const isMain = temp % 100 === 0;
+              return (
+                <div key={temp} className="relative h-full flex flex-col items-center" style={{ width: 0 }}>
+                  {/* Vertical grid line */}
+                  <div
+                    className="absolute inset-y-0 w-px border-r"
+                    style={{
+                      borderColor: isMain ? gridLineColor : intermediateGridLineColor,
+                      borderStyle: gridLineStyle,
+                    }}
+                  ></div>
+                  {/* Small solid tick below axis */}
+                  <div
+                    className="absolute bottom-0 translate-y-full w-px"
+                    style={{
+                      backgroundColor: isMain ? axisTickColor : intermediateTickColor,
+                      height: isMain ? '6px' : '1px',
+                    }}
+                  ></div>
+                  {isMain && (
+                    <span
+                      className="absolute bottom-0 mt-[6px] text-[13px] whitespace-nowrap"
+                      style={{
+                        color: axisTextColor,
+                        left: '0px',
+                        transform: 'translate(-50%, 200%)'
+                      }}
+                    >
+                      {temp} °C
+                    </span>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {/* Chart Content Container */}
@@ -220,7 +253,7 @@ const HeatCapabilities = ({
                       className="absolute h-full flex items-center px-4 rounded-r-[2px] overflow-hidden whitespace-nowrap z-20"
                       style={{ backgroundColor: primaryColor }}
                     >
-                      <motion.div 
+                      <motion.div
                         initial={{ opacity: 0, x: -10 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
@@ -248,7 +281,7 @@ const HeatCapabilities = ({
                         {/* Vertical tick marker at the very end of the bar */}
                         <div className="absolute right-0 top-0 bottom-0 w-[2px]" style={{ backgroundColor: primaryColor }} />
                       </motion.div>
-                      <motion.div 
+                      <motion.div
                         initial={{ opacity: 0, x: -10 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
