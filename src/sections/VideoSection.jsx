@@ -141,7 +141,7 @@ export default function VideoSection() {
   }, []);
 
   return (
-    <section ref={containerRef} className="bg-white   px-6 md:px-16 lg:px-24 relative z-10 font-inter mb-[40vh]">
+    <section ref={containerRef} className="bg-[#f1f5f8] pt-24 pb-[40vh] px-6 md:px-16 lg:px-24 relative z-10 font-inter">
       <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-y-16 md:gap-x-16 lg:gap-x-24">
 
         {/* ROW 1 */}

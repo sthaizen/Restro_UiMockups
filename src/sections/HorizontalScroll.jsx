@@ -6,6 +6,13 @@ import RollingText from '../components/RollingText';
 
 gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
+const CONFIG = {
+  parallax: {
+    yPercentChange: 4, // Vertical shift percentage. Increase for more parallax effect.
+    scrubSpeed: 10,   // Smoothness of the lag effect. Higher = smoother lag.
+  }
+};
+
 export default function HorizontalScroll() {
   const containerRef = useRef(null);
   const sliderRef = useRef(null);
@@ -71,6 +78,39 @@ export default function HorizontalScroll() {
         animation: tween,
         scrub: true,
         invalidateOnRefresh: true,
+      });
+
+      const imageWrappers = gsap.utils.toArray('.horizontal-parallax-wrapper');
+      imageWrappers.forEach((wrapper) => {
+        // Entrance Parallax (animates as component enters, stops when pinning starts)
+        gsap.fromTo(wrapper,
+          { yPercent: -CONFIG.parallax.yPercentChange },
+          {
+            yPercent: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top bottom",
+              end: "bottom 100%",
+              scrub: CONFIG.parallax.scrubSpeed,
+            }
+          }
+        );
+
+        // Exit Parallax (animates as component leaves, starts after unpinning)
+        gsap.fromTo(wrapper,
+          { yPercent: 0 },
+          {
+            yPercent: CONFIG.parallax.yPercentChange,
+            ease: "none",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "bottom 100%", // Automatically adjusted by GSAP to start after pin spacing
+              end: "bottom top",
+              scrub: CONFIG.parallax.scrubSpeed,
+            }
+          }
+        );
       });
 
     }, containerRef);
@@ -173,10 +213,16 @@ export default function HorizontalScroll() {
                   <div className="absolute top-0 left-0 w-full h-[1px] bg-white/10"></div>
 
                   <a href="#" className="peer flex items-center gap-3 group text-[#FFFFFF] text-[16px] font-medium tracking-wide w-fit">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-x-1 shrink-0">
-                      <polyline points="15 10 20 15 15 20"></polyline>
-                      <path d="M4 4v7a4 4 0 0 0 4 4h12"></path>
-                    </svg>
+                    <div className="relative overflow-hidden w-[18px] h-[18px] flex items-center justify-center shrink-0">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-x-[150%]">
+                        <path d="M5 12h14" />
+                        <path d="M12 5l7 7-7 7" />
+                      </svg>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute -translate-x-[150%] transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-x-0">
+                        <path d="M5 12h14" />
+                        <path d="M12 5l7 7-7 7" />
+                      </svg>
+                    </div>
                     <RollingText text="Learn More" />
                   </a>
 
@@ -191,13 +237,14 @@ export default function HorizontalScroll() {
                 key={index}
                 className="w-[350px] md:w-[450px] h-full relative shrink-0 rounded-sm shadow-xl overflow-hidden group cursor-pointer"
               >
-                <img
-                  src={card.src}
-                  alt={card.alt}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.1]"
-                />
-                <div className="absolute inset-0 bg-black opacity-40 transition-opacity duration-700 ease-in-out group-hover:opacity-0" />
-
+                <div className="horizontal-parallax-wrapper absolute top-[-10%] left-[-5%] w-[110%] h-[120%]">
+                  <img
+                    src={card.src}
+                    alt={card.alt}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.1]"
+                  />
+                  <div className="absolute inset-0 bg-black opacity-40 transition-opacity duration-700 ease-in-out group-hover:opacity-0 pointer-events-none" />
+                </div>
               </div>
             );
           }

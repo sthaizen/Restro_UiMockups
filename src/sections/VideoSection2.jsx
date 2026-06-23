@@ -11,6 +11,7 @@ export default function VideoSection2() {
   const videoPlaceholderRef = useRef(null);
   const leftTextRef = useRef(null);
   const rightTextRef = useRef(null);
+  const overlayRef = useRef(null);
 
   const CONTENT_OFFSET_Y = 0;
 
@@ -25,14 +26,19 @@ export default function VideoSection2() {
 
   const TOTAL_PIN_SCROLL_DISTANCE = 200;
 
+  // Video Overlay Controls
+  const OVERLAY_COLOR = "#212325";
+  const OVERLAY_MAX_OPACITY = 0;
+  const OVERLAY_BLUR_PX = 0;
+
   useEffect(() => {
     let ctx = gsap.context(() => {
       const targetTrigger = videoPlaceholderRef.current;
 
       gsap.fromTo(videoWrapperRef.current,
-        { scale: 0.8 },
+        { scale: 1 },
         {
-          scale: 1,
+          scale: 1.2,
           ease: "none",
           scrollTrigger: {
             trigger: containerRef.current,
@@ -127,6 +133,14 @@ export default function VideoSection2() {
         }, 0
       );
 
+      tl.fromTo(overlayRef.current, {
+        opacity: 0
+      }, {
+        opacity: OVERLAY_MAX_OPACITY,
+        duration: 50,
+        ease: "power2.inOut"
+      }, 50);
+
       const leftElements = gsap.utils.toArray(leftTextRef.current.children);
       const rightElements = gsap.utils.toArray(rightTextRef.current.children);
 
@@ -152,14 +166,14 @@ export default function VideoSection2() {
   }, []);
 
   return (
-    <div className="bg-[#1b1b1b] w-full pt-[40px]">
+    <div className="bg-[#1b1b1b] w-full pt-[40px] mb-20">
       <div
         className="h-[1px] bg-white/20 mb-5 mx-auto"
         style={{ width: `${LINE_WIDTH_PX}px`, maxWidth: '100%' }}
       />
 
-      <div className="w-full relative z-20 px-[24px] md:px-[64px] lg:px-[96px] pb-8">
-        <h2 className="text-[#ffffff] font-mono text-[11px] sm:text-[13px] lg:text-[14.87px] tracking-[0.15em] uppercase font-bold select-none text-left pl-4 sm:pl-8 inter">
+      <div className="w-full relative z-20 px-4 md:px-8 lg:px-12 pb-8">
+        <h2 className="text-[#ffffff] font-mono text-[11px] sm:text-[13px] lg:text-[14.87px] tracking-[0.15em] uppercase font-bold select-none text-left inter ml-5">
           ◆ SHOWROOM
         </h2>
       </div>
@@ -174,18 +188,18 @@ export default function VideoSection2() {
             <div className="w-full flex justify-center" style={{ transform: `translateY(${VIDEO_OFFSET_Y}px)` }}>
               <div ref={videoPlaceholderRef} className="w-[65%] aspect-[16/9] opacity-0" />
             </div>
-            
-            <div className="absolute left-1/2 -translate-x-1/2 w-[1600px] max-w-[100vw] top-1/2 -translate-y-[100px] z-20 pointer-events-none px-[24px]">
+
+            <div className="absolute left-1/2 -translate-x-1/2 w-[1600px] max-w-[100vw] top-1/2 -translate-y-[95px] z-20 pointer-events-none px-[24px]">
               <div className="divider-line w-full h-[1px] bg-white/40 origin-center" />
             </div>
-            
+
             <div
               ref={leftTextRef}
               className="absolute left-0 w-[45%] pointer-events-none z-30 top-1/2 -translate-y-1/2"
               style={{ marginTop: `${TEXT_LEFT_OFFSET_Y}px` }}
             >
 
-              <h1 className="text-white text-[32px] md:text-[42px] lg:text-[48px] leading-[1.1] font-light font-['Geist',Arial,sans-serif] tracking-tight drop-shadow-md">
+              <h1 className="text-white text-[32px] md:text-[42px] lg:text-[44px] leading-[1.1] font-light font-['Geist',Arial,sans-serif] tracking-tight drop-shadow-md">
                 A place where precision<br />and creativity connect.
               </h1>
             </div>
@@ -196,18 +210,44 @@ export default function VideoSection2() {
               style={{ marginTop: `${TEXT_RIGHT_OFFSET_Y}px` }}
             >
 
-              <h3 className="text-white uppercase text-[11px] md:text-[13px] tracking-[0.15em] font-bold mb-2">
+              <h3 className="text-white uppercase text-[11px] md:text-[12px] tracking-[0.15em] font-bold mb-2">
                 ADDRESS
               </h3>
               <p className="text-white/80 text-[13px] md:text-[15px] leading-[1.5] max-w-[220px] mb-8 font-light">
                 Orbital 25 Business Park, Unit<br />Watford WD18 9DA, UK
               </p>
 
-              <button className="flex items-center justify-center gap-3 bg-[#ffffff1a] hover:bg-[#ffffff33] transition-colors duration-300 backdrop-blur-sm px-6 py-3 border border-white/20 text-white uppercase text-[12px] tracking-wider font-medium group rounded-sm">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:translate-x-1 shrink-0">
-                  <polyline points="15 10 20 15 15 20"></polyline>
-                  <path d="M4 4v7a4 4 0 0 0 4 4h12"></path>
-                </svg>
+              <button className="flex items-center justify-center gap-3 bg-[#ffffff1a] hover:bg-[#ffffff33] transition-colors duration-300 backdrop-blur-sm px-6 py-3  text-white uppercase text-[12px] tracking-wider font-medium group ">
+                <div className="relative overflow-hidden w-4 h-4 flex items-center justify-center shrink-0">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="absolute transition-transform duration-500 ease-out group-hover:translate-x-[150%]"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="M12 5l7 7-7 7" />
+                  </svg>
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="absolute -translate-x-[150%] transition-transform duration-500 ease-out group-hover:translate-x-0"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="M12 5l7 7-7 7" />
+                  </svg>
+                </div>
                 <RollingText text="SHOWROOM" />
               </button>
             </div>
@@ -227,6 +267,14 @@ export default function VideoSection2() {
             loop
             muted
             playsInline
+          />
+          <div
+            ref={overlayRef}
+            className="absolute inset-0 pointer-events-none opacity-0"
+            style={{
+              backgroundColor: OVERLAY_COLOR,
+              backdropFilter: `blur(${OVERLAY_BLUR_PX}px)`
+            }}
           />
         </div>
       </section>
