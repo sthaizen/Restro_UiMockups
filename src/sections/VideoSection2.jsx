@@ -18,6 +18,27 @@ export default function VideoSection2() {
   const quickSetterX = useRef(null);
   const quickSetterY = useRef(null);
 
+  // Modal State
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const modalVideoRef = useRef(null);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+    setTimeout(() => setIsAnimating(true), 10);
+  };
+
+  const closeModal = () => {
+    setIsAnimating(false);
+    setTimeout(() => {
+      setIsModalOpen(false);
+      if (modalVideoRef.current) modalVideoRef.current.pause();
+    }, 500);
+  };
+
   useEffect(() => {
     if (cursorRef.current) {
       quickSetterX.current = gsap.quickTo(cursorRef.current, "x", {
@@ -81,8 +102,45 @@ export default function VideoSection2() {
 
   // Video Overlay Controls
   const OVERLAY_COLOR = "#212325";
-  const OVERLAY_MAX_OPACITY = 0;
+  const OVERLAY_MAX_OPACITY = 0.4;
   const OVERLAY_BLUR_PX = 0;
+
+  const togglePlay = () => {
+    if (modalVideoRef.current) {
+      if (isPlaying) {
+        modalVideoRef.current.pause();
+      } else {
+        modalVideoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const toggleMute = () => {
+    if (modalVideoRef.current) {
+      modalVideoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    if (modalVideoRef.current) {
+      setCurrentTime(modalVideoRef.current.currentTime);
+    }
+  };
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  useEffect(() => {
+    if (isModalOpen && modalVideoRef.current) {
+      modalVideoRef.current.play();
+      setIsPlaying(true);
+    }
+  }, [isModalOpen]);
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -314,6 +372,7 @@ export default function VideoSection2() {
           style={{ willChange: 'clip-path, transform', transform: 'translateZ(0)' }}
           onMouseEnter={handleVideoMouseEnter}
           onMouseLeave={handleVideoMouseLeave}
+          onClick={openModal}
         >
           <video
             src="/assets/backgrounds/vid.webm"
@@ -347,6 +406,55 @@ export default function VideoSection2() {
           PLAY
         </div>
       </div>
+
+      {/* Video Modal */}
+      {isModalOpen && (
+        <div
+          className={`fixed inset-0 z-[100] bg-[#1a1a1a] flex flex-col font-inter transition-opacity duration-500 ease-in-out ${isAnimating ? 'opacity-100' : 'opacity-0'}`}
+        >
+          {/* Video */}
+          <video
+            ref={modalVideoRef}
+            src="/assets/backgrounds/vid.webm"
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            playsInline
+            onTimeUpdate={handleTimeUpdate}
+            onEnded={() => setIsPlaying(false)}
+          />
+
+          {/* Top Right Close */}
+          <div className="absolute top-8 right-8 z-10">
+            <button
+              onClick={closeModal}
+              className="w-12 h-12 border border-white/20 bg-[#212325] flex items-center justify-center text-white transition-colors hover:bg-[#2a2c2e]"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="absolute bottom-0 left-0 w-full z-10">
+            <div className="mx-8 mb-20 relative">
+              <div className="w-full h-[1px] bg-white/20 mb-6" />
+              <div className="flex justify-between items-center text-white text-[11px] font-bold tracking-[0.15em] uppercase">
+                <div className="flex items-center gap-12">
+                  <button onClick={togglePlay} className="hover:text-white/70 transition-colors w-12 text-left">
+                    {isPlaying ? 'PAUSE' : 'PLAY'}
+                  </button>
+                  <span className="w-12 text-center ml-350">{formatTime(currentTime)}</span>
+                </div>
+                <button onClick={toggleMute} className="hover:text-white/70 transition-colors">
+                  {isMuted ? 'UNMUTE' : 'MUTE'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

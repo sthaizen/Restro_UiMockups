@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
 const CONFIG = {
   parallax: {
-    yPercentChange: 5, // Vertical shift percentage. Increase for more parallax effect.
+    yPercentChange: 10, // Vertical shift percentage. Increase for more parallax effect.
     scrubSpeed: 1,   // Smoothness of the lag effect. Higher = smoother lag.
   }
 };

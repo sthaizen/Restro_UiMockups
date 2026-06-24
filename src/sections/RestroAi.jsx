@@ -32,34 +32,19 @@ export default function RestroAi() {
 
   useEffect(() => {
     let ctx = gsap.context(() => {
-      // 1. Entrance Animations (Triggered once when scrolled into view)
-      gsap.fromTo(titleContentRef.current,
+      // 1. Entrance Animations (Scrubbed overlap transition)
+      gsap.fromTo([titleContentRef.current, cardContentRef.current],
         { opacity: 0, y: 50 },
         {
           opacity: 1,
           y: 0,
-          duration: 1.2,
-          ease: "power3.out",
+          stagger: 0.1,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: containerRef.current,
-            start: "top 70%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
-
-      gsap.fromTo(cardContentRef.current,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.2,
-          delay: 0.15,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 70%",
-            toggleActions: "play none none reverse"
+            start: "top bottom", 
+            end: "top 40%",      // Finishes earlier for a faster animation speed
+            scrub: 0.5          // Tighter scrub for a smoother, less laggy feel
           }
         }
       );

@@ -14,6 +14,7 @@ import VideoSection from './sections/VideoSection';
 import VideoSection2 from './sections/VideoSection2';
 import Anotherabt from './sections/Anotherabt';
 import RestroAi from './sections/RestroAi';
+import MorphComp from './sections/MorphComp';
 import SkillPage from './components/SkillPage/SkillPage';
 import BottomNav from './components/BottomNav';
 import HeatCapabilities from './sections/HeatCapabilities';
@@ -61,6 +62,7 @@ const Home = () => {
         <VideoSection2 />
         <HeatCapabilities />
         <HorizontalScroll />
+        <MorphComp />
         <RestroAi />
         {/* <Anotherabt /> */}
         <Questions />
