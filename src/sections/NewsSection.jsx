@@ -162,7 +162,7 @@ const NewsSection = () => {
               <h4 className="inter font-medium text-[21px] text-black mb-4">
                 {card.title}
               </h4>
-              <p className="inter text-[18px] text-[#524F4B] leading-relaxed">
+              <p className="inter text-[18px] text-[#524F4B] leading-relaxed ">
                 {card.description}
               </p>
             </div>

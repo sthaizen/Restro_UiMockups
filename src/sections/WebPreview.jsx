@@ -29,19 +29,19 @@ const WebPreview = () => {
 
           {/* Left Column - Title */}
           <div>
-            <h2 className="text-[40px] md:text-[48px] text-black leading-[1.1] tracking-tight" style={{ fontFamily: 'Geist, sans-serif' }}>
+            <h2 className="text-[40px] md:text-[48px] font-light leading-tight text-black">
               {CONFIG.text.title}
             </h2>
           </div>
 
           {/* Right Column - Paragraph and Button */}
           <div className="flex flex-col justify-start pt-2">
-            <p className="inter text-[16px] md:text-[18px] text-[#524F4B] leading-relaxed mb-8 max-w-[540px]">
+            <p className="inter text-[16px] md:text-[18px] text-[#524F4B] leading-relaxed mb-8 max-w-[540px] ml-30">
               {CONFIG.text.paragraph}
             </p>
 
             <div className="flex items-start">
-              <button className="flex items-center gap-2 group cursor-pointer">
+              <button className="flex items-center gap-2 group cursor-pointer ml-30">
                 <div className="flex items-center justify-center bg-[#E5EFFF] text-[#1D2939] w-12 h-12 rounded transition-colors group-hover:bg-[#d0e0ff]">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M9 5v7a2 2 0 0 0 2 2h9" />
