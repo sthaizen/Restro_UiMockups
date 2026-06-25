@@ -17,6 +17,8 @@ import RestroAi from './sections/RestroAi';
 import MorphComp from './sections/MorphComp';
 import FeatureGrid from './sections/FeatureGrid';
 import BentoGrid from './sections/BentoGrid';
+import NewsSection from './sections/NewsSection';
+import WebPreview from './sections/WebPreview';
 import SkillPage from './components/SkillPage/SkillPage';
 import BottomNav from './components/BottomNav';
 import HeatCapabilities from './sections/HeatCapabilities';
@@ -61,12 +63,14 @@ const Home = () => {
 
       <div className="relative z-10 bg-[#ffffff] shadow-[0_-10px_50px_rgba(0,0,0,0.12)] ">
         <Newwork />
-        {/* <VideoSection2 /> */}
+        <VideoSection2 />
         <HeatCapabilities />
         <HorizontalScroll />
         <MorphComp />
         <FeatureGrid />
         <RestroAi />
+        <WebPreview />
+        <NewsSection />
 
         <ContactSummery />
         <Ctst />
