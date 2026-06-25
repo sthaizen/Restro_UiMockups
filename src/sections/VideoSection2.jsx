@@ -102,7 +102,7 @@ export default function VideoSection2() {
 
   // Video Overlay Controls
   const OVERLAY_COLOR = "#212325";
-  const OVERLAY_MAX_OPACITY = 0.4;
+  const OVERLAY_MAX_OPACITY = 0;
   const OVERLAY_BLUR_PX = 0;
 
   const togglePlay = () => {
@@ -394,7 +394,7 @@ export default function VideoSection2() {
       </section>
 
       {/* Custom Mouse Cursor following specifications */}
-      <div
+      {/* <div
         ref={cursorRef}
         className="fixed top-0 left-0 pointer-events-none z-50 opacity-0"
         style={{
@@ -405,7 +405,7 @@ export default function VideoSection2() {
         <div className="bg-[#FFFFFF1A] border border-white/10 backdrop-blur-lg text-white px-7 py-3 flex items-center justify-center font-bold text-[12px] tracking-[0.2em] select-none uppercase font-satoshi">
           PLAY
         </div>
-      </div>
+      </div> */}
 
       {/* Video Modal */}
       {isModalOpen && (
@@ -427,9 +427,9 @@ export default function VideoSection2() {
           <div className="absolute top-8 right-8 z-10">
             <button
               onClick={closeModal}
-              className="w-12 h-12 border border-white/20 bg-[#212325] flex items-center justify-center text-white transition-colors hover:bg-[#2a2c2e]"
+              className="w-12 h-12 border border-white/20 bg-[#2c2c2c] flex items-center justify-center text-white transition-colors hover:bg-[#2a2c2e]"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
