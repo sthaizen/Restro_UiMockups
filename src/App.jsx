@@ -19,6 +19,7 @@ import FeatureGrid from './sections/FeatureGrid';
 import BentoGrid from './sections/BentoGrid';
 import NewsSection from './sections/NewsSection';
 import WebPreview from './sections/WebPreview';
+import ConnectCta from './sections/ConnectCta';
 import SkillPage from './components/SkillPage/SkillPage';
 import BottomNav from './components/BottomNav';
 import HeatCapabilities from './sections/HeatCapabilities';
@@ -68,9 +69,10 @@ const Home = () => {
         <HorizontalScroll />
         <MorphComp />
         <FeatureGrid />
+        {/* <NewsSection /> */}
         <RestroAi />
         <WebPreview />
-        <NewsSection />
+        <ConnectCta />
 
         <ContactSummery />
         <Ctst />

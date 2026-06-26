@@ -23,7 +23,7 @@ const CONFIG = {
 
 const WebPreview = () => {
   return (
-    <section className="bg-white py-16 md:py-24 w-full overflow-hidden">
+    <section className="bg-[white] py-16 md:py-24 w-full overflow-hidden bg-">
       <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-8 mb-16 md:mb-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24">
 
@@ -51,6 +51,7 @@ const WebPreview = () => {
                 <div className="flex items-center justify-center border border-gray-300 px-6 h-12 rounded bg-white text-black inter font-medium text-[15px] transition-colors group-hover:bg-gray-50">
                   {CONFIG.text.buttonText}
                 </div>
+
               </button>
             </div>
           </div>
