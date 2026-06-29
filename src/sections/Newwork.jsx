@@ -344,6 +344,7 @@ export default function Newwork() {
               </div>
             </div>
 
+
             {/* Right Bottom Image (High position) */}
             <div ref={bottomRightImgRef} className="flex justify-center lg:translate-x-[60px] lg:translate-y-[-90px]">
               <div
