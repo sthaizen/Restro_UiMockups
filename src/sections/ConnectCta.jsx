@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 import RollingText from '../components/RollingText';
@@ -62,8 +62,19 @@ const ConnectCta = ({ text = CONFIG.text, cta = CONFIG.cta, images = CONFIG.imag
   const img1Ref = useRef(null);
   const img2Ref = useRef(null);
   const containerRef = useRef(null);
+  const footerRef = useRef(null);
+  const [footerHeight, setFooterHeight] = useState(570);
 
   useEffect(() => {
+    const updateFooterHeight = () => {
+      if (footerRef.current) {
+        setFooterHeight(footerRef.current.offsetHeight);
+      }
+    };
+    
+    setTimeout(updateFooterHeight, 100);
+    window.addEventListener('resize', updateFooterHeight);
+
     if (typeof window !== "undefined") {
       gsap.registerPlugin(ScrollTrigger);
     }
@@ -108,34 +119,21 @@ const ConnectCta = ({ text = CONFIG.text, cta = CONFIG.cta, images = CONFIG.imag
           }
         });
       }
-
-      // Parallax Footer Reveal Logic
-      const footerOuter = document.querySelector('.footer-outer');
-      const footerInner = document.querySelector('.footer-inner');
-      if (footerOuter && footerInner) {
-        gsap.fromTo(footerInner, 
-          { y: () => -footerOuter.offsetHeight }, 
-          {
-            y: 0,
-            ease: "none",
-            scrollTrigger: {
-              trigger: footerOuter,
-              start: "top bottom", 
-              end: "bottom bottom", 
-              scrub: true,
-              invalidateOnRefresh: true,
-            }
-          }
-        );
-      }
     });
 
-    return () => ctx.revert();
-  }, [animation.img1ScrollYPx, animation.img2ScrollYPx]);
+    return () => {
+      ctx.revert();
+      window.removeEventListener('resize', updateFooterHeight);
+    };
+  }, [animation.img1ScrollYPx, animation.img2ScrollYPx, animation.scaleAnimationStart, animation.scaleAnimationEnd]);
 
   return (
     <div className="w-full bg-[#000000] relative">
-      <section ref={containerRef} className="relative z-20 w-full bg-[#1b1b1b] overflow-hidden font-sans text-white origin-center shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+      <section 
+        ref={containerRef} 
+        className="relative z-20 w-full bg-[#1b1b1b] overflow-hidden font-sans text-white origin-center shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+        style={{ marginBottom: `-${footerHeight}px` }}
+      >
         <div className="w-full max-w-[1860px] mx-auto px-8 md:px-16 lg:px-24 py-24 md:py-36 grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-16 lg:gap-24 items-center">
 
           <div
@@ -226,10 +224,18 @@ const ConnectCta = ({ text = CONFIG.text, cta = CONFIG.cta, images = CONFIG.imag
         </div>
       </section>
 
-      {/* Footer Parallax Container */}
-      <div className="footer-outer relative z-10 w-full bg-black overflow-hidden">
-        <div className="footer-inner w-full">
-          <Footer />
+      {/* Footer Parallax Container - Natively handles scroll using sticky! */}
+      <div 
+        className="footer-outer relative z-10 w-full bg-black"
+        style={{ height: `${footerHeight * 2}px` }}
+      >
+        <div 
+          className="footer-inner w-full sticky"
+          style={{ height: `${footerHeight}px`, top: `calc(100vh - ${footerHeight}px)` }}
+        >
+          <div ref={footerRef} className="w-full">
+            <Footer />
+          </div>
         </div>
       </div>
     </div>
