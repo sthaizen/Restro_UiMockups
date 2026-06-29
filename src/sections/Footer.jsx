@@ -9,8 +9,9 @@ gsap.registerPlugin(ScrollTrigger);
 // ==========================================
 // Tweak these variables to control exactly how the data stream looks and feels!
 const STREAM_SETTINGS = {
+  footerHeight: '750px',  // Custom height for the entire Footer component
   speedSeconds: 30,       // Animation speed (lower is faster)
-  dotSize: 1.5,             // Radius of the dots
+  dotSize: 2,           // Radius of the dots
   opacity: 1.0,           // Opacity of the dots (0 to 1)
   patternWidth: 800,      // Width of the repeating pattern
   patternHeight: 60,      // Total height of the pattern area
@@ -114,7 +115,10 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="w-full bg-black text-white flex flex-col justify-between pt-16 pb-12 md:pt-24 md:pb-16 px-8 md:px-16 lg:px-24 font-sans relative overflow-hidden">
+    <footer
+      className="w-full bg-black text-white flex flex-col justify-between pt-16 pb-12 md:pt-24 md:pb-16 px-8 md:px-16 lg:px-24 font-sans relative overflow-hidden"
+      style={{ height: STREAM_SETTINGS.footerHeight }}
+    >
 
       {/* Top Section */}
       <div className="flex flex-col lg:flex-row justify-between items-start gap-16 lg:gap-8 z-10">
@@ -122,8 +126,8 @@ const Footer = () => {
         {/* Left Side: Large Text */}
         <div className="lg:w-1/2">
           <h2 className="text-[32px] md:text-[40px] lg:text-[44px] font-[300] leading-[1.1] tracking-tight max-w-[380px]">
-            Proven Advanced <br className="hidden md:block" />
-            Nuclear Technology
+            Exquisite Fine Dining <br className="hidden md:block" />
+            at Polaris Restaurant
           </h2>
         </div>
 
@@ -132,25 +136,25 @@ const Footer = () => {
 
           {/* Column 1 */}
           <div className="flex flex-col gap-1.5">
-            <FooterLink text="Company" />
-            <FooterLink text="Technology" />
-            <FooterLink text="Solutions" />
-            <FooterLink text="Our Edge" />
-            <FooterLink text="Investors" />
+            <FooterLink text="Our Story" />
+            <FooterLink text="Menu" />
+            <FooterLink text="Reservations" />
+            <FooterLink text="Private Events" />
+            <FooterLink text="Gift Cards" />
           </div>
 
           {/* Column 2 */}
           <div className="flex flex-col gap-1.5">
-            <FooterLink text="Our Team" />
-            <FooterLink text="News" />
+            <FooterLink text="Our Chef" />
+            <FooterLink text="Press" />
             <FooterLink text="Careers" />
             <FooterLink text="Contact Us" />
           </div>
 
           {/* Column 3 */}
           <div className="flex flex-col gap-1.5">
-            <FooterLink text="LinkedIn" />
-            <FooterLink text="Follow Us on X" />
+            <FooterLink text="Instagram" />
+            <FooterLink text="Facebook" />
           </div>
 
         </div>
@@ -201,13 +205,13 @@ const Footer = () => {
               <rect x="0" y="36" width="40" height="4" fill="white" />
             </g>
           </svg>
-          <span className="text-[32px] font-semibold tracking-[-0.03em]">ZettaJoule</span>
+          <span className="text-[42px] font-semibold tracking-[-0.03em]">Polaris</span>
         </div>
 
         {/* Copyright & Legal */}
         <div className="flex flex-col items-start gap-2.5 text-[12px] text-[#888888] font-medium tracking-wide">
           <div className="flex flex-wrap items-center gap-6">
-            <p>© 2026 ZettaJoule. All rights reserved.</p>
+            <p>© 2026 Polaris Restaurant. All rights reserved.</p>
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-white transition-colors">Terms of Use</a>
           </div>

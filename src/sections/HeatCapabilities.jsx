@@ -32,11 +32,11 @@ const floatingBarsData = {
 };
 
 const mainBars = [
-  { labelPrefix: 'ZettaJoule', labelSuffix: 'Reactor', text: 'Up to 950 °C', temp: 950, isMain: true },
-  { labelPrefix: 'High-Temp Gas-Cooled', labelSuffix: 'Reactor', text: '750 °C', temp: 750, isMain: false },
-  { labelPrefix: 'Molten Salt', labelSuffix: 'Reactor', text: '650 °C', temp: 650, isMain: false },
-  { labelPrefix: 'Liquid Metal', labelSuffix: 'Reactor', text: '550 °C', temp: 550, isMain: false },
-  { labelPrefix: 'Light Water', labelSuffix: 'Reactor', text: '300 °C', temp: 300, isMain: false },
+  { labelPrefix: 'Polaris', labelSuffix: 'Wood-Fired Oven', text: 'Up to 950 °C', temp: 950, isMain: true },
+  { labelPrefix: 'Commercial', labelSuffix: 'Gas Range', text: '750 °C', temp: 750, isMain: false },
+  { labelPrefix: 'Industrial', labelSuffix: 'Deep Fryer', text: '650 °C', temp: 650, isMain: false },
+  { labelPrefix: 'Salamander', labelSuffix: 'Broiler', text: '550 °C', temp: 550, isMain: false },
+  { labelPrefix: 'Sous Vide', labelSuffix: 'Water Bath', text: '300 °C', temp: 300, isMain: false },
 ];
 
 const HeatCapabilities = ({
@@ -106,10 +106,10 @@ const HeatCapabilities = ({
         style={{ width: containerWidth }}
       >
         <h2 className="gsap-text-anim text-[48px] text-[#ffffff] font-light leading-tight">
-          Unmatched <br /> Heat Capabilities
+          Unmatched <br /> Culinary Heat
         </h2>
         <p className="gsap-text-anim text-[#ffffff] max-w-lg text-[18px] leading-relaxed">
-          Our ZJ advanced SMR will be designed to operate at temperatures up to 950 °C, which is approximately 600 °C higher than conventional water-cooled reactors, while also providing reliable power.
+          Our custom Polaris wood-fired ovens are designed to operate at temperatures up to 950 °C, which is approximately 600 °C higher than conventional ovens, providing the perfect sear for our signature dishes.
         </p>
       </div>
 

@@ -55,7 +55,19 @@ const Home = () => {
   }, [location.hash]);
 
   return (
-    <ReactLenis root ref={lenisRef} autoRaf={false} className='relative w-full min-h-screen'>
+    <ReactLenis 
+      root 
+      ref={lenisRef} 
+      autoRaf={false} 
+      options={{ 
+        lerp: 0.05,           // Lower value = softer, smoother deceleration
+        duration: 1.5,        // Scroll animation duration
+        smoothWheel: true,    // Enable smooth scrolling for mouse wheels
+        wheelMultiplier: 1.1, // Slightly boost the wheel speed for better responsiveness
+        touchMultiplier: 2    // Better feel on mobile/trackpads
+      }}
+      className='relative w-full min-h-screen'
+    >
 
       <div className="sticky top-0 z-0 w-full  pointer-events-auto">
         <Main />

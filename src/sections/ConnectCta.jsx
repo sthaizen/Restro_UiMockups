@@ -6,10 +6,10 @@ import Footer from './Footer';
 
 const CONFIG = {
   text: {
-    highlight: 'Connect With Us.',
-    body: ' Our team is here to provide information on our advanced technology and performance capabilities.',
+    highlight: 'Dine With Us.',
+    body: ' Our culinary team is here to provide an unforgettable fine dining experience at Polaris.',
   },
-  cta: 'Contact Our Team',
+  cta: 'Reserve a Table',
 
   animation: {
     img1ScrollYPx: 50,
@@ -64,16 +64,20 @@ const ConnectCta = ({ text = CONFIG.text, cta = CONFIG.cta, images = CONFIG.imag
   const containerRef = useRef(null);
   const footerRef = useRef(null);
   const [footerHeight, setFooterHeight] = useState(570);
+  const [windowHeight, setWindowHeight] = useState(1000);
 
   useEffect(() => {
-    const updateFooterHeight = () => {
+    const updateDimensions = () => {
       if (footerRef.current) {
         setFooterHeight(footerRef.current.offsetHeight);
       }
+      if (typeof window !== 'undefined') {
+        setWindowHeight(window.innerHeight);
+      }
     };
     
-    setTimeout(updateFooterHeight, 100);
-    window.addEventListener('resize', updateFooterHeight);
+    setTimeout(updateDimensions, 100);
+    window.addEventListener('resize', updateDimensions);
 
     if (typeof window !== "undefined") {
       gsap.registerPlugin(ScrollTrigger);
@@ -88,7 +92,7 @@ const ConnectCta = ({ text = CONFIG.text, cta = CONFIG.cta, images = CONFIG.imag
             trigger: img1Ref.current,
             start: "top bottom",
             end: "bottom top",
-            scrub: true,
+            scrub: 1,
           }
         });
       }
@@ -101,7 +105,7 @@ const ConnectCta = ({ text = CONFIG.text, cta = CONFIG.cta, images = CONFIG.imag
             trigger: img2Ref.current,
             start: "top bottom",
             end: "bottom top",
-            scrub: true,
+            scrub: 1,
           }
         });
       }
@@ -115,24 +119,29 @@ const ConnectCta = ({ text = CONFIG.text, cta = CONFIG.cta, images = CONFIG.imag
             trigger: containerRef.current,
             start: animation.scaleAnimationStart,
             end: animation.scaleAnimationEnd,
-            scrub: true,
+            scrub: 1.5,
           }
         });
       }
     });
 
     return () => {
+      window.removeEventListener('resize', updateDimensions);
       ctx.revert();
-      window.removeEventListener('resize', updateFooterHeight);
     };
-  }, [animation.img1ScrollYPx, animation.img2ScrollYPx, animation.scaleAnimationStart, animation.scaleAnimationEnd]);
+  }, [animation]);
+
+  // If the footer is taller than the user's screen, we must disable the parallax reveal.
+  // Otherwise, the sticky logic will pin it in a way that physically cuts off the top or bottom forever!
+  const isRevealEnabled = footerHeight <= windowHeight;
 
   return (
-    <div className="w-full bg-[#000000] relative">
+    <div className="relative w-full bg-black">
+      {/* The content that rolls over the footer */}
       <section 
         ref={containerRef} 
         className="relative z-20 w-full bg-[#1b1b1b] overflow-hidden font-sans text-white origin-center shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
-        style={{ marginBottom: `-${footerHeight}px` }}
+        style={{ marginBottom: isRevealEnabled ? `-${footerHeight}px` : '0px' }}
       >
         <div className="w-full max-w-[1860px] mx-auto px-8 md:px-16 lg:px-24 py-24 md:py-36 grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-16 lg:gap-24 items-center">
 
@@ -226,12 +235,12 @@ const ConnectCta = ({ text = CONFIG.text, cta = CONFIG.cta, images = CONFIG.imag
 
       {/* Footer Parallax Container - Natively handles scroll using sticky! */}
       <div 
-        className="footer-outer relative z-10 w-full bg-black"
-        style={{ height: `${footerHeight * 2}px` }}
+        className={`footer-outer relative z-10 w-full bg-black ${!isRevealEnabled ? 'flex' : ''}`}
+        style={{ height: isRevealEnabled ? `${footerHeight * 2}px` : 'auto' }}
       >
         <div 
-          className="footer-inner w-full sticky"
-          style={{ height: `${footerHeight}px`, top: `calc(100vh - ${footerHeight}px)` }}
+          className={`footer-inner w-full ${isRevealEnabled ? 'sticky' : 'relative'}`}
+          style={isRevealEnabled ? { height: `${footerHeight}px`, top: `calc(100vh - ${footerHeight}px)` } : {}}
         >
           <div ref={footerRef} className="w-full">
             <Footer />
