@@ -16,7 +16,6 @@ export default function VideoSection() {
 
   const containerRef = useRef(null);
   const videoWrapperRef = useRef(null);
-  const overlayRef = useRef(null);
   const textContentRef = useRef(null);
   const videoPlaceholderRef = useRef(null);
 
