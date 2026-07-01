@@ -6,33 +6,33 @@ gsap.registerPlugin(ScrollTrigger);
 
 const TEAM_MEMBERS = [
   {
-    name: 'Mitsuo Shimofuji',
-    role: 'Co-founder, President and CEO, Board of Directors of ZettaJoule',
+    name: 'Richard Sterling',
+    role: 'Co-founder, President and CEO, Board of Directors of Polaris',
     image: 'https://cdn.prod.website-files.com/695e44c5cda75248659e9817/6960e0cf1750ad1c151bdaae_Finis%20Southworth.webp', // Professional man in suit
   },
   {
-    name: 'Jeffrey Harper',
-    role: 'Co-founder, Chief Commercial Officer of ZettaJoule and President of ZROC',
+    name: 'Michael Chang',
+    role: 'Co-founder, Chief Culinary Officer of Polaris and Executive Chef',
     image: 'https://cdn.prod.website-files.com/695e44c5cda75248659e9817/6960e09d32fbceffd604fd3a_Rumina%20Velshi.webp', // Professional man in suit
   },
   {
-    name: 'Rumina Velshi',
-    role: 'Co-founder, Principal and Strategic Advisor to the CEO of ZettaJoule',
+    name: 'Sarah Jenkins',
+    role: 'Co-founder, Principal and Strategic Advisor to the CEO on Culinary Operations',
     image: 'https://cdn.prod.website-files.com/695e44c5cda75248659e9817/6960e065510a022897a20a30_Jeffrey%20Harper.webp', // Professional woman
   },
   {
-    name: 'Kazuhiko Kunitomi, Ph.D.',
-    role: 'Co-founder and Chief Nuclear Officer, ZettaJoule KK',
+    name: 'David Laurent',
+    role: 'Co-founder and Head of Culinary Innovation, Polaris Kitchens',
     image: 'https://cdn.prod.website-files.com/695e44c5cda75248659e9817/696f67bb0f912993aa049f98_Mitsuo%20Shimofuji.webp', // Professional man
   },
   {
-    name: 'Finis Southworth, Ph.D.',
-    role: 'Chief Technology Officer of ZettaJoule',
+    name: 'Robert Black',
+    role: 'Director of Food and Beverage Operations',
     image: 'https://cdn.prod.website-files.com/695e44c5cda75248659e9817/6960e1364b311125c171b7ba_Andrea%20Veil.webp', // Professional older man
   },
   {
-    name: 'Andrea Vail',
-    role: 'Senior Vice President-Regulatory Strategy of ZettaJoule',
+    name: 'Amanda Hughes',
+    role: 'Senior Vice President of Guest Experience',
     image: 'https://cdn.prod.website-files.com/695e44c5cda75248659e9817/6960e10589de1252039426cf_Kazuhiko%20Kunitomi.webp', // Professional woman
   },
 ];
@@ -200,21 +200,21 @@ export default function TeamSection() {
           <div className="w-full md:w-1/4 pt-2 gsap-header-part">
             <h3 className="text-[#3D5E86] text-[14px] font-['Inter',_sans-serif] leading-[1.2]">
               Meet the International Team<br />
-              Behind Our Technology
+              Behind Our Restaurants
             </h3>
           </div>
           <div className="w-full md:w-[65%] flex flex-col">
             <p className="gsap-header-part text-[#3D5E86] text-[32px] font-['Geist',_sans-serif] font-light leading-[1.2] tracking-[-0.01em]">
-              ZettaJoule brings together world-class experts in
+              Polaris brings together world-class experts in
             </p>
             <p className="gsap-header-part text-[#3D5E86] text-[32px] font-['Geist',_sans-serif] font-light leading-[1.2] tracking-[-0.01em]">
-              nuclear engineering, large-scale project management,
+              culinary innovation, large-scale restaurant management,
             </p>
             <p className="gsap-header-part text-[#3D5E86] text-[32px] font-['Geist',_sans-serif] font-light leading-[1.2] tracking-[-0.01em]">
-              and finance to provide clean energy solutions
+              and hospitality to provide exceptional dining experiences
             </p>
             <p className="gsap-header-part text-[#3D5E86] text-[32px] font-['Geist',_sans-serif] font-light leading-[1.2] tracking-[-0.01em]">
-              for a wide range of industrial and technical operations.
+              for a wide range of casual and fine-dining operations.
             </p>
           </div>
         </div>
@@ -290,7 +290,7 @@ export default function TeamSection() {
               <div className="mt-auto w-full">
                 <h3 className="text-[#3D5E86] text-[45px] font-light leading-tight mb-12 max-w-[480px]">
                   Learn more about the<br />
-                  people behind ZettaJoule
+                  people behind Polaris
                 </h3>
 
                 <div className="relative w-full pt-5">
