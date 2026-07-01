@@ -5,6 +5,8 @@ import gsap from 'gsap';
 
 // Active Section Imports
 import Main from './sections/Main';
+import Footer from "./sections/Footer";
+import TeamSection from "./sections/TeamSection";
 import Ctst from './sections/Ctst';
 import Questions from './sections/question';
 import ContactSummery from './sections/ContactSummery';
@@ -55,11 +57,11 @@ const Home = () => {
   }, [location.hash]);
 
   return (
-    <ReactLenis 
-      root 
-      ref={lenisRef} 
-      autoRaf={false} 
-      options={{ 
+    <ReactLenis
+      root
+      ref={lenisRef}
+      autoRaf={false}
+      options={{
         lerp: 0.05,           // Lower value = softer, smoother deceleration
         duration: 1.5,        // Scroll animation duration
         smoothWheel: true,    // Enable smooth scrolling for mouse wheels
@@ -79,9 +81,10 @@ const Home = () => {
         <HeatCapabilities />
         <HorizontalScroll />
         <MorphComp />
+        <TeamSection />
         <FeatureGrid />
         {/* <NewsSection /> */}
-        <RestroAi />
+        {/* <RestroAi /> */}
         <WebPreview />
         <ConnectCta />
 

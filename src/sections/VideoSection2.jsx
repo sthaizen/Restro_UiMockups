@@ -144,8 +144,6 @@ export default function VideoSection2() {
 
   useEffect(() => {
     let ctx = gsap.context(() => {
-      const targetTrigger = videoPlaceholderRef.current;
-
       gsap.fromTo(videoWrapperRef.current,
         { scale: 1 },
         {

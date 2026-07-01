@@ -45,8 +45,6 @@ const HeatCapabilities = ({
   mainBarGap = 10,
   floatingBarRowHeight = 50,
   chartHeight = 430,
-
-  // Customization controls
   containerWidth = '83%',
   primaryColor = '#688ad0',
   secondaryBarBg = '#242424',
@@ -58,8 +56,6 @@ const HeatCapabilities = ({
   subTitleColor = '#ffffff',
   mainBarTitleColor = '#ffffff',
   mainBarSubColor = '#ffffff',
-
-  // Grid controls
   gridLineColor = '#303030',
   intermediateGridLineColor = '#5a5a5a66',
   gridLineStyle = 'dashed', // 'dashed', 'dotted', 'solid'
@@ -100,7 +96,6 @@ const HeatCapabilities = ({
       style={style}
       {...props}
     >
-      {/* Header */}
       <div
         className={`mx-auto flex flex-col md:flex-row justify-between items-start md:items-center mb-14 gap-8 ${containerClassName}`}
         style={{ width: containerWidth }}
@@ -117,7 +112,6 @@ const HeatCapabilities = ({
         className={`mx-auto ${containerClassName}`}
         style={{ width: containerWidth }}
       >
-        {/* Tabs */}
         <div className="relative flex space-x-8 mb-12 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#2a2a2a]"></div>
           {tabs.map((tab) => (
@@ -142,16 +136,13 @@ const HeatCapabilities = ({
           ))}
         </div>
 
-        {/* Chart Area */}
         <div className="relative w-full pt-8 pb-12">
-          {/* Grid Lines & X-Axis */}
           <div className="absolute inset-0 flex justify-between pointer-events-none">
             <div className="absolute bottom-0 left-0 right-0 h-[1px]" style={{ backgroundColor: axisLineColor }}></div>
             {Array.from({ length: 25 }, (_, i) => i * 50).map((temp) => {
               const isMain = temp % 100 === 0;
               return (
                 <div key={temp} className="relative h-full flex flex-col items-center" style={{ width: 0 }}>
-                  {/* Vertical grid line */}
                   <div
                     className="absolute inset-y-0 w-px border-r"
                     style={{
@@ -159,7 +150,6 @@ const HeatCapabilities = ({
                       borderStyle: gridLineStyle,
                     }}
                   ></div>
-                  {/* Small solid tick below axis */}
                   <div
                     className="absolute bottom-0 translate-y-full w-px"
                     style={{
@@ -184,9 +174,7 @@ const HeatCapabilities = ({
             })}
           </div>
 
-          {/* Chart Content Container */}
           <div className="relative z-10 flex flex-col w-full" style={{ height: `${chartHeight}px` }}>
-            {/* Floating Bars Area (Top half) */}
             <div className="relative h-[130px] w-full mb-6">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -199,7 +187,6 @@ const HeatCapabilities = ({
                 >
                   {floatingBarsData[activeTab]?.map((bar, idx) => (
                     <div key={idx} className="absolute inset-0">
-                      {/* Dashed Box */}
                       <motion.div
                         initial={{ width: 0, opacity: 0 }}
                         animate={{ width: getWidth(bar.start, bar.end), opacity: 1 }}
@@ -217,7 +204,6 @@ const HeatCapabilities = ({
                         }}
                       />
 
-                      {/* Text */}
                       <motion.div
                         initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -239,12 +225,10 @@ const HeatCapabilities = ({
               </AnimatePresence>
             </div>
 
-            {/* Main Bars Area (Bottom half) */}
             <div className="relative flex flex-col justify-end flex-grow pb-[1px]" style={{ gap: `${mainBarGap}px` }}>
               {mainBars.map((bar, idx) => (
                 <div key={idx} className="relative h-[42px] flex items-center w-full group">
                   {bar.isMain ? (
-                    // Highlighted Main Bar
                     <motion.div
                       initial={{ width: 0 }}
                       whileInView={{ width: getLeft(bar.temp) }}
@@ -268,7 +252,6 @@ const HeatCapabilities = ({
                       </motion.div>
                     </motion.div>
                   ) : (
-                    // Regular Bars
                     <div className="absolute left-0 h-full w-full z-10">
                       <motion.div
                         initial={{ width: 0 }}
@@ -278,7 +261,6 @@ const HeatCapabilities = ({
                         className="absolute h-full rounded-r-[2px]"
                         style={{ backgroundColor: secondaryBarBg }}
                       >
-                        {/* Vertical tick marker at the very end of the bar */}
                         <div className="absolute right-0 top-0 bottom-0 w-[2px]" style={{ backgroundColor: primaryColor }} />
                       </motion.div>
                       <motion.div
