@@ -153,7 +153,7 @@ export default function VideoSection2() {
             trigger: containerRef.current,
             start: "top bottom",
             end: PIN_START_POSITION,
-            scrub: true,
+            scrub: 1,
           }
         }
       );
@@ -164,7 +164,7 @@ export default function VideoSection2() {
           start: PIN_START_POSITION,
           end: `+=${TOTAL_PIN_SCROLL_DISTANCE}%`,
           pin: containerRef.current,
-          scrub: true,
+          scrub: 1,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         }
@@ -200,7 +200,7 @@ export default function VideoSection2() {
           const insetBottom = window.innerHeight - (insetTop + p.offsetHeight);
           const insetRight = cRect.width - (insetLeft + p.offsetWidth);
 
-          return `inset(${insetTop}px ${insetRight}px ${insetBottom}px ${insetLeft}px round 6px)`;
+          return `inset(${insetTop}px ${insetRight}px ${insetBottom}px ${insetLeft}px)`;
         }
       }, {
         top: () => {
@@ -215,7 +215,7 @@ export default function VideoSection2() {
         left: 0,
         width: "100%",
         height: "100vh",
-        clipPath: "inset(0px 0px 0px 0px round 0px)",
+        clipPath: "inset(0px 0px 0px 0px)",
         duration: 100,
         ease: "power2.inOut"
       }, 0);
@@ -299,13 +299,13 @@ export default function VideoSection2() {
             </div>
 
             <div className="absolute left-1/2 -translate-x-1/2 w-[1600px] max-w-[100vw] top-1/2 -translate-y-[95px] z-20 pointer-events-none px-[24px]">
-              <div className="divider-line w-full h-[1px] bg-white/40 origin-center" />
+              <div className="divider-line w-full h-[1px] bg-white/40 origin-center" style={{ willChange: 'transform, opacity' }} />
             </div>
 
             <div
               ref={leftTextRef}
               className="absolute left-0 w-[45%] pointer-events-none z-30 top-1/2 -translate-y-1/2"
-              style={{ marginTop: `${TEXT_LEFT_OFFSET_Y}px` }}
+              style={{ marginTop: `${TEXT_LEFT_OFFSET_Y}px`, willChange: 'transform, opacity' }}
             >
 
               <h1 className="text-white text-[32px] md:text-[42px] lg:text-[44px] leading-[1.1] font-light font-['Geist',Arial,sans-serif] tracking-tight drop-shadow-md">
@@ -316,7 +316,7 @@ export default function VideoSection2() {
             <div
               ref={rightTextRef}
               className="absolute right-0 w-[30%] flex flex-col items-end text-right pointer-events-auto z-30 top-1/2 -translate-y-1/2"
-              style={{ marginTop: `${TEXT_RIGHT_OFFSET_Y}px` }}
+              style={{ marginTop: `${TEXT_RIGHT_OFFSET_Y}px`, willChange: 'transform, opacity' }}
             >
 
               <h3 className="text-white uppercase text-[11px] md:text-[12px] tracking-[0.15em] font-bold mb-2">
