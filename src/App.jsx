@@ -7,6 +7,7 @@ import gsap from 'gsap';
 import Main from './sections/Main';
 import Footer from "./sections/Footer";
 import TeamSection from "./sections/TeamSection";
+import BlueBar from "./sections/BlueBar";
 import Ctst from './sections/Ctst';
 import Questions from './sections/question';
 import ContactSummery from './sections/ContactSummery';
@@ -81,6 +82,7 @@ const Home = () => {
         <HeatCapabilities />
         <HorizontalScroll />
         <MorphComp />
+        <BlueBar />
         <TeamSection />
         <FeatureGrid />
         {/* <NewsSection /> */}
