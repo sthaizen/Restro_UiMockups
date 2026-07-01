@@ -8,32 +8,32 @@ const TEAM_MEMBERS = [
   {
     name: 'Richard Sterling',
     role: 'Co-founder, President and CEO, Board of Directors of Polaris',
-    image: 'https://cdn.prod.website-files.com/695e44c5cda75248659e9817/6960e0cf1750ad1c151bdaae_Finis%20Southworth.webp', // Professional man in suit
+    image: '/assets/backgrounds/TeamMember2.png', // Professional man in suit
   },
   {
     name: 'Michael Chang',
     role: 'Co-founder, Chief Culinary Officer of Polaris and Executive Chef',
-    image: 'https://cdn.prod.website-files.com/695e44c5cda75248659e9817/6960e09d32fbceffd604fd3a_Rumina%20Velshi.webp', // Professional man in suit
+    image: '/assets/backgrounds/TeamMember5.png', // Professional man in suit
   },
   {
     name: 'Sarah Jenkins',
     role: 'Co-founder, Principal and Strategic Advisor to the CEO on Culinary Operations',
-    image: 'https://cdn.prod.website-files.com/695e44c5cda75248659e9817/6960e065510a022897a20a30_Jeffrey%20Harper.webp', // Professional woman
+    image: '/assets/backgrounds/TeamMember6.png', // Professional woman
   },
   {
     name: 'David Laurent',
     role: 'Co-founder and Head of Culinary Innovation, Polaris Kitchens',
-    image: 'https://cdn.prod.website-files.com/695e44c5cda75248659e9817/696f67bb0f912993aa049f98_Mitsuo%20Shimofuji.webp', // Professional man
+    image: '/assets/backgrounds/TeamMember.png', // Professional man
   },
   {
     name: 'Robert Black',
     role: 'Director of Food and Beverage Operations',
-    image: 'https://cdn.prod.website-files.com/695e44c5cda75248659e9817/6960e1364b311125c171b7ba_Andrea%20Veil.webp', // Professional older man
+    image: '/assets/backgrounds/TeamMember7.png', // Professional older man
   },
   {
     name: 'Amanda Hughes',
     role: 'Senior Vice President of Guest Experience',
-    image: 'https://cdn.prod.website-files.com/695e44c5cda75248659e9817/6960e10589de1252039426cf_Kazuhiko%20Kunitomi.webp', // Professional woman
+    image: '/assets/backgrounds/TeamMember8.png', // Professional woman
   },
 ];
 

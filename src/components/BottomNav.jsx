@@ -172,17 +172,17 @@ const BottomNav = () => {
                 <motion.p variants={itemVariants} className="text-[10px] tracking-[0.2em] text-[#6b6b6b] mb-5 ml-4 font-semibold">MENU</motion.p>
                 <ul className="text-[2.0rem] leading-tight space-y-0 font-light ml-4">
                   <motion.li variants={itemVariants} className="group cursor-pointer hover:text-[#6b6b6b] transition-colors duration-500"><RollingText text="About" /></motion.li>
-                  <motion.li variants={itemVariants} className="group cursor-pointer hover:text-[#6b6b6b] transition-colors duration-500"><RollingText text="Collection" /></motion.li>
-                  <motion.li variants={itemVariants} className="group cursor-pointer hover:text-[#6b6b6b] transition-colors duration-500"><RollingText text="Projects" /></motion.li>
-                  <motion.li variants={itemVariants} className="group cursor-pointer hover:text-[#6b6b6b] transition-colors duration-500"><RollingText text="Approach" /></motion.li>
-                  <motion.li variants={itemVariants} className="group cursor-pointer hover:text-[#6b6b6b] transition-colors duration-500"><RollingText text="Contact" /></motion.li>
+                  <motion.li variants={itemVariants} className="group cursor-pointer hover:text-[#6b6b6b] transition-colors duration-500"><RollingText text="Features" /></motion.li>
+                  <motion.li variants={itemVariants} className="group cursor-pointer hover:text-[#6b6b6b] transition-colors duration-500"><RollingText text="Pricing" /></motion.li>
+                  <motion.li variants={itemVariants} className="group cursor-pointer hover:text-[#6b6b6b] transition-colors duration-500"><RollingText text="Multi-Branch" /></motion.li>
+                  <motion.li variants={itemVariants} className="group cursor-pointer hover:text-[#6b6b6b] transition-colors duration-500"><RollingText text="AI Assistant" /></motion.li>
                 </ul>
               </div>
 
               <div className="mt-auto">
                 <div className="flex justify-between text-[18px] text-[#6b6b6b] mt-5 ml-4 mr-7">
                   <div className="space-y-1">
-                    <motion.p variants={itemVariants} className="cursor-pointer hover:text-white transition-colors duration-200">News</motion.p>
+                    <motion.p variants={itemVariants} className="cursor-pointer hover:text-white transition-colors duration-200">Contact</motion.p>
                     <motion.p variants={itemVariants} className="cursor-pointer hover:text-white transition-colors duration-200">Showroom</motion.p>
                   </div>
                   <div className="space-y-1 text-right">

@@ -10,12 +10,12 @@ const useSubscription = () => {
 };
 
 const logos = [
-  { name: 'Cyric', type: 'text' },
-  { name: 'Students', type: 'icon-text' },
-  { name: 'Candidates', type: 'icon-text' },
-  { name: 'Mentors', type: 'text' },
-  { name: 'Bootcamps', type: 'stacked-text' },
-  { name: 'Recruiters', type: 'dots-text' },
+  { name: 'Michelin', type: 'text' },
+  { name: 'Chefs', type: 'icon-text' },
+  { name: 'Sommeliers', type: 'icon-text' },
+  { name: 'Zagat', type: 'text' },
+  { name: 'Gourmet', type: 'stacked-text' },
+  { name: 'Fine Dining', type: 'dots-text' },
 ];
 
 const marqueeLogos = [...logos, ...logos, ...logos, ...logos];
@@ -168,8 +168,8 @@ const Hero = () => {
       )}
       {logo.type === 'stacked-text' && (
         <div className="text-white font-medium text-sm leading-tight text-center">
-          steinmeier<br />
-          <span className="text-[#9CA3AF]">consulting</span>
+          gourmet<br />
+          <span className="text-[#9CA3AF]">magazine</span>
         </div>
       )}
       {logo.type === 'dots-text' && (
@@ -179,7 +179,7 @@ const Hero = () => {
             <div className="w-3 h-3 rounded-full bg-white" />
             <div className="w-3 h-3 rounded-full bg-white" />
           </div>
-          Securitas
+          Forbes Travel
         </div>
       )}
     </div>
@@ -215,7 +215,7 @@ const Hero = () => {
             Polaris
           </h1>
           <p className="text-white/90 font-light font-inter text-[18px] sm:text-[22px] md:text-[24px] opacity-0 select-none">
-            Browse the web like it has a horizon.
+            Experience fine dining like never before.
           </p>
         </div>
 
@@ -227,14 +227,14 @@ const Hero = () => {
             <div className="w-full h-[1px] bg-white/20 mb-6 opacity-0" />
 
             <p className="text-white/80 leading-relaxed font-light font-inter text-[14px] sm:text-[15px] md:text-[16px] mb-8 opacity-0">
-              A calm AI browser concept for finding signal, tracing ideas, and moving through knowledge with spatial clarity.
+              A comprehensive restaurant management system for maintaining control, orchestrating service, and moving through operations with absolute clarity.
             </p>
 
             <div className="opacity-0">
               <button
                 className="inline-flex items-center justify-center bg-white text-[#0A0B0E] font-medium font-inter rounded-full hover:bg-white/90 active:scale-95 transition-all shadow-lg px-8 py-3 text-[15px]"
               >
-                Open Polaris
+                Explore Polaris
               </button>
             </div>
           </div>
@@ -248,8 +248,8 @@ const Hero = () => {
         ref={bottomLabelsRef}
         className="relative z-20 w-full max-w-[1720px] mx-auto px-8 md:px-16 pb-4 flex justify-between items-center text-[10px] tracking-[0.2em] text-white/40 uppercase font-inter"
       >
-        <div className="opacity-0">NEURAL CLOUD MAP</div>
-        <div className="opacity-0">DESIGN.MD / AMBIENT EXPLORER</div>
+        <div className="opacity-0">FINE DINING MANAGEMENT</div>
+        <div className="opacity-0">ORBITAL 25 / LONDON, UK</div>
       </div>
 
       <div
@@ -261,7 +261,7 @@ const Hero = () => {
             className="text-center text-white font-light opacity-80"
             style={{ fontSize: '16px', marginBottom: '40px' }}
           >
-            Thousands of learners are preparing with Clyric
+            Trusted by the world's finest culinary institutions
           </p>
 
           <div className="w-full mb-[16px] relative flex justify-start overflow-hidden">
