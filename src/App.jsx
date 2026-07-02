@@ -33,25 +33,42 @@ const Home = () => {
 
   // Sync GSAP ticker with Lenis to prevent scroll jitter on pinned elements
   useEffect(() => {
+    const lenis = lenisRef.current?.lenis;
+
+    // VERY IMPORTANT: Tell GSAP ScrollTrigger to update every time Lenis scrolls.
+    // Without this, GSAP animations will lag behind the smooth scroll.
+    if (lenis) {
+      lenis.on('scroll', ScrollTrigger.update);
+    }
+
     function update(time) {
       lenisRef.current?.lenis?.raf(time * 1000);
     }
 
     gsap.ticker.add(update);
-    gsap.ticker.lagSmoothing(0);
+    gsap.ticker.lagSmoothing(0); // Prevents GSAP from skipping frames, crucial for smooth scroll
 
     return () => {
+      if (lenis) {
+        lenis.off('scroll', ScrollTrigger.update);
+      }
       gsap.ticker.remove(update);
     };
   }, []);
 
-  // Replaced window.location with React Router's useLocation hook
+  // Use Lenis for smooth anchor link scrolling instead of native browser scroll
   useEffect(() => {
     if (location.hash) {
       const el = document.querySelector(location.hash);
+      const lenis = lenisRef.current?.lenis;
+      
       if (el) {
         setTimeout(() => {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (lenis) {
+            lenis.scrollTo(el, { offset: 0, duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+          } else {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         }, 150);
       }
     }
@@ -63,10 +80,9 @@ const Home = () => {
       ref={lenisRef}
       autoRaf={false}
       options={{
-        lerp: 0.05,           // Lower value = softer, smoother deceleration
-        duration: 1.5,        // Scroll animation duration
+        lerp: 0.08,           // Perfect balance: 0.05 is too heavy, 0.1 is too fast
         smoothWheel: true,    // Enable smooth scrolling for mouse wheels
-        wheelMultiplier: 1.1, // Slightly boost the wheel speed for better responsiveness
+        wheelMultiplier: 1,   // Keep 1:1 wheel speed to feel natural
         touchMultiplier: 2    // Better feel on mobile/trackpads
       }}
       className='relative w-full min-h-screen'

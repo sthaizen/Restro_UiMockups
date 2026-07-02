@@ -133,18 +133,18 @@ const Footer = () => {
 
         <div className="w-full lg:w-1/2 flex justify-between lg:justify-end gap-8 md:gap-16 lg:gap-[120px]">
           <div className="flex flex-col gap-1.5">
-            <FooterLink text="Our Story" />
-            <FooterLink text="Menu" />
-            <FooterLink text="Reservations" />
-            <FooterLink text="Private Events" />
-            <FooterLink text="Gift Cards" />
+            <FooterLink text="Features" />
+            <FooterLink text="Multi-Branch" />
+            <FooterLink text="AI Assistant" />
+            <FooterLink text="Pricing" />
+            <FooterLink text="Support" />
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <FooterLink text="Our Chef" />
-            <FooterLink text="Press" />
-            <FooterLink text="Careers" />
-            <FooterLink text="Contact Us" />
+            <FooterLink text="About" />
+            <FooterLink text="Pricing" />
+            <FooterLink text="Contact" />
+            <FooterLink text="Acceptable Use Policy" />
           </div>
 
           <div className="flex flex-col gap-1.5">
@@ -205,7 +205,7 @@ const Footer = () => {
             <a href="#" className="hover:text-white transition-colors">Terms of Use</a>
           </div>
           <p className="flex items-center gap-1.5">
-            Designed with <span className="text-[14px] leading-none text-white">✻</span> <span className="text-white font-semibold tracking-normal text-[13px]">zypsy</span>
+            Designed with <span className="text-[14px] leading-none text-white">✻</span> <span className="text-white font-semibold tracking-normal text-[13px]">Framer</span>
           </p>
         </div>
       </div>
