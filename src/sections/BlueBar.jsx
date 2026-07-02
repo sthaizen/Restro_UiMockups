@@ -6,7 +6,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const BlueBar = ({
   width = '100%',
-  height = '100px',
+  height = '120px',
   animStart = 'top 60%',
   animDuration = 1,
   staggerSpeed = 0.09
@@ -14,7 +14,7 @@ const BlueBar = ({
   const containerRef = useRef(null);
   const topSlicesRef = useRef([]);
   const bottomSlicesRef = useRef([]);
-  const numSlices = 10;
+  const numSlices = 17;
 
   useEffect(() => {
     let ctx = gsap.context(() => {
