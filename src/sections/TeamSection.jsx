@@ -8,17 +8,17 @@ const TEAM_MEMBERS = [
   {
     name: 'Richard Sterling',
     role: 'Co-founder, President and CEO, Board of Directors of Polaris',
-    image: '/assets/backgrounds/TeamMember2.png', // Professional man in suit
+    image: '/assets/backgrounds/TeamMember.png', // Professional man in suit
   },
   {
     name: 'Michael Chang',
     role: 'Co-founder, Chief Culinary Officer of Polaris and Executive Chef',
-    image: '/assets/backgrounds/TeamMember5.png', // Professional man in suit
+    image: '/assets/backgrounds/TeamMember.png', // Professional man in suit
   },
   {
     name: 'Sarah Jenkins',
     role: 'Co-founder, Principal and Strategic Advisor to the CEO on Culinary Operations',
-    image: '/assets/backgrounds/TeamMember6.png', // Professional woman
+    image: '/assets/backgrounds/TeamMember.png', // Professional woman
   },
   {
     name: 'David Laurent',
@@ -28,12 +28,12 @@ const TEAM_MEMBERS = [
   {
     name: 'Robert Black',
     role: 'Director of Food and Beverage Operations',
-    image: '/assets/backgrounds/TeamMember7.png', // Professional older man
+    image: '/assets/backgrounds/TeamMember.png', // Professional older man
   },
   {
     name: 'Amanda Hughes',
     role: 'Senior Vice President of Guest Experience',
-    image: '/assets/backgrounds/TeamMember8.png', // Professional woman
+    image: '/assets/backgrounds/TeamMember.png', // Professional woman
   },
 ];
 
