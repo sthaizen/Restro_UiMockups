@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Box, CornerDownRight } from 'lucide-react';
+import { Box, CornerDownRight, ArrowUp } from 'lucide-react';
 import RollingText from './RollingText';
 
 const CONFIG = {
@@ -27,8 +27,8 @@ const CONFIG = {
     iconStroke: 1.5,
   },
   animation: {
-    ease: [0.25, 1, 0.5, 1],
-    morphDuration: 0.45,
+    ease: [0.22, 1, 0.36, 1], // Smooth, custom cubic-bezier
+    morphDuration: 0.75, // Increased for a slower, smoother reveal
     contentSlideDuration: 0.4,
     contentSlideDelay: 0.08,
     contentSlideDistance: -40,
@@ -38,6 +38,7 @@ const CONFIG = {
     xDelay: 0.15,
     xDuration: 0.3,
     scrollTriggerDistance: 10,
+    bottomTriggerOffset: 30, // Control when the menu opens at the bottom (pixels from bottom)
     // --- Entrance Animation Controls ---
     entranceDelay1: 250,
     entranceDelay2: 650,
@@ -96,7 +97,9 @@ const itemVariants = {
 const BottomNav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [entrancePhase, setEntrancePhase] = useState(0);
+  const [isAtBottom, setIsAtBottom] = useState(false);
   const initialLoadRef = useRef(true);
+  const isAtBottomRef = useRef(false);
 
   useEffect(() => {
     const triggerEntrance = () => {
@@ -111,19 +114,30 @@ const BottomNav = () => {
       }
     };
 
+    let entranceTriggered = window.scrollY > CONFIG.animation.scrollTriggerDistance;
+    if (entranceTriggered) {
+      triggerEntrance();
+    }
+
     const handleScroll = () => {
-      if (window.scrollY > CONFIG.animation.scrollTriggerDistance) {
+      if (!entranceTriggered && window.scrollY > CONFIG.animation.scrollTriggerDistance) {
         triggerEntrance();
-        window.removeEventListener('scroll', handleScroll);
+        entranceTriggered = true;
+      }
+
+      const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - CONFIG.animation.bottomTriggerOffset;
+      if (bottom !== isAtBottomRef.current) {
+        isAtBottomRef.current = bottom;
+        setIsAtBottom(bottom);
+        if (bottom) {
+          setIsOpen(true);
+        } else {
+          setIsOpen(false);
+        }
       }
     };
 
-    if (window.scrollY > CONFIG.animation.scrollTriggerDistance) {
-      triggerEntrance();
-    } else {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-    }
-
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -133,7 +147,7 @@ const BottomNav = () => {
     <>
       {/* Backdrop */}
       <AnimatePresence>
-        {isOpen && (
+        {isOpen && !isAtBottom && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -217,7 +231,14 @@ const BottomNav = () => {
           opacity: { duration: CONFIG.animation.entranceDuration, ease: "easeOut" },
           y: { duration: CONFIG.animation.entranceDuration * 1.2, ease }
         }}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          if (isAtBottom) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setIsOpen(false);
+          } else {
+            setIsOpen(!isOpen);
+          }
+        }}
         className="fixed left-1/2 -translate-x-1/2 z-50 overflow-hidden cursor-pointer"
         style={{
           bottom: CONFIG.bar.bottomOffset,
@@ -294,10 +315,14 @@ const BottomNav = () => {
               transition={{ duration: 0.3, ease }}
               className="absolute inset-0 flex items-center justify-center"
             >
-              <svg width={CONFIG.xButton.iconSize} height={CONFIG.xButton.iconSize} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={CONFIG.xButton.iconStroke} strokeLinecap="round" strokeLinejoin="round" className="text-white">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
+              {isAtBottom ? (
+                <ArrowUp size={CONFIG.xButton.iconSize} strokeWidth={CONFIG.xButton.iconStroke} className="text-white" />
+              ) : (
+                <svg width={CONFIG.xButton.iconSize} height={CONFIG.xButton.iconSize} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={CONFIG.xButton.iconStroke} strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              )}
             </motion.div>
           )}
         </AnimatePresence>

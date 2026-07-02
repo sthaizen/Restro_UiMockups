@@ -144,7 +144,7 @@ const Footer = () => {
             <FooterLink text="About" />
             <FooterLink text="Pricing" />
             <FooterLink text="Contact" />
-            <FooterLink text="Acceptable Use Policy" />
+            <FooterLink text="SLA" />
           </div>
 
           <div className="flex flex-col gap-1.5">
