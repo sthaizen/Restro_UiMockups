@@ -5,7 +5,7 @@ const CONFIG = {
     title: (
       <>Building the Culinary<br />Workforce with Polaris</>
     ),
-    paragraph: "Through Polaris's hospitality subsidiary, the RestroHub Culinary Training Program, we recruit at the local, regional, and national levels to find passionate individuals for careers as executive chefs, line cooks, managers, and other vital roles that power the future of exceptional dining experiences through advanced AI.",
+    paragraph: "Through Polaris's hospitality subsidiary, the Polaris Culinary Training Program, we recruit at the local, regional, and national levels to find passionate individuals for careers as executive chefs, line cooks, managers, and other vital roles that power the future of exceptional dining experiences through advanced AI.",
     buttonText: "Contact Us to Learn More",
   },
   slider: {
