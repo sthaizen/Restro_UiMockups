@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const BlueBar = ({
+const BlueBar = ({ //blur cap
   width = '100%',
   height = '120px',
   animStart = 'top 60%',
