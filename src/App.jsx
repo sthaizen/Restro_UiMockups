@@ -2,6 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import { ReactLenis } from 'lenis/react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Active Section Imports
 import Main from './sections/Main';
