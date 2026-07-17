@@ -1,25 +1,31 @@
-// src/sections/Contact.jsx
-import React, { useRef, useState } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValueEvent,
-} from "framer-motion";
+import React, { useRef, useState, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
-/* ----------------------- Tiny inline animation helpers ---------------------- */
+gsap.registerPlugin(ScrollTrigger);
 
-const FadeInUp = ({ children, className = "", delay = 0, y = 16 }) => (
-  <motion.div
-    className={className}
-    initial={{ opacity: 0, y }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "0px 0px -20% 0px" }}
-    transition={{ type: "spring", stiffness: 120, damping: 18, delay }}
-  >
-    {children}
-  </motion.div>
-);
+const FadeInUp = ({ children, className = "", delay = 0, y = 16 }) => {
+  const ref = useRef(null);
+  useGSAP(() => {
+    gsap.fromTo(ref.current, 
+      { opacity: 0, y: y }, 
+      { 
+        opacity: 1, 
+        y: 0, 
+        duration: 0.8,
+        delay: delay,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top 120%", 
+          once: true
+        }
+      }
+    );
+  }, { scope: ref });
+  return <div ref={ref} className={className}>{children}</div>;
+};
 
 const StaggerChildren = ({
   children,
@@ -40,58 +46,69 @@ const StaggerChildren = ({
 };
 
 const ParallaxWordmark = ({ text, sectionRef, dir }) => {
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
+  const wordRef = useRef(null);
 
-  const wmScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1.0, 1.1]);
-  const wmOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.15, 0.85, 1],
-    [0, 1, 1, 0.7]
-  );
-  const wmY = useTransform(scrollYProgress, [0, 1], [40, -40]);
-  const wmRotate = dir === "down" ? 0.15 : dir === "up" ? -0.15 : 0;
+  useGSAP(() => {
+    gsap.fromTo(wordRef.current,
+      { scale: 0.9, opacity: 0, y: 40 },
+      {
+        scale: 1.1, opacity: 1, y: -40,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true
+        }
+      }
+    );
+  }, { scope: sectionRef });
 
   return (
     <div className="flex justify-center">
-      <motion.span
+      <span
+        ref={wordRef}
         aria-hidden="true"
         className="block leading-none tracking-tight text-black pt-40 pl-100 select-none
-                   text-[18vw] md:text-[12vw] lg:text-[14vw] xl:text-[21vw] font-normal
-                   motion-reduce:transform-none motion-reduce:transition-none"
-        style={{ scale: wmScale, opacity: wmOpacity, y: wmY, rotate: wmRotate }}
-        transition={{ type: "spring", stiffness: 80, damping: 18 }}
+                   text-[18vw] md:text-[12vw] lg:text-[14vw] xl:text-[21vw] font-normal"
       >
         {text}
-      </motion.span>
+      </span>
     </div>
   );
 };
 
 const CornerCopyright = ({ sectionRef, year = 2025, className = "" }) => {
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-  const y = useTransform(scrollYProgress, [0, 1], [8, -8]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 1], [0, 1, 1]);
+  const crRef = useRef(null);
+
+  useGSAP(() => {
+    gsap.fromTo(crRef.current,
+      { opacity: 0, y: 8 },
+      {
+        opacity: 1, y: -8,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true
+        }
+      }
+    );
+  }, { scope: sectionRef });
 
   return (
-    <motion.div
+    <div
+      ref={crRef}
       className={
         className ||
         "absolute left-[5vw] bottom-9 text-[14px] text-black select-none"
       }
-      style={{ y, opacity }}
     >
       ©{year}
-    </motion.div>
+    </div>
   );
 };
-
-
 
 const CTAButton = ({ href = "#contact" }) => (
   <a
@@ -108,7 +125,6 @@ const CTAButton = ({ href = "#contact" }) => (
   </a>
 );
 
-
 const Contact = ({
   email = "mailto:you@example.com",
   whatsapp = "https://wa.me/15551234567",
@@ -119,28 +135,32 @@ const Contact = ({
   ctaHref = "#contact",
 }) => {
   const sectionRef = useRef(null);
+  const footerRef = useRef(null);
 
-  // one-time scroll direction tracker (for subtle tilt on wordmark)
-  const { scrollY } = useScroll();
-  const [dir, setDir] = useState("down");
-  const [last, setLast] = useState(0);
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setDir(latest > last ? "down" : "up");
-    setLast(latest);
-  });
+  useGSAP(() => {
+      gsap.fromTo(footerRef.current, 
+        { opacity: 0, y: 24 }, 
+        { 
+          opacity: 1, y: 0, 
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: "top 80%",
+          }
+        }
+      );
+  }, { scope: sectionRef });
 
   return (
     <section id="contact" ref={sectionRef} className="relative w-full py-20 lg:py-1 bg-[#fafafa] scroll-mt-24">
       <div className="mx-auto w-full px-[5vw] lg:px-[4vw] pt-1 md:pt-25">
         <div className="grid grid-cols-1 md:grid-cols-3 items-start gap-10">
-          {/* Left: label */}
           <FadeInUp>
             <h2 className="text-[15px] tracking-widest font-normal text-black select-none">
               [CONTACT]
             </h2>
           </FadeInUp>
-
-          {/* Middle: links */}
           <FadeInUp>
             <StaggerChildren className="grid grid-cols-2 gap-y-6 gap-x-20" itemOffset={0.08}>
               <div className="space-y-4">
@@ -151,7 +171,6 @@ const Contact = ({
                   WHATSAPP
                 </a>
               </div>
-
               <div className="space-y-4">
                 <a href={instagram} className="block text-sm hover:opacity-60">
                   INSTAGRAM
@@ -168,25 +187,19 @@ const Contact = ({
               </div>
             </StaggerChildren>
           </FadeInUp>
-
-          {/* Right: CTA */}
           <FadeInUp className="flex md:justify-end">
             <CTAButton href={ctaHref} />
           </FadeInUp>
         </div>
       </div>
 
-
-      <motion.footer
+      <footer
+        ref={footerRef}
         className="relative mt-20 w-full hidden lg:block"
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ amount: 0.2, once: false }}
-        transition={{ type: "spring", stiffness: 120, damping: 20 }}
       >
         <CornerCopyright sectionRef={sectionRef} year={2026} />
-        <ParallaxWordmark text="STAY ZI" sectionRef={sectionRef} dir={dir} />
-      </motion.footer>
+        <ParallaxWordmark text="STAY ZI" sectionRef={sectionRef} dir="down" />
+      </footer>
     </section>
   );
 };

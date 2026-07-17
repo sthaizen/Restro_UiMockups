@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import Navbar from "../components/Navbar";
@@ -22,10 +23,9 @@ const Faq = ({ theme, setTheme }) => {
     const gridRef = useRef(null);
 
 
-    useEffect(() => {
+    useGSAP(() => {
         if (!heroRef.current) return;
 
-        let ctx = gsap.context(() => {
             const loadTl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
             // 1. Initial Overlay Fade-out (Crucial for fixing black screen)
@@ -108,10 +108,7 @@ const Faq = ({ theme, setTheme }) => {
                 }
             });
 
-        }, heroRef.current); // Use .current for scope
-
-        return () => ctx.revert();
-    }, []);
+    }, { scope: heroRef });
 
     const cards = [
         { title: "Blog", desc: "The latest coding tips, interview breakdowns, and more in the Clyric blog." },

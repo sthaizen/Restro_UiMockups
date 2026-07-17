@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import RollingText from '../components/RollingText';
 
@@ -19,8 +20,7 @@ export default function VideoSection() {
   const textContentRef = useRef(null);
   const videoPlaceholderRef = useRef(null);
 
-  useEffect(() => {
-    let ctx = gsap.context(() => {
+  useGSAP(() => {
       const targetTrigger = TRIGGER_ELEMENT === "video" ? videoPlaceholderRef.current : containerRef.current;
 
       const totalScrollVH = EXPANSION_SCROLL_VH + HOLD_SCROLL_VH;
@@ -105,7 +105,7 @@ export default function VideoSection() {
         height: "100vh",
         clipPath: "inset(0px 0px 0px 0px round 0px)",
         duration: EXPANSION_SCROLL_VH,
-        ease: "power2.inOut"
+        ease: "none"
       });
 
       // Add a dummy pad to guarantee the scrub timeline length is EXACTLY totalScrollVH
@@ -134,10 +134,7 @@ export default function VideoSection() {
           "-=0.9"
         );
 
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+  }, { scope: containerRef });
 
   return (
     <section ref={containerRef} className="bg-[#f1f5f8] pt-24 pb-[40vh] px-6 md:px-16 lg:px-24 relative z-10 font-inter">

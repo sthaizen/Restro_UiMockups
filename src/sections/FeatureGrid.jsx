@@ -1,5 +1,6 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Register the plugin
@@ -7,8 +8,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const CONFIG = {
   parallax: {
-    yPercentChange: 10, // Vertical shift percentage. Increase for more parallax effect.
-    scrubSpeed: 1,   // Smoothness of the lag effect. Higher = smoother lag.
+    yPercentChange: 10,
+    scrubSpeed: true,
   }
 };
 
@@ -20,8 +21,7 @@ const FeaturesGrid = () => {
     img3: "https://cdn.prod.website-files.com/65e82de5fac5e8a0bf813f65/66c7e154fff376e4c93fd03f_About_Image_03.avif"
   };
 
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
+  useGSAP(() => {
       // 1. Header Animation
       gsap.from(".animate-header", {
         y: 60,
@@ -67,10 +67,7 @@ const FeaturesGrid = () => {
           }
         );
       });
-    }, componentRoot);
-
-    return () => ctx.revert(); // Cleanup
-  }, []);
+  }, { scope: componentRoot });
 
   return (
     <section ref={componentRoot} className="relative z-20 w-full bg-[#ffffff] flex justify-center py-20">

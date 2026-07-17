@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -37,8 +38,7 @@ const Hero = () => {
 
   const [, setIsLoaded] = useState(false);
 
-  useEffect(() => {
-    let ctx = gsap.context(() => {
+  useGSAP(() => {
       const loadTl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
       loadTl.to(brightOverlayRef.current, {
@@ -141,10 +141,7 @@ const Hero = () => {
         { xPercent: 0, repeat: -1, duration: 45, ease: 'none' }
       );
 
-    }, heroRef);
-
-    return () => ctx.revert();
-  }, []);
+  }, { scope: heroRef });
 
   const renderLogo = (logo, index) => (
     <div
@@ -212,7 +209,7 @@ const Hero = () => {
         {/* Left Column: Bottom-Left Title and Subtitle */}
         <div ref={contentRef} className="flex flex-col items-start text-left w-full lg:w-[60%]">
           <h1 className="text-white font-medium font-inter tracking-tight leading-[1.0] mb-4 text-[72px] sm:text-[96px] md:text-[120px] lg:text-[150px] opacity-0 select-none">
-            Restro Hub
+            Polaris
           </h1>
           <p className="text-white/90 font-light font-inter text-[18px] sm:text-[22px] md:text-[24px] opacity-0 select-none">
             Experience fine dining like never before.

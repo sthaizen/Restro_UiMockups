@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -8,13 +9,13 @@ const CONFIG = {
   parallax: {
     // Distance values: positive moves down (slower scroll), negative moves up (faster scroll)
     videoYOffset: 100,
-    videoScrub: 1,         // Smoothness: higher number = more buttery lag
+    videoScrub: true,
 
     titleYOffset: -80,
-    titleScrub: 1,
+    titleScrub: true,
 
     cardYOffset: -80,
-    cardScrub: 1.5,
+    cardScrub: true,
   }
 };
 
@@ -30,8 +31,7 @@ export default function RestroAi() {
   const titleContentRef = useRef(null);
   const cardContentRef = useRef(null);
 
-  useEffect(() => {
-    let ctx = gsap.context(() => {
+  useGSAP(() => {
       // 1. Entrance Animations (Scrubbed overlap transition)
       gsap.fromTo([titleContentRef.current, cardContentRef.current],
         { opacity: 0, y: 50 },
@@ -39,12 +39,12 @@ export default function RestroAi() {
           opacity: 1,
           y: 0,
           stagger: 0.1,
-          ease: "power2.out",
+          ease: "none",
           scrollTrigger: {
             trigger: containerRef.current,
             start: "top bottom", 
-            end: "top 40%",      // Finishes earlier for a faster animation speed
-            scrub: 0.5          // Tighter scrub for a smoother, less laggy feel
+            end: "top 40%",
+            scrub: true
           }
         }
       );
@@ -84,10 +84,7 @@ export default function RestroAi() {
           scrub: CONFIG.parallax.cardScrub,
         }
       });
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+  }, { scope: containerRef });
 
   return (
     <section ref={containerRef} className="relative w-full min-h-screen bg-[#f1f5f9] flex items-center justify-center overflow-hidden font-sans">

@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -96,8 +97,7 @@ export default function TeamSection() {
   const containerRef = useRef(null);
   const headerRef = useRef(null);
 
-  useEffect(() => {
-    let ctx = gsap.context(() => {
+  useGSAP(() => {
       // Header Scrubbed Reveal (Blur + Clip-path)
       if (headerRef.current) {
         const parts = gsap.utils.toArray('.gsap-header-part', headerRef.current);
@@ -187,10 +187,7 @@ export default function TeamSection() {
         trigger.kill();
         clearTimeout(scrollTimeout);
       };
-    });
-
-    return () => ctx.revert();
-  }, []);
+  }, { scope: containerRef });
 
   return (
     <section ref={containerRef} className="relative z-20 w-full bg-[#f1f5f8] px-6 md:px-12 lg:px-[60px] py-24 font-sans flex flex-col items-center">
