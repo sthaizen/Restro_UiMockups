@@ -392,3 +392,12 @@ html.dark-scrollbar {
   scrollbar-color: #27272a #000000;
 }
 
+/* Ensure all buttons have a pointer cursor */
+button, 
+[role="button"], 
+input[type="submit"], 
+input[type="button"], 
+input[type="reset"] {
+  cursor: pointer !important;
+}
+

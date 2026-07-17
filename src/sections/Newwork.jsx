@@ -196,7 +196,7 @@ export default function Newwork() {
             {/* Top Block */}
             <div className="flex flex-col items-center">
               <span className="text-[11px] sm:text-[14.87px] font-normal uppercase tracking-[0.15em] text-[#212325] mb-8 sm:mb-10 block font-mono">
-                ◆ ABOUT POLARIS
+                ◆ ABOUT RESTRO HUB
               </span>
               <div className="font-medium">
                 We bring restaurants to life through control and innovation.
@@ -274,7 +274,7 @@ export default function Newwork() {
             {/* Right column: Info & Button */}
             <div className="w-full lg:w-1/2 flex flex-col items-start text-left lg:pl-32">
               <p className="text-[19.1px] leading-[1.4] text-[#212325] mb-10 font-normal font-sans max-w-[320px] tracking-tight">
-                Our <strong className="font-bold text-black">Polaris system</strong> is built for smooth billing, smarter orders, and reliable control. Made for restaurants that want speed, clarity, and service.
+                Our <strong className="font-bold text-black">Restro Hub system</strong> is built for smooth billing, smarter orders, and reliable control. Made for restaurants that want speed, clarity, and service.
               </p>
               <button className="group mt-10 sm:mt-0 bg-black text-white text-[12px] sm:text-[13px] font-medium tracking-wider uppercase px-8 py-4 flex items-center justify-center gap-3 hover:bg-[#222] transition-colors duration-500">
                 <div className="relative overflow-hidden w-4 h-4 flex items-center justify-center">

@@ -212,7 +212,7 @@ const Hero = () => {
         {/* Left Column: Bottom-Left Title and Subtitle */}
         <div ref={contentRef} className="flex flex-col items-start text-left w-full lg:w-[60%]">
           <h1 className="text-white font-medium font-inter tracking-tight leading-[1.0] mb-4 text-[72px] sm:text-[96px] md:text-[120px] lg:text-[150px] opacity-0 select-none">
-            Polaris
+            Restro Hub
           </h1>
           <p className="text-white/90 font-light font-inter text-[18px] sm:text-[22px] md:text-[24px] opacity-0 select-none">
             Experience fine dining like never before.
@@ -234,7 +234,7 @@ const Hero = () => {
               <button
                 className="inline-flex items-center justify-center bg-white text-[#0A0B0E] font-medium font-inter rounded-full hover:bg-white/90 active:scale-95 transition-all shadow-lg px-8 py-3 text-[15px]"
               >
-                Explore Polaris
+                Explore Restro Hub
               </button>
             </div>
           </div>

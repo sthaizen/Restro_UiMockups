@@ -3,9 +3,9 @@ import React from 'react';
 const CONFIG = {
   text: {
     title: (
-      <>Building the Culinary<br />Workforce with Polaris</>
+      <>Building the Culinary<br />Workforce with Restro Hub</>
     ),
-    paragraph: "Through Polaris's hospitality subsidiary, the Polaris Culinary Training Program, we recruit at the local, regional, and national levels to find passionate individuals for careers as executive chefs, line cooks, managers, and other vital roles that power the future of exceptional dining experiences through advanced AI.",
+    paragraph: "Through Restro Hub's hospitality subsidiary, the Restro Hub Culinary Training Program, we recruit at the local, regional, and national levels to find passionate individuals for careers as executive chefs, line cooks, managers, and other vital roles that power the future of exceptional dining experiences through advanced AI.",
     buttonText: "Contact Us to Learn More",
   },
   slider: {

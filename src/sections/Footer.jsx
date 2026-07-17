@@ -127,7 +127,7 @@ const Footer = () => {
         <div className="lg:w-1/2">
           <h2 className="text-[32px] md:text-[40px] lg:text-[44px] font-[300] leading-[1.1] tracking-tight max-w-[380px]">
             Exquisite Fine Dining <br className="hidden md:block" />
-            at Polaris Restaurant
+            at Restro Hub Restaurant
           </h2>
         </div>
 
@@ -195,12 +195,12 @@ const Footer = () => {
               <rect x="0" y="36" width="40" height="4" fill="white" />
             </g>
           </svg>
-          <span className="text-[42px] font-semibold tracking-[-0.03em]">Polaris</span>
+          <span className="text-[42px] font-semibold tracking-[-0.03em]">Restro Hub</span>
         </div>
 
         <div className="flex flex-col items-start gap-2.5 text-[12px] text-[#888888] font-medium tracking-wide">
           <div className="flex flex-wrap items-center gap-6">
-            <p>© 2026 Polaris Restaurant. All rights reserved.</p>
+            <p>© 2026 Restro Hub Restaurant. All rights reserved.</p>
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-white transition-colors">Terms of Use</a>
           </div>

@@ -7,12 +7,12 @@ gsap.registerPlugin(ScrollTrigger);
 const TEAM_MEMBERS = [
   {
     name: 'Richard Sterling',
-    role: 'Co-founder, President and CEO, Board of Directors of Polaris',
+    role: 'Co-founder, President and CEO, Board of Directors of Restro Hub',
     image: '/assets/backgrounds/TeamMember.png', // Professional man in suit
   },
   {
     name: 'Michael Chang',
-    role: 'Co-founder, Chief Culinary Officer of Polaris and Executive Chef',
+    role: 'Co-founder, Chief Culinary Officer of Restro Hub and Executive Chef',
     image: '/assets/backgrounds/TeamMember.png', // Professional man in suit
   },
   {
@@ -22,7 +22,7 @@ const TEAM_MEMBERS = [
   },
   {
     name: 'David Laurent',
-    role: 'Co-founder and Head of Culinary Innovation, Polaris Kitchens',
+    role: 'Co-founder and Head of Culinary Innovation, Restro Hub Kitchens',
     image: '/assets/backgrounds/TeamMember.png', // Professional man
   },
   {
@@ -205,7 +205,7 @@ export default function TeamSection() {
           </div>
           <div className="w-full md:w-[65%] flex flex-col">
             <p className="gsap-header-part text-[#3D5E86] text-[32px] font-['Geist',_sans-serif] font-light leading-[1.2] tracking-[-0.01em]">
-              Polaris brings together world-class experts in
+              Restro Hub brings together world-class experts in
             </p>
             <p className="gsap-header-part text-[#3D5E86] text-[32px] font-['Geist',_sans-serif] font-light leading-[1.2] tracking-[-0.01em]">
               culinary innovation, large-scale restaurant management,
@@ -290,7 +290,7 @@ export default function TeamSection() {
               <div className="mt-auto w-full">
                 <h3 className="text-[#3D5E86] text-[45px] font-light leading-tight mb-12 max-w-[480px]">
                   Learn more about the<br />
-                  people behind Polaris
+                  people behind Restro Hub
                 </h3>
 
                 <div className="relative w-full pt-5">
