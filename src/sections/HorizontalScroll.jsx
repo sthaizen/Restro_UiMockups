@@ -136,7 +136,7 @@ export default function HorizontalScroll() {
       type: 'text',
       category: 'Guest Experience',
       title: 'Frictionless Reservations and Table Management',
-      description: 'The Polaris platform provides reliable, scalable tools for waitlist management and seating arrangements to maximize your floor capacity and delight your guests.',
+      description: 'The Restro Hub platform provides reliable, scalable tools for waitlist management and seating arrangements to maximize your floor capacity and delight your guests.',
     },
     {
       type: 'image',

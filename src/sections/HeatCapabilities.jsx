@@ -32,7 +32,7 @@ const floatingBarsData = {
 };
 
 const mainBars = [
-  { labelPrefix: 'Polaris', labelSuffix: 'Wood-Fired Oven', text: 'Up to 950 °C', temp: 950, isMain: true },
+  { labelPrefix: 'Restro Hub', labelSuffix: 'Wood-Fired Oven', text: 'Up to 950 °C', temp: 950, isMain: true },
   { labelPrefix: 'Commercial', labelSuffix: 'Gas Range', text: '750 °C', temp: 750, isMain: false },
   { labelPrefix: 'Industrial', labelSuffix: 'Deep Fryer', text: '650 °C', temp: 650, isMain: false },
   { labelPrefix: 'Salamander', labelSuffix: 'Broiler', text: '550 °C', temp: 550, isMain: false },
@@ -104,7 +104,7 @@ const HeatCapabilities = ({
           Unmatched <br /> Culinary Heat
         </h2>
         <p className="gsap-text-anim text-[#ffffff] max-w-lg text-[18px] leading-relaxed">
-          Our custom Polaris wood-fired ovens are designed to operate at temperatures up to 950 °C, which is approximately 600 °C higher than conventional ovens, providing the perfect sear for our signature dishes.
+          Our custom Restro Hub wood-fired ovens are designed to operate at temperatures up to 950 °C, which is approximately 600 °C higher than conventional ovens, providing the perfect sear for our signature dishes.
         </p>
       </div>
 

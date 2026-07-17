@@ -6,7 +6,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Active Section Imports
 import Main from './sections/Main';
 import Footer from "./sections/Footer";
 import TeamSection from "./sections/TeamSection";
@@ -34,12 +33,9 @@ const Home = () => {
   const location = useLocation();
   const lenisRef = useRef();
 
-  // Sync GSAP ticker with Lenis to prevent scroll jitter on pinned elements
   useEffect(() => {
     const lenis = lenisRef.current?.lenis;
 
-    // VERY IMPORTANT: Tell GSAP ScrollTrigger to update every time Lenis scrolls.
-    // Without this, GSAP animations will lag behind the smooth scroll.
     if (lenis) {
       lenis.on('scroll', ScrollTrigger.update);
     }
@@ -49,7 +45,7 @@ const Home = () => {
     }
 
     gsap.ticker.add(update);
-    gsap.ticker.lagSmoothing(0); // Prevents GSAP from skipping frames, crucial for smooth scroll
+    gsap.ticker.lagSmoothing(0);
 
     return () => {
       if (lenis) {
@@ -59,7 +55,6 @@ const Home = () => {
     };
   }, []);
 
-  // Use Lenis for smooth anchor link scrolling instead of native browser scroll
   useEffect(() => {
     if (location.hash) {
       const el = document.querySelector(location.hash);
@@ -83,10 +78,10 @@ const Home = () => {
       ref={lenisRef}
       autoRaf={false}
       options={{
-        lerp: 0.08,           // Perfect balance: 0.05 is too heavy, 0.1 is too fast
-        smoothWheel: true,    // Enable smooth scrolling for mouse wheels
-        wheelMultiplier: 1,   // Keep 1:1 wheel speed to feel natural
-        touchMultiplier: 2    // Better feel on mobile/trackpads
+        lerp: 0.08,
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 2
       }}
       className='relative w-full min-h-screen'
     >
@@ -104,8 +99,6 @@ const Home = () => {
         <BlueBar />
         <TeamSection />
         <FeatureGrid />
-        {/* <NewsSection /> */}
-        {/* <RestroAi /> */}
         <WebPreview />
         <ConnectCta />
 

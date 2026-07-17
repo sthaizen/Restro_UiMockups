@@ -201,7 +201,7 @@ const BottomNav = () => {
                   </div>
                   <div className="space-y-1 text-right">
                     <motion.p variants={itemVariants}>020 8156 7290</motion.p>
-                    <motion.p variants={itemVariants} className="cursor-pointer hover:text-white transition-colors duration-200">sales@polaris.co</motion.p>
+                    <motion.p variants={itemVariants} className="cursor-pointer hover:text-white transition-colors duration-200">sales@restrohub.co</motion.p>
                   </div>
                 </div>
 
