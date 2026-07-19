@@ -110,8 +110,8 @@ export default function HorizontalScroll() {
     {
       type: 'text',
       category: 'Smart POS',
-      title: 'Seamless Point of Sale for Modern Dining',
-      description: 'Our advanced POS systems operate at lightning speed to deliver seamless workflows and high-efficiency order management to help streamline your restaurant operations.',
+      title: 'Advanced Point of Sale with Split Bills & Credits',
+      description: 'Our POS handles split bills, partial payments, customer credit, discounts, and tips — all in one seamless interface built for the speed of Nepal\'s busiest restaurants.',
     },
     {
       type: 'image',
@@ -120,9 +120,9 @@ export default function HorizontalScroll() {
     },
     {
       type: 'text',
-      category: 'Kitchen AI',
-      title: 'Intelligent Routing and Kitchen Display Systems',
-      description: 'We are developing advanced routing algorithms capable of organizing tickets instantly, reducing wait times and minimizing errors during peak dining hours.',
+      category: 'Kitchen Display',
+      title: 'Smart KDS with Station Routing & Urgency Timers',
+      description: 'Orders are automatically routed to the right kitchen station with urgency-based timers, reducing wait times and eliminating ticket chaos during peak dining hours.',
     },
     {
       type: 'image',
@@ -131,9 +131,9 @@ export default function HorizontalScroll() {
     },
     {
       type: 'text',
-      category: 'Guest Experience',
-      title: 'Frictionless Reservations and Table Management',
-      description: 'The Restro Hub platform provides reliable, scalable tools for waitlist management and seating arrangements to maximize your floor capacity and delight your guests.',
+      category: 'QR Ordering',
+      title: 'Contactless Table Ordering via QR Code Tokens',
+      description: 'Customers scan table-specific QR tokens to browse your menu and place orders directly — no app downloads required. Reduces staff workload and speeds up service.',
     },
     {
       type: 'image',
@@ -143,8 +143,8 @@ export default function HorizontalScroll() {
     {
       type: 'text',
       category: 'Inventory Sync',
-      title: 'Automated Tracking for Food and Beverage',
-      description: 'Advanced technology enables deep insights into stock levels, reducing food waste and optimizing ordering for your kitchen in real-time.',
+      title: 'Auto Stock Deduction & Low-Level Alerts',
+      description: 'Track every ingredient in real-time with automatic deduction on each order. Get instant low-stock alerts so you never run out during a rush.',
     }
   ];
 
@@ -156,13 +156,13 @@ export default function HorizontalScroll() {
         <div className="text-white mb-8 md:mb-0 header-left min-w-[280px]">
           <h2 className="text-[14px] font-normal leading-[1.4] font-['Inter',Arial,sans-serif]">
             <div className="typewriter-line-1">Modernizing Restaurant Operations</div>
-            <div className="typewriter-line-2">Unlocking High-Efficiency Dining Systems</div>
+            <div className="typewriter-line-2">Unlocking Smarter Dining with RestroHub</div>
           </h2>
         </div>
 
         <div className="flex flex-col gap-8 md:items-start w-full max-w-[1000px]">
           <div className="text-white/90 text-[24px] md:text-[32px] leading-[1.3] font-light font-sans header-right text-left">
-            Together, these capabilities unlock transformative dining solutions across key areas, including front-of-house service, kitchen management, inventory tracking, and guest experience.
+            Together, these capabilities unlock transformative dining solutions across key areas, including point of sale, kitchen routing, inventory tracking, and AI-powered assistance.
           </div>
         </div>
       </div>

@@ -71,111 +71,111 @@ export default function Newwork() {
       gsap.registerPlugin(ScrollTrigger);
     }
 
-      // Header reveal (scrubbed: works on scroll down + up)
-      if (h1Ref.current) {
-        const header = h1Ref.current;
+    // Header reveal (scrubbed: works on scroll down + up)
+    if (h1Ref.current) {
+      const header = h1Ref.current;
 
-        const topBlock = header.children?.[0];
-        const bottomBlock = header.children?.[1];
+      const topBlock = header.children?.[0];
+      const bottomBlock = header.children?.[1];
 
-        const label = topBlock?.querySelector("span");
-        const line1 = topBlock?.querySelector("div");
-        const line2 = bottomBlock;
+      const label = topBlock?.querySelector("span");
+      const line1 = topBlock?.querySelector("div");
+      const line2 = bottomBlock;
 
-        const parts = [label, line1, line2].filter(Boolean);
+      const parts = [label, line1, line2].filter(Boolean);
 
-        // Initial states
-        gsap.set(parts, {
-          opacity: 0,
-          y: 26,
-          filter: "blur(5px)",
-          clipPath: "inset(0 0 100% 0)",
-          willChange: "transform, opacity, filter, clip-path",
+      // Initial states
+      gsap.set(parts, {
+        opacity: 0,
+        y: 26,
+        filter: "blur(5px)",
+        clipPath: "inset(0 0 100% 0)",
+        willChange: "transform, opacity, filter, clip-path",
+      });
+
+      const tl = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: header,
+          start: "top 85%",
+          end: "top 45%",
+          scrub: true,
+        },
+      });
+
+      if (label) {
+        tl.to(label, {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          clipPath: "inset(0 0 0% 0)",
+          duration: 0.35,
         });
+      }
 
-        const tl = gsap.timeline({
-          defaults: { ease: "none" },
-          scrollTrigger: {
-            trigger: header,
-            start: "top 85%",
-            end: "top 45%",
-            scrub: true,
-          },
-        });
+      tl.to(
+        [line1, line2].filter(Boolean),
+        {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          clipPath: "inset(0 0 0% 0)",
+          duration: 0.65,
+          stagger: 0.12,
+        },
+        label ? 0.1 : 0
+      );
 
-        if (label) {
-          tl.to(label, {
-            opacity: 1,
-            y: 0,
-            filter: "blur(0px)",
-            clipPath: "inset(0 0 0% 0)",
-            duration: 0.35,
-          });
+      gsap.to(header, {
+        y: -18,
+        ease: "none",
+        scrollTrigger: {
+          trigger: header,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+    }
+    // Parallax scroll for the bottom 3 staggered images
+    if (bottomLeftImgRef.current) {
+      gsap.to(bottomLeftImgRef.current, {
+        y: 100,
+        ease: "none",
+        scrollTrigger: {
+          trigger: bottomLeftImgRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
         }
+      });
+    }
 
-        tl.to(
-          [line1, line2].filter(Boolean),
-          {
-            opacity: 1,
-            y: 0,
-            filter: "blur(0px)",
-            clipPath: "inset(0 0 0% 0)",
-            duration: 0.65,
-            stagger: 0.12,
-          },
-          label ? 0.1 : 0
-        );
+    if (middleImgRef.current) {
+      gsap.to(middleImgRef.current, {
+        y: -80,
+        ease: "none",
+        scrollTrigger: {
+          trigger: middleImgRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        }
+      });
+    }
 
-        gsap.to(header, {
-          y: -18,
-          ease: "none",
-          scrollTrigger: {
-            trigger: header,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
-      }
-      // Parallax scroll for the bottom 3 staggered images
-      if (bottomLeftImgRef.current) {
-        gsap.to(bottomLeftImgRef.current, {
-          y: 100,
-          ease: "none",
-          scrollTrigger: {
-            trigger: bottomLeftImgRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          }
-        });
-      }
-
-      if (middleImgRef.current) {
-        gsap.to(middleImgRef.current, {
-          y: -80,
-          ease: "none",
-          scrollTrigger: {
-            trigger: middleImgRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          }
-        });
-      }
-
-      if (bottomRightImgRef.current) {
-        gsap.to(bottomRightImgRef.current, {
-          y: -200,
-          ease: "none",
-          scrollTrigger: {
-            trigger: bottomRightImgRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          }
-        });
-      }
+    if (bottomRightImgRef.current) {
+      gsap.to(bottomRightImgRef.current, {
+        y: -200,
+        ease: "none",
+        scrollTrigger: {
+          trigger: bottomRightImgRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        }
+      });
+    }
   }, []);
 
   return (
@@ -195,13 +195,13 @@ export default function Newwork() {
                 ◆ ABOUT RESTRO HUB
               </span>
               <div className="font-medium">
-                We bring restaurants to life through control and innovation.
+                We empower restaurants with smart POS, AI tools, and total control.
               </div>
             </div>
 
             {/* Bottom Block */}
             <div className="font-medium">
-              Trusted by owners who demand speed, accuracy, service, and care.
+              Trusted by 500+ owners who demand speed, accuracy, and results.
             </div>
           </h1>
 
@@ -270,7 +270,7 @@ export default function Newwork() {
             {/* Right column: Info & Button */}
             <div className="w-full lg:w-1/2 flex flex-col items-start text-left lg:pl-32">
               <p className="text-[19.1px] leading-[1.4] text-[#212325] mb-10 font-normal font-sans max-w-[320px] tracking-tight">
-                Our <strong className="font-bold text-black">Restro Hub system</strong> is built for smooth billing, smarter orders, and reliable control. Made for restaurants that want speed, clarity, and service.
+                Our <strong className="font-bold text-black">RestroHub platform</strong> delivers smart POS, kitchen displays, QR ordering, and AI-powered operations. Made for restaurants that want speed, clarity, and control.
               </p>
               <button className="group mt-10 sm:mt-0 bg-black text-white text-[12px] sm:text-[13px] font-medium tracking-wider uppercase px-8 py-4 flex items-center justify-center gap-3 hover:bg-[#222] transition-colors duration-500">
                 <div className="relative overflow-hidden w-4 h-4 flex items-center justify-center">
