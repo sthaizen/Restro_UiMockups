@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { gsap } from "gsap";
+import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLenis } from "lenis/react";
 
@@ -84,8 +85,7 @@ const CirculaScrollSection = () => {
   // Mobile intro block refs
   const mobileIntroRef = useRef(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(() => {
       const isMobile = window.innerWidth < 1024;
 
       // -----------------------------------
@@ -250,10 +250,7 @@ const CirculaScrollSection = () => {
       });
 
       ScrollTrigger.refresh();
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+  }, { scope: containerRef });
 
   return (
     <section id="about" ref={containerRef} className="bg-[#ffffff] font-sans py-20 scroll-mt-24">

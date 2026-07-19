@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -7,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 const CONFIG = {
   parallax: {
     yPercentChange: 10,
-    scrubSpeed: 1,
+    scrubSpeed: true,
   },
   lines: {
     vertical: {
@@ -57,42 +58,38 @@ const CONFIG = {
 const NewsSection = () => {
   const containerRef = useRef(null);
 
-  useEffect(() => {
-    let ctx = gsap.context(() => {
-      // Header Animation
-      gsap.from(".news-animate-header", {
-        y: 20,
-        opacity: 0.8,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".news-animate-header",
-          start: "top 75%",
-          toggleActions: "play none none reverse"
-        }
-      });
+  useGSAP(() => {
+    // Header Animation
+    gsap.from(".news-animate-header", {
+      y: 20,
+      opacity: 0.8,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".news-animate-header",
+        start: "top 75%",
+        toggleActions: "play none none reverse"
+      }
+    });
 
-      // Image Parallax Animation
-      const images = gsap.utils.toArray('.news-parallax-image');
-      images.forEach((img) => {
-        gsap.fromTo(img,
-          { yPercent: -CONFIG.parallax.yPercentChange },
-          {
-            yPercent: 0,
-            ease: "none",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: CONFIG.parallax.scrubSpeed,
-            }
+    // Image Parallax Animation
+    const images = gsap.utils.toArray('.news-parallax-image');
+    images.forEach((img) => {
+      gsap.fromTo(img,
+        { yPercent: -CONFIG.parallax.yPercentChange },
+        {
+          yPercent: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: CONFIG.parallax.scrubSpeed,
           }
-        );
-      });
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+        }
+      );
+    });
+  }, { scope: containerRef });
 
   return (
     <section ref={containerRef} className="bg-white py-16 md:py-24 px-4 sm:px-8 w-full">

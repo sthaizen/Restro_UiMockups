@@ -1,5 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { TextPlugin } from 'gsap/TextPlugin';
 import RollingText from '../components/RollingText';
@@ -8,8 +9,8 @@ gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
 const CONFIG = {
   parallax: {
-    yPercentChange: 10, // Vertical shift percentage. Increase for more parallax effect.
-    scrubSpeed: 1,   // Smoothness of the lag effect. Higher = smoother lag.
+    yPercentChange: 10,
+    scrubSpeed: true,
   }
 };
 
@@ -20,15 +21,14 @@ export default function HorizontalScroll() {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
-  useEffect(() => {
-    let ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 70%",
-          toggleActions: "play none none none"
-        }
-      });
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top 70%",
+        toggleActions: "play none none none"
+      }
+    });
 
       tl.from(".typewriter-line-1", {
         text: "",
@@ -73,10 +73,7 @@ export default function HorizontalScroll() {
         );
       });
 
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+  }, { scope: containerRef });
 
   const handleScroll = () => {
     if (sliderRef.current) {

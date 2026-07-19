@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,54 +17,50 @@ const BlueBar = ({ //blur cap
   const bottomSlicesRef = useRef([]);
   const numSlices = 17;
 
-  useEffect(() => {
-    let ctx = gsap.context(() => {
-      gsap.set(topSlicesRef.current, { transformOrigin: 'right' });
-      gsap.set(bottomSlicesRef.current, { transformOrigin: 'left' });
+  useGSAP(() => {
+    gsap.set(topSlicesRef.current, { transformOrigin: 'right' });
+    gsap.set(bottomSlicesRef.current, { transformOrigin: 'left' });
 
-      gsap.fromTo(
-        topSlicesRef.current,
-        { scaleX: 0 },
-        {
-          scaleX: 1,
-          duration: animDuration,
-          ease: 'power3.inOut',
-          stagger: {
-            each: staggerSpeed,
-            from: 'end',
-          },
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: animStart,
-            end: 'top 0%',
-            scrub: 2.5,
-          },
-        }
-      );
+    gsap.fromTo(
+      topSlicesRef.current,
+      { scaleX: 0 },
+      {
+        scaleX: 1,
+        duration: animDuration,
+        ease: 'none',
+        stagger: {
+          each: staggerSpeed,
+          from: 'end',
+        },
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: animStart,
+          end: 'top 0%',
+          scrub: true,
+        },
+      }
+    );
 
-      gsap.fromTo(
-        bottomSlicesRef.current,
-        { scaleX: 0 },
-        {
-          scaleX: 1,
-          duration: animDuration,
-          ease: 'power3.inOut',
-          stagger: {
-            each: staggerSpeed,
-            from: 'start',
-          },
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: animStart,
-            end: 'top 0%',
-            scrub: 2.5,
-          },
-        }
-      );
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+    gsap.fromTo(
+      bottomSlicesRef.current,
+      { scaleX: 0 },
+      {
+        scaleX: 1,
+        duration: animDuration,
+        ease: 'none',
+        stagger: {
+          each: staggerSpeed,
+          from: 'start',
+        },
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: animStart,
+          end: 'top 0%',
+          scrub: true,
+        },
+      }
+    );
+  }, { scope: containerRef });
 
   return (
     <div

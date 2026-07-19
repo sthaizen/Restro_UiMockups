@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -38,21 +39,20 @@ const CirculaFeaturesSection = () => {
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(() => {
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 80%",
           end: "bottom 80%",
-          scrub: 1,
+          scrub: true,
         }
       });
 
       tl.fromTo(titleRef.current,
         { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.2, ease: "power4.out" }
+        { y: 0, opacity: 1, duration: 1.2, ease: "none" }
       )
         .fromTo(".circula-row-1",
           { y: 60, opacity: 0 },
@@ -61,7 +61,7 @@ const CirculaFeaturesSection = () => {
             opacity: 1,
             duration: 1.2,
             stagger: 0.1,
-            ease: "power4.out"
+            ease: "none"
           },
           "-=0.9"
         )
@@ -72,15 +72,12 @@ const CirculaFeaturesSection = () => {
             opacity: 1,
             duration: 1.2,
             stagger: 0.1,
-            ease: "power4.out"
+            ease: "none"
           },
           "-=1.0"
         );
 
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  }, { scope: sectionRef });
 
   return (
     <section ref={sectionRef} className="bg-white py-24 px-5 md:px-10 overflow-hidden text-[#111111]">

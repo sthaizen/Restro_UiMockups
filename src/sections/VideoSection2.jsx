@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import RollingText from '../components/RollingText';
 
@@ -142,33 +143,32 @@ export default function VideoSection2() {
     }
   }, [isModalOpen]);
 
-  useEffect(() => {
-    let ctx = gsap.context(() => {
-      gsap.fromTo(videoWrapperRef.current,
-        { scale: 1 },
-        {
-          scale: 1.2,
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top bottom",
-            end: PIN_START_POSITION,
-            scrub: 1,
-          }
-        }
-      );
-
-      const tl = gsap.timeline({
+  useGSAP(() => {
+    gsap.fromTo(videoWrapperRef.current,
+      { scale: 1 },
+      {
+        scale: 1.2,
+        ease: "none",
         scrollTrigger: {
           trigger: containerRef.current,
-          start: PIN_START_POSITION,
-          end: `+=${TOTAL_PIN_SCROLL_DISTANCE}%`,
-          pin: containerRef.current,
-          scrub: 1,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
+          start: "top bottom",
+          end: PIN_START_POSITION,
+          scrub: true,
         }
-      });
+      }
+    );
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: PIN_START_POSITION,
+        end: `+=${TOTAL_PIN_SCROLL_DISTANCE}%`,
+        pin: containerRef.current,
+        scrub: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      }
+    });
 
       tl.fromTo(videoWrapperRef.current, {
         top: () => {
@@ -217,19 +217,19 @@ export default function VideoSection2() {
         height: "100vh",
         clipPath: "inset(0px 0px 0px 0px)",
         duration: 100,
-        ease: "power2.inOut"
+        ease: "none"
       }, 0);
 
       tl.to(leftTextRef.current, {
         x: -TEXT_PARALLAX_X,
         duration: 100,
-        ease: "power2.inOut"
+        ease: "none"
       }, 0);
 
       tl.to(rightTextRef.current, {
         x: TEXT_PARALLAX_X,
         duration: 100,
-        ease: "power2.inOut"
+        ease: "none"
       }, 0);
 
       tl.fromTo(".divider-line",
@@ -238,7 +238,7 @@ export default function VideoSection2() {
           scaleX: 1,
           opacity: 1,
           duration: 100,
-          ease: "power2.inOut"
+          ease: "none"
         }, 0
       );
 
@@ -247,7 +247,7 @@ export default function VideoSection2() {
       }, {
         opacity: OVERLAY_MAX_OPACITY,
         duration: 50,
-        ease: "power2.inOut"
+        ease: "none"
       }, 50);
 
       const leftElements = gsap.utils.toArray(leftTextRef.current.children);
@@ -269,10 +269,7 @@ export default function VideoSection2() {
         }
       );
 
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+  }, { scope: containerRef });
 
   return (
     <div className="bg-[#1b1b1b] w-full pt-[40px] mb-20">

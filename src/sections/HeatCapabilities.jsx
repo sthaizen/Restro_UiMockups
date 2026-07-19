@@ -1,5 +1,4 @@
-import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -58,20 +57,26 @@ const HeatCapabilities = ({
   mainBarSubColor = '#ffffff',
   gridLineColor = '#303030',
   intermediateGridLineColor = '#5a5a5a66',
-  gridLineStyle = 'dashed', // 'dashed', 'dotted', 'solid'
+  gridLineStyle = 'dashed',
   axisLineColor = '#5a5a5aff',
   axisTickColor = '#5a5a5aff',
   intermediateTickColor = '#5a5a5a80',
   axisTextColor = '#ffffff',
-
   style,
   ...props
 }) => {
   const [activeTab, setActiveTab] = useState('cities');
   const maxTemp = 1200;
+  
   const containerRef = useRef(null);
+  const activeTabLineRef = useRef(null);
+  const floatingContainerRef = useRef(null);
+  const tabRefs = useRef({});
+  const tabWrapperRef = useRef(null);
+  const { contextSafe } = useGSAP({ scope: containerRef });
 
   useGSAP(() => {
+    // Top text stagger
     gsap.from('.gsap-text-anim', {
       scrollTrigger: {
         trigger: containerRef.current,
@@ -84,7 +89,116 @@ const HeatCapabilities = ({
       stagger: 0.2,
       ease: 'power3.out',
     });
+
+    // Main Bars Entrance
+    gsap.utils.toArray('.main-bar-row').forEach((rowEl, idx) => {
+       const fill = rowEl.querySelector('.main-bar-fill');
+       const text = rowEl.querySelector('.main-bar-text');
+
+       if (fill) {
+           gsap.fromTo(fill, 
+             { width: 0 }, 
+             { 
+                 width: fill.dataset.width, 
+                 duration: 1, 
+                 ease: "easeOut",
+                 scrollTrigger: {
+                     trigger: rowEl,
+                     start: 'top 95%',
+                     once: true
+                 }
+             }
+           );
+       }
+       if (text) {
+           gsap.fromTo(text, 
+               { opacity: 0, x: -10 },
+               {
+                   opacity: 1, x: 0,
+                   duration: 0.6,
+                   delay: 0.3 + idx * 0.1,
+                   ease: "easeOut",
+                   scrollTrigger: {
+                     trigger: rowEl,
+                     start: 'top 95%',
+                     once: true
+                 }
+               }
+           );
+       }
+    });
+
   }, { scope: containerRef });
+
+  // Handle Tab Switch
+  useEffect(() => {
+    // Move Underline
+    const tabEl = tabRefs.current[activeTab];
+    if (tabEl && activeTabLineRef.current && tabWrapperRef.current) {
+        const relativeLeft = tabEl.offsetLeft;
+        
+        gsap.to(activeTabLineRef.current, {
+            left: relativeLeft,
+            width: tabEl.getBoundingClientRect().width,
+            duration: 0.4,
+            ease: 'power3.out',
+        });
+    }
+
+    // Animate Floating Bars IN
+    if (floatingContainerRef.current) {
+        // First kill any existing animations to prevent conflicts
+        gsap.killTweensOf(floatingContainerRef.current);
+        gsap.killTweensOf(floatingContainerRef.current.querySelectorAll('.floating-fill, .floating-text'));
+
+        // Reset the container state for the entrance
+        gsap.set(floatingContainerRef.current, { opacity: 0, y: 5 });
+
+        const tl = gsap.timeline();
+        
+        tl.to(floatingContainerRef.current, { opacity: 1, y: 0, duration: 0.3, ease: 'easeOut' });
+
+        const floatingItems = floatingContainerRef.current.querySelectorAll('.floating-item');
+        floatingItems.forEach((item, idx) => {
+             const fill = item.querySelector('.floating-fill');
+             const text = item.querySelector('.floating-text');
+             
+             if (fill && text) {
+                 gsap.fromTo(fill, 
+                     { width: 0, opacity: 0 }, 
+                     { width: fill.dataset.width, opacity: 1, duration: 0.6, ease: 'easeOut' }, 
+                     0.1 + (idx * 0.1) // relative to the timeline start, offset by idx
+                 );
+                 gsap.fromTo(text, 
+                     { opacity: 0, y: 8 }, 
+                     { opacity: 1, y: 0, duration: 0.5, ease: 'easeOut' }, 
+                     0.4 + (idx * 0.1)
+                 );
+             }
+        });
+    }
+
+  }, [activeTab]);
+
+  const handleTabClick = contextSafe((tabId) => {
+      if (tabId === activeTab) return;
+      
+      // Animate out current
+      if (floatingContainerRef.current) {
+          gsap.to(floatingContainerRef.current, {
+              opacity: 0,
+              y: -5,
+              duration: 0.2,
+              ease: 'easeOut',
+              onComplete: () => {
+                  setActiveTab(tabId);
+              }
+          });
+      } else {
+          setActiveTab(tabId);
+      }
+  });
+
 
   const getLeft = (val) => `${(val / maxTemp) * 100}%`;
   const getWidth = (start, end) => `${((end - start) / maxTemp) * 100}%`;
@@ -112,26 +226,21 @@ const HeatCapabilities = ({
         className={`mx-auto ${containerClassName}`}
         style={{ width: containerWidth }}
       >
-        <div className="relative flex space-x-8 mb-12 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div ref={tabWrapperRef} className="relative flex space-x-8 mb-12 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#2a2a2a]"></div>
+          
+          <div ref={activeTabLineRef} className="absolute bottom-0 h-[3px]" style={{ backgroundColor: primaryColor, left: 0, width: 0 }} />
+
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              ref={(el) => tabRefs.current[tab.id] = el}
+              onClick={() => handleTabClick(tab.id)}
               className={`pb-3 whitespace-nowrap transition-colors relative z-10 ${activeTab === tab.id ? 'text-white' : 'text-[#888888] hover:text-gray-300'
                 }`}
               style={{ fontSize: primaryTextSize }}
             >
               {tab.label}
-              {activeTab === tab.id && (
-                <motion.div
-                  layoutId="activeTabUnderline"
-                  className="absolute left-0 right-0 bottom-0 h-[3px]"
-                  style={{ backgroundColor: primaryColor }}
-                  initial={false}
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                />
-              )}
             </button>
           ))}
         </div>
@@ -176,106 +285,84 @@ const HeatCapabilities = ({
 
           <div className="relative z-10 flex flex-col w-full" style={{ height: `${chartHeight}px` }}>
             <div className="relative h-[130px] w-full mb-6">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeTab}
-                  initial={{ opacity: 0, y: 5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -5 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="absolute inset-0"
-                >
+              <div ref={floatingContainerRef} className="absolute inset-0">
                   {floatingBarsData[activeTab]?.map((bar, idx) => (
-                    <div key={idx} className="absolute inset-0">
-                      <motion.div
-                        initial={{ width: 0, opacity: 0 }}
-                        animate={{ width: getWidth(bar.start, bar.end), opacity: 1 }}
-                        transition={{ duration: 0.6, delay: idx * 0.1, ease: "easeOut" }}
-                        className={`absolute h-[40px] border border-dashed backdrop-blur-sm
+                    <div key={idx} className="absolute inset-0 floating-item">
+                      <div
+                        className={`floating-fill absolute h-[40px] border border-dashed backdrop-blur-sm
                           ${bar.fadeRight ? 'border-r-0 rounded-l-[4px]' : 'rounded-[4px]'}
                         `}
+                        data-width={getWidth(bar.start, bar.end)}
                         style={{
                           backgroundColor: floatingBoxBg,
                           borderColor: floatingBoxBorder,
                           left: getLeft(bar.start),
                           top: `${bar.row * floatingBarRowHeight + 10}px`,
+                          width: 0,
+                          opacity: 0,
                           maskImage: bar.fadeRight ? 'linear-gradient(to right, black 80%, transparent 100%)' : 'none',
                           WebkitMaskImage: bar.fadeRight ? 'linear-gradient(to right, black 80%, transparent 100%)' : 'none',
                         }}
                       />
 
-                      <motion.div
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.4 + idx * 0.1, ease: "easeOut" }}
-                        className={`absolute h-[40px] flex flex-col justify-center whitespace-nowrap`}
+                      <div
+                        className={`floating-text absolute h-[40px] flex flex-col justify-center whitespace-nowrap`}
                         style={{
                           top: `${bar.row * floatingBarRowHeight + 10}px`,
                           left: bar.textPos === 'right' ? `calc(${getLeft(bar.end)} + 16px)` : undefined,
                           right: bar.textPos === 'left' ? `calc(100% - ${getLeft(bar.start)} + 16px)` : undefined,
-                          alignItems: bar.textPos === 'left' ? 'flex-end' : 'flex-start'
+                          alignItems: bar.textPos === 'left' ? 'flex-end' : 'flex-start',
+                          opacity: 0,
+                          transform: 'translateY(8px)'
                         }}
                       >
                         <span className="leading-snug font-medium" style={{ color: titleColor, fontSize: primaryTextSize }}>{bar.label}</span>
                         <span className="leading-snug" style={{ color: subTitleColor, fontSize: secondaryTextSize }}>{bar.tempRange}</span>
-                      </motion.div>
+                      </div>
                     </div>
                   ))}
-                </motion.div>
-              </AnimatePresence>
+              </div>
             </div>
 
             <div className="relative flex flex-col justify-end flex-grow pb-[1px]" style={{ gap: `${mainBarGap}px` }}>
               {mainBars.map((bar, idx) => (
-                <div key={idx} className="relative h-[42px] flex items-center w-full group">
+                <div key={idx} className="main-bar-row relative h-[42px] flex items-center w-full group">
                   {bar.isMain ? (
-                    <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: getLeft(bar.temp) }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, ease: "easeOut" }}
-                      className="absolute h-full flex items-center px-4 rounded-r-[2px] overflow-hidden whitespace-nowrap z-20"
-                      style={{ backgroundColor: primaryColor }}
+                    <div
+                      className="main-bar-fill absolute h-full flex items-center px-4 rounded-r-[2px] overflow-hidden whitespace-nowrap z-20"
+                      data-width={getLeft(bar.temp)}
+                      style={{ backgroundColor: primaryColor, width: 0 }}
                     >
-                      <motion.div
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.3 + idx * 0.1, ease: "easeOut" }}
-                        className="flex items-center gap-[6px]"
+                      <div
+                        className="main-bar-text flex items-center gap-[6px]"
+                        style={{ opacity: 0, transform: 'translateX(-10px)' }}
                       >
                         <span style={{ color: titleColor, fontSize: primaryTextSize }}>
                           <span className="font-bold">{bar.labelPrefix}</span>
                           {bar.labelSuffix && <span className="font-normal ml-[3px]">{bar.labelSuffix}</span>}
                         </span>
                         <span className="ml-1" style={{ color: titleColor, opacity: 0.8, fontSize: primaryTextSize }}>{bar.text}</span>
-                      </motion.div>
-                    </motion.div>
+                      </div>
+                    </div>
                   ) : (
                     <div className="absolute left-0 h-full w-full z-10">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: getLeft(bar.temp) }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, ease: "easeOut" }}
-                        className="absolute h-full rounded-r-[2px]"
-                        style={{ backgroundColor: secondaryBarBg }}
+                      <div
+                        className="main-bar-fill absolute h-full rounded-r-[2px]"
+                        data-width={getLeft(bar.temp)}
+                        style={{ backgroundColor: secondaryBarBg, width: 0 }}
                       >
                         <div className="absolute right-0 top-0 bottom-0 w-[2px]" style={{ backgroundColor: primaryColor }} />
-                      </motion.div>
-                      <motion.div
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.3 + idx * 0.1, ease: "easeOut" }}
-                        className="absolute left-0 flex items-center h-full px-4 whitespace-nowrap z-10 pointer-events-none"
+                      </div>
+                      <div
+                        className="main-bar-text absolute left-0 flex items-center h-full px-4 whitespace-nowrap z-10 pointer-events-none"
+                        style={{ opacity: 0, transform: 'translateX(-10px)' }}
                       >
                         <span style={{ color: mainBarTitleColor, fontSize: primaryTextSize }}>
                           {bar.labelPrefix}
                           {bar.labelSuffix && <span className="ml-[3px]">{bar.labelSuffix}</span>}
                         </span>
                         <span className="ml-2" style={{ color: mainBarSubColor, fontSize: primaryTextSize }}>{bar.text}</span>
-                      </motion.div>
+                      </div>
                     </div>
                   )}
                 </div>

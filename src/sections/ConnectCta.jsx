@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/all';
 import RollingText from '../components/RollingText';
 import Footer from './Footer';
@@ -83,53 +84,52 @@ const ConnectCta = ({ text = CONFIG.text, cta = CONFIG.cta, images = CONFIG.imag
       gsap.registerPlugin(ScrollTrigger);
     }
 
-    const ctx = gsap.context(() => {
-      if (img1Ref.current) {
-        gsap.to(img1Ref.current, {
-          y: animation.img1ScrollYPx,
-          ease: "none",
-          scrollTrigger: {
-            trigger: img1Ref.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          }
-        });
-      }
-
-      if (img2Ref.current) {
-        gsap.to(img2Ref.current, {
-          y: animation.img2ScrollYPx,
-          ease: "none",
-          scrollTrigger: {
-            trigger: img2Ref.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          }
-        });
-      }
-
-      if (containerRef.current) {
-        gsap.to(containerRef.current, {
-          scale: 0.97,
-          borderRadius: "32px",
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: animation.scaleAnimationStart,
-            end: animation.scaleAnimationEnd,
-            scrub: 1.5,
-          }
-        });
-      }
-    });
-
     return () => {
       window.removeEventListener('resize', updateDimensions);
-      ctx.revert();
     };
-  }, [animation]);
+  }, []);
+
+  useGSAP(() => {
+    if (img1Ref.current) {
+      gsap.to(img1Ref.current, {
+        y: animation.img1ScrollYPx,
+        ease: "none",
+        scrollTrigger: {
+          trigger: img1Ref.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        }
+      });
+    }
+
+    if (img2Ref.current) {
+      gsap.to(img2Ref.current, {
+        y: animation.img2ScrollYPx,
+        ease: "none",
+        scrollTrigger: {
+          trigger: img2Ref.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        }
+      });
+    }
+
+    if (containerRef.current) {
+      gsap.to(containerRef.current, {
+        scale: 0.97,
+        borderRadius: "32px",
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: animation.scaleAnimationStart,
+          end: animation.scaleAnimationEnd,
+          scrub: true,
+        }
+      });
+    }
+  }, { scope: containerRef, dependencies: [animation] });
 
   // If the footer is taller than the user's screen, we must disable the parallax reveal.
   // Otherwise, the sticky logic will pin it in a way that physically cuts off the top or bottom forever!

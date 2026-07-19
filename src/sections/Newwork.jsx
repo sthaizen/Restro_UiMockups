@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { gsap } from "gsap";
+import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from "gsap/all";
 import RollingText from "../components/RollingText";
 
@@ -65,12 +66,10 @@ export default function Newwork() {
     }
   };
 
-  useEffect(() => {
+  useGSAP(() => {
     if (typeof window !== "undefined") {
       gsap.registerPlugin(ScrollTrigger);
     }
-
-    const ctx = gsap.context(() => {
 
       // Header reveal (scrubbed: works on scroll down + up)
       if (h1Ref.current) {
@@ -177,9 +176,6 @@ export default function Newwork() {
           }
         });
       }
-    });
-
-    return () => ctx.revert();
   }, []);
 
   return (
