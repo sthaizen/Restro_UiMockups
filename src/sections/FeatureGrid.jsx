@@ -76,11 +76,11 @@ const FeaturesGrid = () => {
         {/* Header Section */}
         <div className="mb-16 md:mb-24 max-w-4xl ml-0 lg:ml-24 animate-header">
           <h2 className="text-[36px] md:text-[48px] lg:text-[56px] font-light leading-[1.1] tracking-tight">
-            <span className="text-[#888888] block">Turning chaos into perfect harmony.</span>
-            <span className="text-[#111111] font-normal block mt-2">So efficient, every second counts.</span>
+            <span className="text-[#888888] block">Turning restaurant chaos into smooth control.</span>
+            <span className="text-[#111111] font-normal block mt-2">So efficient, every order counts.</span>
           </h2>
           <p className="mt-8 text-[#666666] text-[14px] md:text-[16px] max-w-[600px] leading-relaxed">
-            This allows every restaurant team to focus on delivering exceptional guest experiences with greater impact, leading to better service and increased profitability.
+            This allows every restaurant team to focus on delivering exceptional guest experiences with greater impact, leading to faster service and increased profitability.
           </p>
         </div>
 
@@ -95,20 +95,20 @@ const FeaturesGrid = () => {
           </div>
           <div className="grid-item grid-row-1 bg-[#f9fafb] rounded-[12px] p-10 md:p-16 flex flex-col justify-between h-[400px] md:h-[500px]">
             <h3 className="text-[28px] md:text-[36px] text-[#111111] font-light leading-tight max-w-[85%]">
-              Nothing drives success like real-time data
+              Nothing drives success like real-time analytics
             </h3>
             <p className="text-[#666666] text-[14px] md:text-[15px] leading-relaxed max-w-[95%]">
-              Nobody wants to run a restaurant blindly and it's frustrating to manage inventory without smart alerts. Unstructured management is exactly that: time consuming and nerve wracking. About time to change this.
+              Nobody wants to run a restaurant blindly and it's frustrating to manage inventory without smart alerts. RestroHub gives you hourly revenue reports and top-selling item tracking. About time to take full control.
             </p>
           </div>
 
           {/* Row 2 */}
           <div className="grid-item grid-row-2 bg-[#f9fafb] rounded-[12px] p-10 md:p-16 flex flex-col justify-between h-[400px] md:h-[500px] order-last md:order-none">
             <h3 className="text-[28px] md:text-[36px] text-[#111111] font-light leading-tight max-w-[85%]">
-              We help restaurants operate smarter and serve with confidence
+              We help restaurants operate smarter and serve with total confidence
             </h3>
             <p className="text-[#666666] text-[14px] md:text-[15px] leading-relaxed max-w-[95%]">
-              This way restaurant owners are transforming their workflows and gaining full control across all their daily operations.
+              This way restaurant owners are transforming their workflows and gaining full control across all their daily operations with RestroHub's platform.
             </p>
           </div>
           <div className="grid-item grid-row-2 rounded-[12px] overflow-hidden h-[400px] md:h-[500px] relative group cursor-pointer">
@@ -127,10 +127,10 @@ const FeaturesGrid = () => {
             <h3 className="text-[28px] md:text-[36px] text-[#111111] font-light leading-tight max-w-[90%] flex flex-wrap items-center gap-x-3">
               With
               <span className="w-[18px] h-[18px] bg-[#111111] rounded-full inline-block shrink-0 relative top-[2px]"></span>
-              Restro, teams will streamline their service globally
+              RestroHub, teams will streamline their service nationwide
             </h3>
             <p className="text-[#666666] text-[14px] md:text-[15px] leading-relaxed max-w-[95%]">
-              By leveraging new technologies, artificial intelligence and seamless omnichannel experiences we will redefine restaurant management for good.
+              By leveraging new technologies, artificial intelligence and seamless multi-branch management we will redefine restaurant operations across Nepal for good.
             </p>
           </div>
 

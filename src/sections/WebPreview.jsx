@@ -3,10 +3,10 @@ import React from 'react';
 const CONFIG = {
   text: {
     title: (
-      <>Building the Culinary<br />Workforce with Restro Hub</>
+      <>Build Your Restaurant<br />Website Free with RestroHub</>
     ),
-    paragraph: "Through Restro Hub's hospitality subsidiary, the Restro Hub Culinary Training Program, we recruit at the local, regional, and national levels to find passionate individuals for careers as executive chefs, line cooks, managers, and other vital roles that power the future of exceptional dining experiences through advanced AI.",
-    buttonText: "Contact Us to Learn More",
+    paragraph: "Through RestroHub's built-in website builder, restaurants can create a professional online presence with 12 layout blocks, 3 beautiful themes, and custom domain support — all at zero extra cost. Launch your menu, location, and booking page in minutes without any technical knowledge.",
+    buttonText: "Start Building for Free",
   },
   slider: {
     speed: "30s", // Time to complete one full scroll

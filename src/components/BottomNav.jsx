@@ -32,10 +32,10 @@ const BottomNav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [entrancePhase, setEntrancePhase] = useState(0);
   const [isAtBottom, setIsAtBottom] = useState(false);
-  
+
   const initialLoadRef = useRef(true);
   const isAtBottomRef = useRef(false);
-  
+
   const containerRef = useRef(null);
   const backdropRef = useRef(null);
   const cardRef = useRef(null);
@@ -96,9 +96,9 @@ const BottomNav = () => {
 
     if (isOpen) {
       gsap.to(cardRef.current, { height: CONFIG.card.height, opacity: 1, duration: CONFIG.animation.morphDuration, ease: "power3.out", display: 'block' });
-      gsap.fromTo(contentRef.current.children, 
-         { opacity: 0, y: 20, clipPath: "inset(0 0 100% 0)" },
-         { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)", duration: 0.4, stagger: 0.04, ease: "power3.out", delay: 0.1 }
+      gsap.fromTo(contentRef.current.children,
+        { opacity: 0, y: 20, clipPath: "inset(0 0 100% 0)" },
+        { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)", duration: 0.4, stagger: 0.04, ease: "power3.out", delay: 0.1 }
       );
     } else {
       gsap.to(cardRef.current, { height: 0, opacity: 0, duration: CONFIG.animation.morphDuration, ease: "power3.out", display: 'none' });
@@ -107,7 +107,7 @@ const BottomNav = () => {
 
   useGSAP(() => {
     const isAnim = initialLoadRef.current;
-    
+
     gsap.to(buttonRef.current, {
       opacity: entrancePhase > 0 ? 1 : 0,
       y: entrancePhase > 0 ? 0 : 120,
@@ -118,40 +118,40 @@ const BottomNav = () => {
     });
 
     if (!isOpen) {
-        gsap.to(buttonIconOpenedRef.current, { opacity: 0, scale: 0.5, duration: 0.2 });
-        gsap.to(buttonIconClosedRef.current, { opacity: 1, y: 0, duration: 0.3, delay: 0.1 });
-        
-        const closedBox = buttonIconClosedRef.current.querySelector('.closed-box');
-        const closedText = buttonIconClosedRef.current.querySelector('.closed-text');
-        const closedLines = buttonIconClosedRef.current.querySelector('.closed-lines');
-        
-        if (closedBox) {
-            gsap.to(closedBox, {
-              left: entrancePhase >= 3 ? 24 : "50%",
-              xPercent: entrancePhase >= 3 ? 0 : -50,
-              duration: isAnim ? CONFIG.animation.entranceDuration : CONFIG.animation.morphDuration,
-              ease: "power3.out"
-            });
-        }
-        if (closedText) {
-            gsap.to(closedText, {
-                opacity: entrancePhase >= 3 ? 1 : 0,
-                y: entrancePhase >= 3 ? 0 : 10,
-                duration: CONFIG.animation.entranceDuration,
-                ease: "power3.out"
-            });
-        }
-        if (closedLines) {
-            gsap.to(closedLines, {
-                opacity: entrancePhase >= 3 ? 1 : 0,
-                y: entrancePhase >= 3 ? 0 : 10,
-                duration: CONFIG.animation.entranceDuration,
-                ease: "power3.out"
-            });
-        }
+      gsap.to(buttonIconOpenedRef.current, { opacity: 0, scale: 0.5, duration: 0.2 });
+      gsap.to(buttonIconClosedRef.current, { opacity: 1, y: 0, duration: 0.3, delay: 0.1 });
+
+      const closedBox = buttonIconClosedRef.current.querySelector('.closed-box');
+      const closedText = buttonIconClosedRef.current.querySelector('.closed-text');
+      const closedLines = buttonIconClosedRef.current.querySelector('.closed-lines');
+
+      if (closedBox) {
+        gsap.to(closedBox, {
+          left: entrancePhase >= 3 ? 24 : "50%",
+          xPercent: entrancePhase >= 3 ? 0 : -50,
+          duration: isAnim ? CONFIG.animation.entranceDuration : CONFIG.animation.morphDuration,
+          ease: "power3.out"
+        });
+      }
+      if (closedText) {
+        gsap.to(closedText, {
+          opacity: entrancePhase >= 3 ? 1 : 0,
+          y: entrancePhase >= 3 ? 0 : 10,
+          duration: CONFIG.animation.entranceDuration,
+          ease: "power3.out"
+        });
+      }
+      if (closedLines) {
+        gsap.to(closedLines, {
+          opacity: entrancePhase >= 3 ? 1 : 0,
+          y: entrancePhase >= 3 ? 0 : 10,
+          duration: CONFIG.animation.entranceDuration,
+          ease: "power3.out"
+        });
+      }
     } else {
-        gsap.to(buttonIconClosedRef.current, { opacity: 0, y: -20, duration: 0.2 });
-        gsap.to(buttonIconOpenedRef.current, { opacity: 1, scale: 1, duration: 0.3, delay: 0.1 });
+      gsap.to(buttonIconClosedRef.current, { opacity: 0, y: -20, duration: 0.2 });
+      gsap.to(buttonIconOpenedRef.current, { opacity: 1, scale: 1, duration: 0.3, delay: 0.1 });
     }
   }, [entrancePhase, isOpen]);
 
@@ -197,14 +197,14 @@ const BottomNav = () => {
                 <p className="cursor-pointer hover:text-white transition-colors duration-200">Showroom</p>
               </div>
               <div className="space-y-1 text-right">
-                <p>020 8156 7290</p>
-                <p className="cursor-pointer hover:text-white transition-colors duration-200">sales@restrohub.co</p>
+                <p>980-0000000</p>
+                <p className="cursor-pointer hover:text-white transition-colors duration-200">sales@restrohub.com.np</p>
               </div>
             </div>
 
             <button className="group mx-auto w-[80%] mt-15 border-1 border-white/5 bg-[#101012] hover:bg-white hover:text-black transition-all duration-500 py-4 text-[11px] font-semibold tracking-[0.15em] flex justify-center items-center gap-3">
               <CornerDownRight size={15} strokeWidth={1.5} />
-              <RollingText text="GET A QUOTE" />
+              <RollingText text="START FREE TRIAL" />
             </button>
           </div>
         </div>
@@ -232,10 +232,10 @@ const BottomNav = () => {
           boxShadow: CONFIG.shadow,
         }}
         onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = hexToRgba(CONFIG.bar.bgColorHover, CONFIG.bar.opacity);
+          e.currentTarget.style.backgroundColor = hexToRgba(CONFIG.bar.bgColorHover, CONFIG.bar.opacity);
         }}
         onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = hexToRgba(CONFIG.bar.bgColor, CONFIG.bar.opacity);
+          e.currentTarget.style.backgroundColor = hexToRgba(CONFIG.bar.bgColor, CONFIG.bar.opacity);
         }}
       >
         <div

@@ -280,7 +280,7 @@ export default function VideoSection2() {
 
       <div className="w-full relative z-20 px-4 md:px-8 lg:px-12 pb-8">
         <h2 className="text-[#ffffff] font-mono text-[11px] sm:text-[13px] lg:text-[14.87px] tracking-[0.15em] uppercase font-bold select-none text-left inter ml-5">
-          ◆ SHOWROOM
+          ◆ LIVE DEMO
         </h2>
       </div>
 
@@ -306,7 +306,7 @@ export default function VideoSection2() {
             >
 
               <h1 className="text-white text-[32px] md:text-[42px] lg:text-[44px] leading-[1.1] font-light font-['Geist',Arial,sans-serif] tracking-tight drop-shadow-md">
-                A place where precision<br />and creativity connect.
+                Where smart technology<br />and hospitality connect.
               </h1>
             </div>
 
@@ -317,10 +317,10 @@ export default function VideoSection2() {
             >
 
               <h3 className="text-white uppercase text-[11px] md:text-[12px] tracking-[0.15em] font-bold mb-2">
-                ADDRESS
+                HEAD OFFICE
               </h3>
               <p className="text-white/80 text-[13px] md:text-[15px] leading-[1.5] max-w-[220px] mb-8 font-light">
-                Orbital 25 Business Park, Unit<br />Watford WD18 9DA, UK
+                RestroHub Pvt. Ltd., Tinkune<br />Kathmandu 44600, Nepal
               </p>
 
               <button className="flex items-center justify-center gap-3 bg-[#ffffff1a] hover:bg-[#ffffff33] transition-colors duration-300 backdrop-blur-sm px-6 py-3  text-white uppercase text-[12px] tracking-wider font-medium group ">
@@ -354,7 +354,7 @@ export default function VideoSection2() {
                     <path d="M12 5l7 7-7 7" />
                   </svg>
                 </div>
-                <RollingText text="SHOWROOM" />
+                <RollingText text="WATCH DEMO" />
               </button>
             </div>
 

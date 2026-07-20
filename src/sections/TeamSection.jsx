@@ -7,34 +7,34 @@ gsap.registerPlugin(ScrollTrigger);
 
 const TEAM_MEMBERS = [
   {
-    name: 'Richard Sterling',
-    role: 'Co-founder, President and CEO, Board of Directors of Restro Hub',
-    image: '/assets/backgrounds/TeamMember.png', // Professional man in suit
+    name: 'Aarav Shrestha',
+    role: 'Co-founder, CEO and Board of Directors of RestroHub Nepal',
+    image: '/assets/backgrounds/TeamMember.png',
   },
   {
-    name: 'Michael Chang',
-    role: 'Co-founder, Chief Culinary Officer of Restro Hub and Executive Chef',
-    image: '/assets/backgrounds/TeamMember.png', // Professional man in suit
+    name: 'Priya Maharjan',
+    role: 'Co-founder, Chief Technology Officer of RestroHub and Lead Engineer',
+    image: '/assets/backgrounds/TeamMember.png',
   },
   {
-    name: 'Sarah Jenkins',
-    role: 'Co-founder, Principal and Strategic Advisor to the CEO on Culinary Operations',
-    image: '/assets/backgrounds/TeamMember.png', // Professional woman
+    name: 'Suman Tamang',
+    role: 'Co-founder, Head of Product and Strategic Advisor to the CEO on Platform Operations',
+    image: '/assets/backgrounds/TeamMember.png',
   },
   {
-    name: 'David Laurent',
-    role: 'Co-founder and Head of Culinary Innovation, Restro Hub Kitchens',
-    image: '/assets/backgrounds/TeamMember.png', // Professional man
+    name: 'Anita Gurung',
+    role: 'Co-founder and Head of AI Innovation, RestroHub RestroBuddy',
+    image: '/assets/backgrounds/TeamMember.png',
   },
   {
-    name: 'Robert Black',
-    role: 'Director of Food and Beverage Operations',
-    image: '/assets/backgrounds/TeamMember.png', // Professional older man
+    name: 'Rajesh Adhikari',
+    role: 'Director of Customer Success and Support Operations',
+    image: '/assets/backgrounds/TeamMember.png',
   },
   {
-    name: 'Amanda Hughes',
-    role: 'Senior Vice President of Guest Experience',
-    image: '/assets/backgrounds/TeamMember.png', // Professional woman
+    name: 'Kavya Thapa',
+    role: 'Senior Vice President of Sales and Partnerships',
+    image: '/assets/backgrounds/TeamMember.png',
   },
 ];
 
@@ -196,22 +196,22 @@ export default function TeamSection() {
         <div ref={headerRef} className="flex flex-col md:flex-row justify-between items-start gap-12 mb-[100px]">
           <div className="w-full md:w-1/4 pt-2 gsap-header-part">
             <h3 className="text-[#3D5E86] text-[14px] font-['Inter',_sans-serif] leading-[1.2]">
-              Meet the International Team<br />
-              Behind Our Restaurants
+              Meet the Engineering Team<br />
+              Behind RestroHub Platform
             </h3>
           </div>
           <div className="w-full md:w-[65%] flex flex-col">
             <p className="gsap-header-part text-[#3D5E86] text-[32px] font-['Geist',_sans-serif] font-light leading-[1.2] tracking-[-0.01em]">
-              Restro Hub brings together world-class experts in
+              RestroHub brings together talented engineers in
             </p>
             <p className="gsap-header-part text-[#3D5E86] text-[32px] font-['Geist',_sans-serif] font-light leading-[1.2] tracking-[-0.01em]">
-              culinary innovation, large-scale restaurant management,
+              AI, cloud infrastructure, product design,
             </p>
             <p className="gsap-header-part text-[#3D5E86] text-[32px] font-['Geist',_sans-serif] font-light leading-[1.2] tracking-[-0.01em]">
-              and hospitality to provide exceptional dining experiences
+              and restaurant technology to build the smartest
             </p>
             <p className="gsap-header-part text-[#3D5E86] text-[32px] font-['Geist',_sans-serif] font-light leading-[1.2] tracking-[-0.01em]">
-              for a wide range of casual and fine-dining operations.
+              management platform for restaurants across Nepal.
             </p>
           </div>
         </div>
@@ -287,7 +287,7 @@ export default function TeamSection() {
               <div className="mt-auto w-full">
                 <h3 className="text-[#3D5E86] text-[45px] font-light leading-tight mb-12 max-w-[480px]">
                   Learn more about the<br />
-                  people behind Restro Hub
+                  people behind RestroHub
                 </h3>
 
                 <div className="relative w-full pt-5">

@@ -25,7 +25,7 @@ const controls = {
 
   // Text Controls
   title: {
-    text: "24/7 Seamless Restaurant\nManagement System",
+    text: "24/7 All-in-One Restaurant\nManagement Platform",
     fontSizeDesktop: "50px",
     fontSizeMobile: "40px",
     color: "#000000",
@@ -34,7 +34,7 @@ const controls = {
     marginBottom: "48px",
   },
   paragraph1: {
-    text: "We provide restaurant owners with a comprehensive suite of digital tools, including streamlined ordering, inventory management, and real-time analytics.",
+    text: "We provide restaurant owners with a comprehensive suite of digital tools, including smart POS, QR ordering, kitchen display systems, and AI-powered analytics.",
     fontSize: "15px",
     color: "#524F4B",
     width: "70%",
@@ -42,7 +42,7 @@ const controls = {
     marginBottom: "24px",
   },
   paragraph2: {
-    text: "Through our all-in-one platform, we handle the technical complexities of your digital operations, empowering your team to focus on delivering exceptional dining experiences.",
+    text: "Through our all-in-one platform, we handle the technical complexities of your daily operations, empowering your team to focus on delivering exceptional dining experiences across Nepal.",
     fontSize: "15px",
     color: "#524F4B",
     width: "70%",
@@ -52,7 +52,7 @@ const controls = {
 
   // Button Controls
   button: {
-    text: "CONTACT US",
+    text: "START FREE TRIAL",
     backgroundColor: "#000000",
     textColor: "#ffffff",
     hoverBackgroundColor: "#222222",
