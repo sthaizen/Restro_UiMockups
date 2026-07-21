@@ -39,107 +39,107 @@ const Hero = () => {
   const [, setIsLoaded] = useState(false);
 
   useGSAP(() => {
-      const loadTl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+    const loadTl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
-      loadTl.to(brightOverlayRef.current, {
-        opacity: 0,
-        duration: 1,
-        ease: 'power2.inOut'
-      }, 0)
-        .fromTo(bgImageRef.current,
-          { scale: 1.3, filter: 'brightness(1.2)' },
-          { scale: 1, filter: 'brightness(1)', duration: 1.5, ease: 'power3.out' },
-          0
-        )
-        .call(() => setIsLoaded(true), null, "-=1.1")
-        .fromTo(contentRef.current.children,
-          { y: 40, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1.2, stagger: 0.15 },
-          "-=1.1"
-        )
-        .fromTo(rightContentRef.current.children,
-          { y: 40, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1.2, stagger: 0.15 },
-          "-=1.0"
-        )
-        .fromTo(bottomLabelsRef.current.children,
-          { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1.2, stagger: 0.15 },
-          "-=1.1"
-        )
-        ;
+    loadTl.to(brightOverlayRef.current, {
+      opacity: 0,
+      duration: 1,
+      ease: 'power2.inOut'
+    }, 0)
+      .fromTo(bgImageRef.current,
+        { scale: 1.3, filter: 'brightness(1.2)' },
+        { scale: 1, filter: 'brightness(1)', duration: 1.5, ease: 'power3.out' },
+        0
+      )
+      .call(() => setIsLoaded(true), null, "-=1.1")
+      .fromTo(contentRef.current.children,
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, stagger: 0.15 },
+        "-=1.1"
+      )
+      .fromTo(rightContentRef.current.children,
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, stagger: 0.15 },
+        "-=1.0"
+      )
+      .fromTo(bottomLabelsRef.current.children,
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, stagger: 0.15 },
+        "-=1.1"
+      )
+      ;
 
-      // Scroll-triggered reveal for the logo/marquee section
-      // Pull it up faster and make it complete earlier in the scroll, keeping opacity at 0
-      gsap.fromTo(logoSectionRef.current,
-        { yPercent: 120, opacity: 0 },
-        {
-          yPercent: -180,
-          opacity: 0,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: 'top top',
-            end: '85% top',
-            scrub: true,
-          }
-        }
-      );
-
-      gsap.fromTo(bgImageRef.current,
-        { yPercent: 0 },
-        {
-          yPercent: -30,
-          ease: 'none',
-          immediateRender: false,
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true,
-          }
-        }
-      );
-
-      // Main content scrolls up to the top half of the screen but remains visible (opacity 1)
-      [contentRef, rightContentRef].forEach((ref) => {
-        gsap.to(ref.current, {
-          yPercent: -400,
-          opacity: 0,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true,
-          }
-        });
-      });
-
-      // Bottom labels fade out as the logo section scrolls up to avoid overlap
-      gsap.to(bottomLabelsRef.current, {
-        yPercent: -150,
+    // Scroll-triggered reveal for the logo/marquee section
+    // Pull it up faster and make it complete earlier in the scroll, keeping opacity at 0
+    gsap.fromTo(logoSectionRef.current,
+      { yPercent: 120, opacity: 0 },
+      {
+        yPercent: -180,
         opacity: 0,
         ease: 'none',
         scrollTrigger: {
           trigger: heroRef.current,
           start: 'top top',
-          end: '30% top',
+          end: '85% top',
+          scrub: true,
+        }
+      }
+    );
+
+    gsap.fromTo(bgImageRef.current,
+      { yPercent: 0 },
+      {
+        yPercent: -30,
+        ease: 'none',
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        }
+      }
+    );
+
+    // Main content scrolls up to the top half of the screen but remains visible (opacity 1)
+    [contentRef, rightContentRef].forEach((ref) => {
+      gsap.to(ref.current, {
+        yPercent: -400,
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: 'bottom top',
           scrub: true,
         }
       });
+    });
 
-      gsap.to(track1Ref.current, {
-        xPercent: -40,
-        repeat: -1,
-        duration: 45,
-        ease: 'none',
-      });
+    // Bottom labels fade out as the logo section scrolls up to avoid overlap
+    gsap.to(bottomLabelsRef.current, {
+      yPercent: -150,
+      opacity: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: heroRef.current,
+        start: 'top top',
+        end: '30% top',
+        scrub: true,
+      }
+    });
 
-      gsap.fromTo(track2Ref.current,
-        { xPercent: -50 },
-        { xPercent: 0, repeat: -1, duration: 45, ease: 'none' }
-      );
+    gsap.to(track1Ref.current, {
+      xPercent: -40,
+      repeat: -1,
+      duration: 45,
+      ease: 'none',
+    });
+
+    gsap.fromTo(track2Ref.current,
+      { xPercent: -50 },
+      { xPercent: 0, repeat: -1, duration: 45, ease: 'none' }
+    );
 
   }, { scope: heroRef });
 
@@ -246,7 +246,7 @@ const Hero = () => {
         className="relative z-20 w-full max-w-[1720px] mx-auto px-8 md:px-16 pb-4 flex justify-between items-center text-[10px] tracking-[0.2em] text-white/40 uppercase font-inter"
       >
         <div className="opacity-0">FINE DINING MANAGEMENT</div>
-        <div className="opacity-0">ORBITAL 25 / LONDON, UK</div>
+        <div className="opacity-0">Tinkune / Kathmandu, Nepal</div>
       </div>
 
       <div

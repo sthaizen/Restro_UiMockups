@@ -204,7 +204,7 @@ const BottomNav = () => {
 
             <button className="group mx-auto w-[80%] mt-15 border-1 border-white/5 bg-[#101012] hover:bg-white hover:text-black transition-all duration-500 py-4 text-[11px] font-semibold tracking-[0.15em] flex justify-center items-center gap-3">
               <CornerDownRight size={15} strokeWidth={1.5} />
-              <RollingText text="START FREE TRIAL" />
+              <RollingText text="GET A QUOTE" />
             </button>
           </div>
         </div>

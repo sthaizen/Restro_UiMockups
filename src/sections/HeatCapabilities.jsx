@@ -6,36 +6,40 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const tabs = [
-  { id: 'cities', label: 'Cities & Infrastructure' },
-  { id: 'materials', label: 'Materials & Manufacturing' },
-  { id: 'fuels', label: 'Fuels & Upstream' },
-  { id: 'hydrogen', label: 'H₂ Hydrogen' }
+  { id: 'pos', label: 'Point of Sale' },
+  { id: 'inventory', label: 'Inventory & Stock' },
+  { id: 'analytics', label: 'Data & Analytics' },
+  { id: 'loyalty', label: 'CRM & Loyalty' }
 ];
 
 const floatingBarsData = {
-  cities: [
-    { label: 'District heating', tempRange: '100 °C - 250 °C', start: 100, end: 250, row: 0, textPos: 'right' },
-    { label: 'Seawater Desalination', tempRange: '100 °C - 200 °C', start: 100, end: 200, row: 1, textPos: 'right' }
+  pos: [
+    { label: 'Legacy Cash Registers', tempRange: '10 - 30 Pts', start: 10, end: 30, row: 0, textPos: 'right' },
+    { label: 'Basic Cloud POS', tempRange: '30 - 60 Pts', start: 30, end: 60, row: 1, textPos: 'right' }
   ],
-  materials: [
-    { label: 'Pulp & Paper Production', tempRange: '150 °C - 400 °C', start: 150, end: 400, row: 1, textPos: 'right' },
-    { label: 'Iron & Steel Production', tempRange: '1000 °C - ≥ 2200 °C', start: 1000, end: 1250, row: 0, fadeRight: true, textPos: 'left' },
-    { label: 'Lime & Cement Manufacture', tempRange: '1200 °C - ≥ 2200 °C', start: 1200, end: 1280, row: 1, fadeRight: true, textPos: 'left' }
+  inventory: [
+    { label: 'Manual Spreadsheets', tempRange: '10 - 25 Pts', start: 10, end: 25, row: 1, textPos: 'right' },
+    { label: 'Standalone Apps', tempRange: '40 - 70 Pts', start: 40, end: 70, row: 0, fadeRight: true, textPos: 'left' },
+    { label: 'Heavy ERP Systems', tempRange: '60 - 85 Pts', start: 60, end: 85, row: 1, fadeRight: true, textPos: 'left' }
   ],
-  fuels: [
-    { label: 'Heavy Oil Recovery', tempRange: '300 °C - 500 °C', start: 300, end: 500, row: 0, textPos: 'right' }
+  analytics: [
+    { label: 'Basic Daily Reports', tempRange: '20 - 45 Pts', start: 20, end: 45, row: 0, textPos: 'right' },
+    { label: 'Third-Party BI Tools', tempRange: '50 - 75 Pts', start: 50, end: 75, row: 1, textPos: 'right' },
+    { label: 'Custom Integrations', tempRange: '70 - 90 Pts', start: 70, end: 90, row: 2, textPos: 'right' }
   ],
-  hydrogen: [
-    { label: 'High-Temp Electrolysis', tempRange: '700 °C - 900 °C', start: 700, end: 900, row: 0, textPos: 'right' }
+  loyalty: [
+    { label: 'Physical Punch Cards', tempRange: '5 - 20 Pts', start: 5, end: 20, row: 0, textPos: 'right' },
+    { label: 'Standalone Loyalty Apps', tempRange: '30 - 60 Pts', start: 30, end: 60, row: 1, textPos: 'right' },
+    { label: 'Email Platforms', tempRange: '40 - 70 Pts', start: 40, end: 70, row: 2, textPos: 'right' }
   ]
 };
 
 const mainBars = [
-  { labelPrefix: 'Restro Hub', labelSuffix: 'Wood-Fired Oven', text: 'Up to 950 °C', temp: 950, isMain: true },
-  { labelPrefix: 'Commercial', labelSuffix: 'Gas Range', text: '750 °C', temp: 750, isMain: false },
-  { labelPrefix: 'Industrial', labelSuffix: 'Deep Fryer', text: '650 °C', temp: 650, isMain: false },
-  { labelPrefix: 'Salamander', labelSuffix: 'Broiler', text: '550 °C', temp: 550, isMain: false },
-  { labelPrefix: 'Sous Vide', labelSuffix: 'Water Bath', text: '300 °C', temp: 300, isMain: false },
+  { labelPrefix: 'Restro Hub', labelSuffix: 'Complete Suite', text: '98 Pts', temp: 98, isMain: true },
+  { labelPrefix: 'Premium', labelSuffix: 'POS System', text: '85 Pts', temp: 85, isMain: false },
+  { labelPrefix: 'Standard', labelSuffix: 'POS System', text: '70 Pts', temp: 70, isMain: false },
+  { labelPrefix: 'Basic', labelSuffix: 'Management App', text: '50 Pts', temp: 50, isMain: false },
+  { labelPrefix: 'Entry Level', labelSuffix: 'App', text: '30 Pts', temp: 30, isMain: false },
 ];
 
 const HeatCapabilities = ({
@@ -65,9 +69,9 @@ const HeatCapabilities = ({
   style,
   ...props
 }) => {
-  const [activeTab, setActiveTab] = useState('cities');
-  const maxTemp = 1200;
-  
+  const [activeTab, setActiveTab] = useState('pos');
+  const maxTemp = 100;
+
   const containerRef = useRef(null);
   const activeTabLineRef = useRef(null);
   const floatingContainerRef = useRef(null);
@@ -92,111 +96,107 @@ const HeatCapabilities = ({
 
     // Main Bars Entrance
     gsap.utils.toArray('.main-bar-row').forEach((rowEl, idx) => {
-       const fill = rowEl.querySelector('.main-bar-fill');
-       const text = rowEl.querySelector('.main-bar-text');
+      const fill = rowEl.querySelector('.main-bar-fill');
+      const text = rowEl.querySelector('.main-bar-text');
 
-       if (fill) {
-           gsap.fromTo(fill, 
-             { width: 0 }, 
-             { 
-                 width: fill.dataset.width, 
-                 duration: 1, 
-                 ease: "easeOut",
-                 scrollTrigger: {
-                     trigger: rowEl,
-                     start: 'top 95%',
-                     once: true
-                 }
-             }
-           );
-       }
-       if (text) {
-           gsap.fromTo(text, 
-               { opacity: 0, x: -10 },
-               {
-                   opacity: 1, x: 0,
-                   duration: 0.6,
-                   delay: 0.3 + idx * 0.1,
-                   ease: "easeOut",
-                   scrollTrigger: {
-                     trigger: rowEl,
-                     start: 'top 95%',
-                     once: true
-                 }
-               }
-           );
-       }
+      if (fill) {
+        gsap.fromTo(fill,
+          { width: 0 },
+          {
+            width: fill.dataset.width,
+            duration: 1,
+            ease: "easeOut",
+            scrollTrigger: {
+              trigger: rowEl,
+              start: 'top 95%',
+              once: true
+            }
+          }
+        );
+      }
+      if (text) {
+        gsap.fromTo(text,
+          { opacity: 0, x: -10 },
+          {
+            opacity: 1, x: 0,
+            duration: 0.6,
+            delay: 0.3 + idx * 0.1,
+            ease: "easeOut",
+            scrollTrigger: {
+              trigger: rowEl,
+              start: 'top 95%',
+              once: true
+            }
+          }
+        );
+      }
     });
 
   }, { scope: containerRef });
 
-  // Handle Tab Switch
-  useEffect(() => {
+  // Handle Tab Switch Animation
+  useGSAP(() => {
     // Move Underline
     const tabEl = tabRefs.current[activeTab];
     if (tabEl && activeTabLineRef.current && tabWrapperRef.current) {
-        const relativeLeft = tabEl.offsetLeft;
-        
-        gsap.to(activeTabLineRef.current, {
-            left: relativeLeft,
-            width: tabEl.getBoundingClientRect().width,
-            duration: 0.4,
-            ease: 'power3.out',
-        });
+      const relativeLeft = tabEl.offsetLeft;
+
+      gsap.to(activeTabLineRef.current, {
+        left: relativeLeft,
+        width: tabEl.getBoundingClientRect().width,
+        duration: 0.4,
+        ease: 'power3.out',
+      });
     }
 
     // Animate Floating Bars IN
     if (floatingContainerRef.current) {
-        // First kill any existing animations to prevent conflicts
-        gsap.killTweensOf(floatingContainerRef.current);
-        gsap.killTweensOf(floatingContainerRef.current.querySelectorAll('.floating-fill, .floating-text'));
+      // Reset the container state for the entrance
+      gsap.set(floatingContainerRef.current, { opacity: 0, y: 5 });
 
-        // Reset the container state for the entrance
-        gsap.set(floatingContainerRef.current, { opacity: 0, y: 5 });
+      const tl = gsap.timeline();
 
-        const tl = gsap.timeline();
-        
-        tl.to(floatingContainerRef.current, { opacity: 1, y: 0, duration: 0.3, ease: 'easeOut' });
+      tl.to(floatingContainerRef.current, { opacity: 1, y: 0, duration: 0.3, ease: 'easeOut' });
 
-        const floatingItems = floatingContainerRef.current.querySelectorAll('.floating-item');
-        floatingItems.forEach((item, idx) => {
-             const fill = item.querySelector('.floating-fill');
-             const text = item.querySelector('.floating-text');
-             
-             if (fill && text) {
-                 gsap.fromTo(fill, 
-                     { width: 0, opacity: 0 }, 
-                     { width: fill.dataset.width, opacity: 1, duration: 0.6, ease: 'easeOut' }, 
-                     0.1 + (idx * 0.1) // relative to the timeline start, offset by idx
-                 );
-                 gsap.fromTo(text, 
-                     { opacity: 0, y: 8 }, 
-                     { opacity: 1, y: 0, duration: 0.5, ease: 'easeOut' }, 
-                     0.4 + (idx * 0.1)
-                 );
-             }
-        });
+      const floatingItems = floatingContainerRef.current.querySelectorAll('.floating-item');
+      floatingItems.forEach((item, idx) => {
+        const fill = item.querySelector('.floating-fill');
+        const text = item.querySelector('.floating-text');
+
+        if (fill && text) {
+          tl.fromTo(fill,
+            { width: 0, opacity: 0 },
+            { width: fill.dataset.width, opacity: 1, duration: 0.6, ease: 'easeOut' },
+            0.1 + (idx * 0.1) // relative to the timeline start, offset by idx
+          );
+          tl.fromTo(text,
+            { opacity: 0, y: 8 },
+            { opacity: 1, y: 0, duration: 0.5, ease: 'easeOut' },
+            0.4 + (idx * 0.1)
+          );
+        }
+      });
     }
 
-  }, [activeTab]);
+  }, { dependencies: [activeTab], scope: containerRef });
 
   const handleTabClick = contextSafe((tabId) => {
-      if (tabId === activeTab) return;
-      
-      // Animate out current
-      if (floatingContainerRef.current) {
-          gsap.to(floatingContainerRef.current, {
-              opacity: 0,
-              y: -5,
-              duration: 0.2,
-              ease: 'easeOut',
-              onComplete: () => {
-                  setActiveTab(tabId);
-              }
-          });
-      } else {
+    if (tabId === activeTab) return;
+
+    // Animate out current
+    if (floatingContainerRef.current) {
+      gsap.to(floatingContainerRef.current, {
+        opacity: 0,
+        y: -5,
+        duration: 0.2,
+        ease: 'easeOut',
+        onComplete: () => {
           setActiveTab(tabId);
-      }
+        }
+      });
+    } else {
+      setActiveTab(tabId);
+    }
   });
 
 
@@ -215,10 +215,10 @@ const HeatCapabilities = ({
         style={{ width: containerWidth }}
       >
         <h2 className="gsap-text-anim text-[48px] text-[#ffffff] font-light leading-tight">
-          Unmatched <br /> Culinary Heat
+          Unmatched <br /> System Performance
         </h2>
         <p className="gsap-text-anim text-[#ffffff] max-w-lg text-[18px] leading-relaxed">
-          Our custom Restro Hub wood-fired ovens are designed to operate at temperatures up to 950 °C, which is approximately 600 °C higher than conventional ovens, providing the perfect sear for our signature dishes.
+          Restro Hub offers an all-in-one comprehensive suite that drastically outperforms conventional restaurant management applications, giving you unmatched efficiency and total control over your business.
         </p>
       </div>
 
@@ -228,7 +228,7 @@ const HeatCapabilities = ({
       >
         <div ref={tabWrapperRef} className="relative flex space-x-8 mb-12 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#2a2a2a]"></div>
-          
+
           <div ref={activeTabLineRef} className="absolute bottom-0 h-[3px]" style={{ backgroundColor: primaryColor, left: 0, width: 0 }} />
 
           {tabs.map((tab) => (
@@ -248,8 +248,8 @@ const HeatCapabilities = ({
         <div className="relative w-full pt-8 pb-12">
           <div className="absolute inset-0 flex justify-between pointer-events-none">
             <div className="absolute bottom-0 left-0 right-0 h-[1px]" style={{ backgroundColor: axisLineColor }}></div>
-            {Array.from({ length: 25 }, (_, i) => i * 50).map((temp) => {
-              const isMain = temp % 100 === 0;
+            {Array.from({ length: 21 }, (_, i) => i * 5).map((temp) => {
+              const isMain = temp % 10 === 0;
               return (
                 <div key={temp} className="relative h-full flex flex-col items-center" style={{ width: 0 }}>
                   <div
@@ -275,7 +275,7 @@ const HeatCapabilities = ({
                         transform: 'translate(-50%, 200%)'
                       }}
                     >
-                      {temp} °C
+                      {temp}
                     </span>
                   )}
                 </div>
@@ -284,43 +284,43 @@ const HeatCapabilities = ({
           </div>
 
           <div className="relative z-10 flex flex-col w-full" style={{ height: `${chartHeight}px` }}>
-            <div className="relative h-[130px] w-full mb-6">
+            <div className="relative h-[200px] w-full mb-6">
               <div ref={floatingContainerRef} className="absolute inset-0">
-                  {floatingBarsData[activeTab]?.map((bar, idx) => (
-                    <div key={idx} className="absolute inset-0 floating-item">
-                      <div
-                        className={`floating-fill absolute h-[40px] border border-dashed backdrop-blur-sm
+                {floatingBarsData[activeTab]?.map((bar, idx) => (
+                  <div key={idx} className="absolute inset-0 floating-item">
+                    <div
+                      className={`floating-fill absolute h-[40px] border border-dashed backdrop-blur-sm
                           ${bar.fadeRight ? 'border-r-0 rounded-l-[4px]' : 'rounded-[4px]'}
                         `}
-                        data-width={getWidth(bar.start, bar.end)}
-                        style={{
-                          backgroundColor: floatingBoxBg,
-                          borderColor: floatingBoxBorder,
-                          left: getLeft(bar.start),
-                          top: `${bar.row * floatingBarRowHeight + 10}px`,
-                          width: 0,
-                          opacity: 0,
-                          maskImage: bar.fadeRight ? 'linear-gradient(to right, black 80%, transparent 100%)' : 'none',
-                          WebkitMaskImage: bar.fadeRight ? 'linear-gradient(to right, black 80%, transparent 100%)' : 'none',
-                        }}
-                      />
+                      data-width={getWidth(bar.start, bar.end)}
+                      style={{
+                        backgroundColor: floatingBoxBg,
+                        borderColor: floatingBoxBorder,
+                        left: getLeft(bar.start),
+                        top: `${bar.row * floatingBarRowHeight + 10}px`,
+                        width: 0,
+                        opacity: 0,
+                        maskImage: bar.fadeRight ? 'linear-gradient(to right, black 80%, transparent 100%)' : 'none',
+                        WebkitMaskImage: bar.fadeRight ? 'linear-gradient(to right, black 80%, transparent 100%)' : 'none',
+                      }}
+                    />
 
-                      <div
-                        className={`floating-text absolute h-[40px] flex flex-col justify-center whitespace-nowrap`}
-                        style={{
-                          top: `${bar.row * floatingBarRowHeight + 10}px`,
-                          left: bar.textPos === 'right' ? `calc(${getLeft(bar.end)} + 16px)` : undefined,
-                          right: bar.textPos === 'left' ? `calc(100% - ${getLeft(bar.start)} + 16px)` : undefined,
-                          alignItems: bar.textPos === 'left' ? 'flex-end' : 'flex-start',
-                          opacity: 0,
-                          transform: 'translateY(8px)'
-                        }}
-                      >
-                        <span className="leading-snug font-medium" style={{ color: titleColor, fontSize: primaryTextSize }}>{bar.label}</span>
-                        <span className="leading-snug" style={{ color: subTitleColor, fontSize: secondaryTextSize }}>{bar.tempRange}</span>
-                      </div>
+                    <div
+                      className={`floating-text absolute h-[40px] flex flex-col justify-center whitespace-nowrap`}
+                      style={{
+                        top: `${bar.row * floatingBarRowHeight + 10}px`,
+                        left: bar.textPos === 'right' ? `calc(${getLeft(bar.end)} + 16px)` : undefined,
+                        right: bar.textPos === 'left' ? `calc(100% - ${getLeft(bar.start)} + 16px)` : undefined,
+                        alignItems: bar.textPos === 'left' ? 'flex-end' : 'flex-start',
+                        opacity: 0,
+                        transform: 'translateY(8px)'
+                      }}
+                    >
+                      <span className="leading-snug font-medium" style={{ color: titleColor, fontSize: '13px' }}>{bar.label}</span>
+                      <span className="leading-snug" style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '12px' }}>{bar.tempRange}</span>
                     </div>
-                  ))}
+                  </div>
+                ))}
               </div>
             </div>
 
