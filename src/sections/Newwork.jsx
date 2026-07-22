@@ -99,7 +99,7 @@ export default function Newwork() {
           trigger: header,
           start: "top 85%",
           end: "top 45%",
-          scrub: true,
+          scrub: 1,
         },
       });
 
@@ -129,11 +129,12 @@ export default function Newwork() {
       gsap.to(header, {
         y: -18,
         ease: "none",
+        force3D: true,
         scrollTrigger: {
           trigger: header,
           start: "top bottom",
           end: "bottom top",
-          scrub: true,
+          scrub: 1,
         },
       });
     }
@@ -142,11 +143,12 @@ export default function Newwork() {
       gsap.to(bottomLeftImgRef.current, {
         y: 100,
         ease: "none",
+        force3D: true,
         scrollTrigger: {
           trigger: bottomLeftImgRef.current,
           start: "top bottom",
           end: "bottom top",
-          scrub: true,
+          scrub: 1,
         }
       });
     }
@@ -155,11 +157,12 @@ export default function Newwork() {
       gsap.to(middleImgRef.current, {
         y: -80,
         ease: "none",
+        force3D: true,
         scrollTrigger: {
           trigger: middleImgRef.current,
           start: "top bottom",
           end: "bottom top",
-          scrub: true,
+          scrub: 1,
         }
       });
     }
@@ -168,11 +171,12 @@ export default function Newwork() {
       gsap.to(bottomRightImgRef.current, {
         y: -200,
         ease: "none",
+        force3D: true,
         scrollTrigger: {
           trigger: bottomRightImgRef.current,
           start: "top bottom",
           end: "bottom top",
-          scrub: true,
+          scrub: 1,
         }
       });
     }
@@ -311,9 +315,9 @@ export default function Newwork() {
           {/* Staggered bottom images row */}
           <div className="grid grid-cols-3 gap-3 sm:gap-6 lg:gap-12 items-start mt-20 sm:mt-32 px-4 sm:px-12 lg:px-24">
             {/* Left Bottom Image (Low position) */}
-            <div ref={bottomLeftImgRef} className="flex justify-center pt-[15%] lg:pt-[25%] lg:translate-x-[-120px] lg:translate-y-[0px]">
+            <div ref={bottomLeftImgRef} className="flex justify-center pt-[15%] lg:pt-[25%] lg:translate-x-[-120px] lg:translate-y-[0px] will-change-transform">
               <div
-                className="group relative w-full max-w-[384px] aspect-[384/473] overflow-hidden shadow-sm cursor-pointer"
+                className="group relative w-full max-w-[384px] aspect-[384/473] overflow-hidden shadow-sm cursor-pointer will-change-transform"
                 onMouseEnter={handleCardMouseEnter}
                 onMouseLeave={handleCardMouseLeave}
               >
@@ -326,9 +330,9 @@ export default function Newwork() {
             </div>
 
             {/* Middle Bottom Image (Medium position) */}
-            <div ref={middleImgRef} className="flex justify-center pt-[5%] lg:pt-[10%] lg:translate-x-[120px] lg:translate-y-[50px]">
+            <div ref={middleImgRef} className="flex justify-center pt-[5%] lg:pt-[10%] lg:translate-x-[120px] lg:translate-y-[50px] will-change-transform">
               <div
-                className="group relative w-full max-w-[316px] aspect-[316/390] overflow-hidden shadow-sm cursor-pointer"
+                className="group relative w-full max-w-[316px] aspect-[316/390] overflow-hidden shadow-sm cursor-pointer will-change-transform"
                 onMouseEnter={handleCardMouseEnter}
                 onMouseLeave={handleCardMouseLeave}
               >
@@ -342,9 +346,9 @@ export default function Newwork() {
 
 
             {/* Right Bottom Image (High position) */}
-            <div ref={bottomRightImgRef} className="flex justify-center lg:translate-x-[60px] lg:translate-y-[-90px]">
+            <div ref={bottomRightImgRef} className="flex justify-center lg:translate-x-[60px] lg:translate-y-[-90px] will-change-transform">
               <div
-                className="group relative w-full max-w-[376px] aspect-[316/390] overflow-hidden shadow-sm cursor-pointer"
+                className="group relative w-full max-w-[376px] aspect-[316/390] overflow-hidden shadow-sm cursor-pointer will-change-transform"
                 onMouseEnter={handleCardMouseEnter}
                 onMouseLeave={handleCardMouseLeave}
               >
@@ -369,7 +373,7 @@ export default function Newwork() {
           willChange: "transform",
         }}
       >
-        <div className="bg-[#FFFFFF1A] border border-white/10 backdrop-blur-lg text-white px-7 py-3 flex items-center justify-center font-bold text-[12px] tracking-[0.2em] select-none uppercase font-satoshi">
+        <div className="bg-[#111111] border border-white/10 text-white px-7 py-3 flex items-center justify-center font-bold text-[12px] tracking-[0.2em] select-none uppercase font-satoshi shadow-xl">
           VIEW
         </div>
       </div>

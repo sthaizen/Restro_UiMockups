@@ -34,24 +34,26 @@ const Home = () => {
   const lenisRef = useRef();
 
   useEffect(() => {
-    const lenis = lenisRef.current?.lenis;
+    let lenisInstance = null;
+    let timer = null;
 
-    if (lenis) {
-      lenis.on('scroll', ScrollTrigger.update);
-    }
+    const setupLenis = () => {
+      lenisInstance = lenisRef.current?.lenis;
+      if (lenisInstance) {
+        lenisInstance.on('scroll', ScrollTrigger.update);
+        ScrollTrigger.refresh();
+      } else {
+        timer = requestAnimationFrame(setupLenis);
+      }
+    };
 
-    function update(time) {
-      lenisRef.current?.lenis?.raf(time * 1000);
-    }
-
-    gsap.ticker.add(update);
-    gsap.ticker.lagSmoothing(0);
+    setupLenis();
 
     return () => {
-      if (lenis) {
-        lenis.off('scroll', ScrollTrigger.update);
+      if (timer) cancelAnimationFrame(timer);
+      if (lenisInstance) {
+        lenisInstance.off('scroll', ScrollTrigger.update);
       }
-      gsap.ticker.remove(update);
     };
   }, []);
 
@@ -76,12 +78,12 @@ const Home = () => {
     <ReactLenis
       root
       ref={lenisRef}
-      autoRaf={false}
+      autoRaf={true}
       options={{
         lerp: 0.08,
         smoothWheel: true,
         wheelMultiplier: 1,
-        touchMultiplier: 2
+        touchMultiplier: 1.5
       }}
       className='relative w-full min-h-screen'
     >
