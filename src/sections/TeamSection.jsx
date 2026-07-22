@@ -172,6 +172,13 @@ export default function TeamSection() {
       });
 
       const updateTimeScale = () => {
+        if (Math.abs(currentTimeScale - targetTimeScale) < 0.001) {
+          if (currentTimeScale !== targetTimeScale) {
+            currentTimeScale = targetTimeScale;
+            if (scrollAnim) scrollAnim.timeScale(currentTimeScale);
+          }
+          return;
+        }
         const lerpFactor = isScrolling ? 0.15 : 0.02;
         currentTimeScale += (targetTimeScale - currentTimeScale) * lerpFactor;
         if (scrollAnim) {

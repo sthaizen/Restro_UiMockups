@@ -257,7 +257,8 @@ export default function HorizontalScroll() {
                     <img
                       src={card.src}
                       alt={card.alt}
-                      className="horizontal-parallax-image absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.1]"
+                      className="horizontal-parallax-image absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.1] will-change-transform"
+                      style={{ transform: 'translateZ(0)' }}
                     />
                   </div>
                 </div>

@@ -63,21 +63,29 @@ const BottomNav = () => {
       triggerEntrance();
     }
 
-    const handleScroll = () => {
-      if (!entranceTriggered && window.scrollY > CONFIG.animation.scrollTriggerDistance) {
-        triggerEntrance();
-        entranceTriggered = true;
-      }
+    let ticking = false;
 
-      const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - CONFIG.animation.bottomTriggerOffset;
-      if (bottom !== isAtBottomRef.current) {
-        isAtBottomRef.current = bottom;
-        setIsAtBottom(bottom);
-        if (bottom) {
-          setIsOpen(true);
-        } else {
-          setIsOpen(false);
-        }
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (!entranceTriggered && window.scrollY > CONFIG.animation.scrollTriggerDistance) {
+            triggerEntrance();
+            entranceTriggered = true;
+          }
+
+          const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - CONFIG.animation.bottomTriggerOffset;
+          if (bottom !== isAtBottomRef.current) {
+            isAtBottomRef.current = bottom;
+            setIsAtBottom(bottom);
+            if (bottom) {
+              setIsOpen(true);
+            } else {
+              setIsOpen(false);
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
