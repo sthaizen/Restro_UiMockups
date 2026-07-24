@@ -365,7 +365,7 @@ export default function Newwork() {
       </div>
 
       {/* Custom Mouse Cursor following specifications */}
-      <div
+      {/* <div
         ref={cursorRef}
         className="fixed top-0 left-0 pointer-events-none z-50 opacity-0"
         style={{
@@ -373,10 +373,12 @@ export default function Newwork() {
           willChange: "transform",
         }}
       >
-        <div className="bg-[#111111] border border-white/10 text-white px-7 py-3 flex items-center justify-center font-bold text-[12px] tracking-[0.2em] select-none uppercase font-satoshi shadow-xl">
+        <div className="bg-[#111111] border border-white/10 text-white px-4 py-2.5 flex items-center justify-center text-[11px] font-semibold tracking-[0.2em] select-none uppercase shadow-xl">
           VIEW
         </div>
-      </div>
+      </div> */}
+
+
     </div>
   );
 }
