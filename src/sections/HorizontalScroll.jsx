@@ -156,7 +156,7 @@ export default function HorizontalScroll() {
         <div className="text-white mb-8 md:mb-0 header-left min-w-[280px]">
           <h2 className="text-[14px] font-normal leading-[1.4] font-['Inter',Arial,sans-serif]">
             <div className="typewriter-line-1">Modernizing Restaurant Operations</div>
-            <div className="typewriter-line-2">Unlocking Smarter Dining with RestroHub</div>
+            <div className="typewriter-line-2">Unlocking Smarter Dining with Polaris</div>
           </h2>
         </div>
 

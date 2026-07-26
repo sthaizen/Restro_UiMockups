@@ -3,9 +3,9 @@ import React from 'react';
 const CONFIG = {
   text: {
     title: (
-      <>Build Your Restaurant<br />Website Free with RestroHub</>
+      <>Build Your Restaurant<br />Website Free with Polaris</>
     ),
-    paragraph: "Through RestroHub's built-in website builder, restaurants can create a professional online presence with 12 layout blocks, 3 beautiful themes, and custom domain support — all at zero extra cost. Launch your menu, location, and booking page in minutes without any technical knowledge.",
+    paragraph: "Through Polaris's built-in website builder, restaurants can create a professional online presence with 12 layout blocks, 3 beautiful themes, and custom domain support — all at zero extra cost. Launch your menu, location, and booking page in minutes without any technical knowledge.",
     buttonText: "Start Building for Free",
   },
   slider: {

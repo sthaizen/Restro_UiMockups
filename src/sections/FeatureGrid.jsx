@@ -98,7 +98,7 @@ const FeaturesGrid = () => {
               Nothing drives success like real-time analytics
             </h3>
             <p className="text-[#666666] text-[14px] md:text-[15px] leading-relaxed max-w-[95%]">
-              Nobody wants to run a restaurant blindly and it's frustrating to manage inventory without smart alerts. RestroHub gives you hourly revenue reports and top-selling item tracking. About time to take full control.
+              Nobody wants to run a restaurant blindly and it's frustrating to manage inventory without smart alerts. Polaris gives you hourly revenue reports and top-selling item tracking. About time to take full control.
             </p>
           </div>
 
@@ -108,7 +108,7 @@ const FeaturesGrid = () => {
               We help restaurants operate smarter and serve with total confidence
             </h3>
             <p className="text-[#666666] text-[14px] md:text-[15px] leading-relaxed max-w-[95%]">
-              This way restaurant owners are transforming their workflows and gaining full control across all their daily operations with RestroHub's platform.
+              This way restaurant owners are transforming their workflows and gaining full control across all their daily operations with Polaris's platform.
             </p>
           </div>
           <div className="grid-item grid-row-2 rounded-[12px] overflow-hidden h-[400px] md:h-[500px] relative group cursor-pointer">
@@ -127,7 +127,7 @@ const FeaturesGrid = () => {
             <h3 className="text-[28px] md:text-[36px] text-[#111111] font-light leading-tight max-w-[90%] flex flex-wrap items-center gap-x-3">
               With
               <span className="w-[18px] h-[18px] bg-[#111111] rounded-full inline-block shrink-0 relative top-[2px]"></span>
-              RestroHub, teams will streamline their service nationwide
+              Polaris, teams will streamline their service nationwide
             </h3>
             <p className="text-[#666666] text-[14px] md:text-[15px] leading-relaxed max-w-[95%]">
               By leveraging new technologies, artificial intelligence and seamless multi-branch management we will redefine restaurant operations across Nepal for good.

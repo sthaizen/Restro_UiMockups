@@ -175,7 +175,7 @@ export default function VideoSection() {
         {/* Left Column (Bottom) */}
         <div className="md:col-span-4">
           <p className="reveal-p opacity-0 text-[#524F4B] text-[23px] font-['Geist',Arial,sans-serif] font-normal leading-[1.4]">
-            Our platform, Restro Hub, is designed to align every aspect of your restaurant operations, bringing effortless control to kitchens and management alike.
+            Our platform, Polaris, is designed to align every aspect of your restaurant operations, bringing effortless control to kitchens and management alike.
           </p>
         </div>
 
@@ -210,7 +210,7 @@ export default function VideoSection() {
 
           <div className="w-full flex justify-between items-start text-white">
             <div className="left-part flex flex-col">
-              <span className="reveal-text block text-lg md:text-[27px] font-medium tracking-wide mb-1">Restro Hub</span>
+              <span className="reveal-text block text-lg md:text-[27px] font-medium tracking-wide mb-1">Polaris</span>
               <span className="reveal-text block text-md md:text-[22px] font-light opacity-90">/ pəˈlɛərɪs /</span>
             </div>
 

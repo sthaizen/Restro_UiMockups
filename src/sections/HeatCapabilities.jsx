@@ -35,7 +35,7 @@ const floatingBarsData = {
 };
 
 const mainBars = [
-  { labelPrefix: 'Restro Hub', labelSuffix: 'Complete Suite', text: '98 Pts', temp: 98, isMain: true },
+  { labelPrefix: 'Polaris', labelSuffix: 'Complete Suite', text: '98 Pts', temp: 98, isMain: true },
   { labelPrefix: 'Premium', labelSuffix: 'POS System', text: '85 Pts', temp: 85, isMain: false },
   { labelPrefix: 'Standard', labelSuffix: 'POS System', text: '70 Pts', temp: 70, isMain: false },
   { labelPrefix: 'Basic', labelSuffix: 'Management App', text: '50 Pts', temp: 50, isMain: false },
@@ -218,7 +218,7 @@ const HeatCapabilities = ({
           Unmatched <br /> System Performance
         </h2>
         <p className="gsap-text-anim text-[#ffffff] max-w-lg text-[18px] leading-relaxed">
-          Restro Hub offers an all-in-one comprehensive suite that drastically outperforms conventional restaurant management applications, giving you unmatched efficiency and total control over your business.
+          Polaris offers an all-in-one comprehensive suite that drastically outperforms conventional restaurant management applications, giving you unmatched efficiency and total control over your business.
         </p>
       </div>
 

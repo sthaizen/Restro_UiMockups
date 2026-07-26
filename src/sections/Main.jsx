@@ -231,7 +231,7 @@ const Hero = () => {
               <button
                 className="inline-flex items-center justify-center bg-white text-[#0A0B0E] font-medium font-inter rounded-full hover:bg-white/90 active:scale-95 transition-all shadow-lg px-8 py-3 text-[15px]"
               >
-                Explore Restro Hub
+                Explore Polaris
               </button>
             </div>
           </div>

@@ -8,12 +8,12 @@ gsap.registerPlugin(ScrollTrigger);
 const TEAM_MEMBERS = [
   {
     name: 'Aarav Shrestha',
-    role: 'Co-founder, CEO and Board of Directors of RestroHub Nepal',
+    role: 'Co-founder, CEO and Board of Directors of Polaris Nepal',
     image: '/assets/backgrounds/TeamMember.png',
   },
   {
     name: 'Priya Maharjan',
-    role: 'Co-founder, Chief Technology Officer of RestroHub and Lead Engineer',
+    role: 'Co-founder, Chief Technology Officer of Polaris and Lead Engineer',
     image: '/assets/backgrounds/TeamMember.png',
   },
   {
@@ -23,7 +23,7 @@ const TEAM_MEMBERS = [
   },
   {
     name: 'Anita Gurung',
-    role: 'Co-founder and Head of AI Innovation, RestroHub RestroBuddy',
+    role: 'Co-founder and Head of AI Innovation, Polaris Buddy',
     image: '/assets/backgrounds/TeamMember.png',
   },
   {
@@ -204,12 +204,12 @@ export default function TeamSection() {
           <div className="w-full md:w-1/4 pt-2 gsap-header-part">
             <h3 className="text-[#3D5E86] text-[14px] font-['Inter',_sans-serif] leading-[1.2]">
               Meet the Engineering Team<br />
-              Behind RestroHub Platform
+              Behind Polaris Platform
             </h3>
           </div>
           <div className="w-full md:w-[65%] flex flex-col">
             <p className="gsap-header-part text-[#3D5E86] text-[32px] font-['Geist',_sans-serif] font-light leading-[1.2] tracking-[-0.01em]">
-              RestroHub brings together talented engineers in
+              Polaris brings together talented engineers in
             </p>
             <p className="gsap-header-part text-[#3D5E86] text-[32px] font-['Geist',_sans-serif] font-light leading-[1.2] tracking-[-0.01em]">
               AI, cloud infrastructure, product design,
@@ -294,7 +294,7 @@ export default function TeamSection() {
               <div className="mt-auto w-full">
                 <h3 className="text-[#3D5E86] text-[45px] font-light leading-tight mb-12 max-w-[480px]">
                   Learn more about the<br />
-                  people behind RestroHub
+                  people behind Polaris
                 </h3>
 
                 <div className="relative w-full pt-5">

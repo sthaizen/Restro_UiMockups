@@ -26,7 +26,7 @@ const CONFIG = {
   },
   content: {
     header: {
-      tag: "Restro Management",
+      tag: "Polaris Management",
       title: (
         <>Leveraging AI to Reduce Costs<br className="hidden md:block" /> and Accelerate Service</>
       ),

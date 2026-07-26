@@ -8,7 +8,7 @@ import Footer from './Footer';
 const CONFIG = {
   text: {
     highlight: 'Dine With Us.',
-    body: ' Our culinary team is here to provide an unforgettable fine dining experience at Restro Hub.',
+    body: ' Our culinary team is here to provide an unforgettable fine dining experience at Polaris.',
   },
   cta: 'Reserve a Table',
 

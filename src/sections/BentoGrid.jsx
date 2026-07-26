@@ -85,7 +85,7 @@ const CirculaFeaturesSection = () => {
 
         <div ref={titleRef} className="text-left w-full opacity-0 will-change-transform">
           <h2 className="text-[40px] md:text-[56px] font-medium leading-[1.1] tracking-tight">
-            <span className="text-gray-500 text-[46px]">Get started with Restro.</span>
+            <span className="text-gray-500 text-[46px]">Get started with Polaris.</span>
             <br />
             <span className="text-gray-900">Fast setup, seamless operations — all in one place.</span>
           </h2>
@@ -107,7 +107,7 @@ const CirculaFeaturesSection = () => {
                 </div>
               </div>
               <div className="hidden sm:flex flex-col items-end">
-                <span className="text-2xl font-bold tracking-tighter text-gray-900">RESTRO</span>
+                <span className="text-2xl font-bold tracking-tighter text-gray-900">POLARIS</span>
                 <span className="text-[10px] font-medium tracking-normal text-gray-600 -mt-1">
                   Restaurant management, simplified.
                 </span>

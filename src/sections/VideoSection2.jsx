@@ -320,7 +320,7 @@ export default function VideoSection2() {
                 HEAD OFFICE
               </h3>
               <p className="text-white/80 text-[13px] md:text-[15px] leading-[1.5] max-w-[220px] mb-8 font-light">
-                RestroHub Pvt. Ltd., Tinkune<br />Kathmandu 44600, Nepal
+                Polaris Pvt. Ltd., Tinkune<br />Kathmandu 44600, Nepal
               </p>
 
               <button className="flex items-center justify-center gap-3 bg-[#ffffff1a] hover:bg-[#ffffff33] transition-colors duration-300 backdrop-blur-sm px-6 py-3  text-white uppercase text-[12px] tracking-wider font-medium group ">
