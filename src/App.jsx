@@ -61,7 +61,7 @@ const Home = () => {
     if (location.hash) {
       const el = document.querySelector(location.hash);
       const lenis = lenisRef.current?.lenis;
-      
+
       if (el) {
         setTimeout(() => {
           if (lenis) {

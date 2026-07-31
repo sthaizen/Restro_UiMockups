@@ -125,18 +125,21 @@ export default function Newwork() {
         },
         label ? 0.1 : 0
       );
+      -
 
-      gsap.to(header, {
-        y: -18,
-        ease: "none",
-        force3D: true,
-        scrollTrigger: {
-          trigger: header,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1,
-        },
-      });
+        +
+
+        gsap.to(header, {
+          y: -18,
+          ease: "none",
+          force3D: true,
+          scrollTrigger: {
+            trigger: header,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
     }
     // Parallax scroll for the bottom 3 staggered images
     if (bottomLeftImgRef.current) {
@@ -274,7 +277,7 @@ export default function Newwork() {
             {/* Right column: Info & Button */}
             <div className="w-full lg:w-1/2 flex flex-col items-start text-left lg:pl-32">
               <p className="text-[19.1px] leading-[1.4] text-[#212325] mb-10 font-normal font-sans max-w-[320px] tracking-tight">
-                Our <strong className="font-bold text-black">Polaris platform</strong> delivers smart POS, kitchen displays, QR ordering, and AI-powered operations. Made for restaurants that want speed, clarity, and control.
+                Our <strong className="font-bold text-black">Restrohub platform</strong> delivers smart POS, kitchen displays, QR ordering, and AI-powered operations. Made for restaurants that want speed, clarity, and control.
               </p>
               <button className="group mt-10 sm:mt-0 bg-black text-white text-[12px] sm:text-[13px] font-medium tracking-wider uppercase px-8 py-4 flex items-center justify-center gap-3 hover:bg-[#222] transition-colors duration-500">
                 <div className="relative overflow-hidden w-4 h-4 flex items-center justify-center">
