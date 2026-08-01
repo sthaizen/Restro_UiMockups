@@ -71,6 +71,7 @@ const controls = {
   }
 };
 
+
 export default function MorphComp() {
   const containerRef = useRef(null);
   const textRef = useRef(null);
@@ -120,6 +121,37 @@ export default function MorphComp() {
       className="w-full min-h-screen flex items-center justify-center py-20 px-4 md:px-12 lg:px-24"
       style={{ backgroundColor: controls.container.backgroundColor }}
     >
+      <style>{`
+        @media (max-width: 1023px) {
+          .morph-left-col {
+            padding: 0px !important;
+            transform: none !important;
+          }
+          .morph-title {
+            margin-bottom: 24px !important;
+          }
+          .morph-p1 {
+            margin-top: 0px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin-bottom: 16px !important;
+          }
+          .morph-p2 {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin-bottom: 32px !important;
+          }
+          .morph-img-wrapper {
+            justify-content: center !important;
+            margin-top: 24px !important;
+          }
+          .morph-img {
+            width: 100% !important;
+            max-width: 100% !important;
+            transform: none !important;
+          }
+        }
+      `}</style>
       <div
         className="w-full flex flex-col lg:flex-row items-center"
         style={{
@@ -131,7 +163,7 @@ export default function MorphComp() {
         {/* Left Column - Text & Button */}
         <div
           ref={textRef}
-          className="w-full lg:w-[45%] flex flex-col items-start text-left shrink-0 relative z-10"
+          className="morph-left-col w-full lg:w-[45%] flex flex-col items-start text-left shrink-0 relative z-10"
           style={{
             transform: `translate(${controls.textLayout.translateX}, ${controls.textLayout.translateY})`,
             marginLeft: controls.textLayout.marginLeft,
@@ -139,7 +171,7 @@ export default function MorphComp() {
           }}
         >
           <h2
-            className="font-sans font-light leading-tight whitespace-pre-line"
+            className="morph-title font-sans font-light leading-tight whitespace-pre-line"
             style={{
               color: controls.title.color,
               fontSize: `clamp(${controls.title.fontSizeMobile}, 4vw, ${controls.title.fontSizeDesktop})`,
@@ -152,7 +184,7 @@ export default function MorphComp() {
           </h2>
 
           <p
-            className="font-inter leading-[1.4] mt-75"
+            className="morph-p1 font-inter leading-[1.4] mt-75"
             style={{
               color: controls.paragraph1.color,
               fontSize: controls.paragraph1.fontSize,
@@ -165,7 +197,7 @@ export default function MorphComp() {
           </p>
 
           <p
-            className="font-inter leading-[1.4]"
+            className="morph-p2 font-inter leading-[1.4]"
             style={{
               color: controls.paragraph2.color,
               fontSize: controls.paragraph2.fontSize,
@@ -221,12 +253,12 @@ export default function MorphComp() {
         </div>
 
         {/* Right Column - Image */}
-        <div className="w-full lg:w-[60%] flex items-center justify-end">
+        <div className="morph-img-wrapper w-full lg:w-[60%] flex items-center justify-end">
           <img
             ref={imageRef}
             src={controls.image.src}
             alt={controls.image.alt}
-            className="h-auto object-contain"
+            className="morph-img h-auto object-contain"
             style={{
               width: controls.image.width,
               maxWidth: controls.image.maxWidth,
@@ -240,3 +272,4 @@ export default function MorphComp() {
     </div>
   );
 }
+
