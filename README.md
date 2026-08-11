@@ -1,12 +1,61 @@
-# React + Vite
+# Polaris by Restrohub - UI Mockups
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, high-performance landing page and UI mock-up for **Polaris**, an advanced restaurant management system developed by Restrohub. The platform showcases features like smart POS, kitchen displays, QR ordering, and AI-powered operations through a highly interactive and visually stunning web interface.
 
-Currently, two official plugins are available:
+## Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Immersive Animations**: Powered by **GSAP** (GreenSock) for intricate, scroll-triggered, and timeline-based animations.
+- **Smooth Scrolling**: Implemented using **Lenis** (`@studio-freight/react-lenis`) for buttery-smooth and luxurious scrolling experiences.
+- **Modern & Premium Design**: Utilizing **Tailwind CSS** for responsive, pixel-perfect, and modern UI layouts.
+- **Interactive Data Visualizations**: Custom-built, animated capability charts to demonstrate system performance compared to legacy systems.
+- **3D Elements**: Integration of **React Three Fiber** and **Cobe** for interactive 3D components and globes.
 
-## Expanding the ESLint configuration
+## Technology Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Framework**: React 19 + Vite
+- **Styling**: Tailwind CSS v4
+- **Animation**: GSAP, React Spring
+- **Scroll Handling**: Lenis (Smooth Scroll)
+- **3D & Canvas**: `@react-three/fiber`, `@react-three/drei`, `cobe`
+- **Routing**: React Router DOM
+- **Icons**: Lucide React
+
+## Getting Started
+
+Follow these steps to set up the project locally:
+
+### 1. Prerequisites
+Make sure you have [Node.js](https://nodejs.org/) installed on your machine.
+
+### 2. Installation
+Clone the repository and install the required dependencies:
+
+```bash
+# Install dependencies
+npm install
+```
+
+### 3. Development Server
+Start the Vite development server:
+
+```bash
+# Start the dev server
+npm run dev
+```
+
+The application will be available at `http://localhost:5173`.
+
+### 4. Build for Production
+To build the application for production, run:
+
+```bash
+npm run build
+```
+
+## Project Structure
+
+- `src/components/`: Reusable, smaller UI components (e.g., RollingText, BottomNav, SkillPage).
+- `src/sections/`: Distinct, large-scale sections of the landing page (e.g., Main/Hero, RestroAi, HeatCapabilities, TeamSection).
+- `public/assets/`: Static assets such as images, background videos, and mockups.
+
+
